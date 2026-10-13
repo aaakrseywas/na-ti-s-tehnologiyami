@@ -1,0 +1,980 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/lesson.css') }}">
+
+<main class="lesson-page">
+    <a href="/" class="back-link">← Все занятия</a>
+
+    <div class="head">
+        <div>
+            <small>УРОК 1 · СМАРТФОН С НУЛЯ</small>
+            <h1>Смартфон с нуля</h1>
+            <p>Первое знакомство со смартфоном, его основными элементами, жестами и базовыми настройками.</p>
+        </div>
+<div class="head-actions">
+    <button class="btn" onclick="openPresentation()">Режим показа</button>
+</div>
+    </div>
+
+    <div class="note">
+        Сначала теория с объяснением, затем практика с заданиями.
+        Итоги — в режиме показа по кнопке в шапке.
+    </div>
+
+    <div id="lesson-app"></div>
+
+    <button id="toTop" class="to-top" onclick="scrollToTop()" aria-label="Наверх">↑</button>
+</main>
+
+<!-- ============================================================
+     РЕЖИМ ПОКАЗА — встроенный полноэкранный overlay
+     ============================================================ -->
+<div id="presentation" class="presentation-overlay" aria-hidden="true">
+    <div class="pres-topline">
+        <span>На «ты» с технологиями</span>
+        <span>Урок 1 · Итоги</span>
+        <button class="pres-close" onclick="closePresentation()" aria-label="Закрыть">×</button>
+    </div>
+
+    <div class="pres-stage">
+        {# ============ СЛАЙД 1. Обложка ============ #}
+        <section class="pres-screen active">
+            <small class="pres-kicker">УРОК 1 · ИТОГИ</small>
+            <h1 class="pres-h1">Смартфон<br><em>с нуля</em></h1>
+            <p class="pres-subtitle">
+                Мы разобрались, как устроен смартфон, научились управлять им жестами
+                и менять базовые настройки. Ниже — короткое резюме урока.
+            </p>
+        </section>
+
+        {# ============ СЛАЙД 2. Что освоили ============ #}
+        <section class="pres-screen">
+            <small class="pres-kicker">ЧТО ОСВОИЛИ</small>
+            <h1 class="pres-h1">Шесть ключевых навыков</h1>
+
+            <div class="pres-skill-grid">
+                <div class="pres-skill">
+                    <div class="pres-ico">1</div>
+                    <div>
+                        <b>Устройство смартфона</b>
+                        <span>Экран, кнопки, камеры, динамик, микрофон, разъём, лоток SIM.</span>
+                    </div>
+                </div>
+                <div class="pres-skill">
+                    <div class="pres-ico">2</div>
+                    <div>
+                        <b>Разъёмы зарядки</b>
+                        <span>USB-C, Lightning, micro-USB — и как определить свой.</span>
+                    </div>
+                </div>
+                <div class="pres-skill">
+                    <div class="pres-ico">3</div>
+                    <div>
+                        <b>Android и iOS</b>
+                        <span>Чем отличаются системы и почему инструкции не всегда совпадают.</span>
+                    </div>
+                </div>
+                <div class="pres-skill">
+                    <div class="pres-ico">4</div>
+                    <div>
+                        <b>Жесты на экране</b>
+                        <span>Касание, долгое нажатие, свайп, движение двумя пальцами.</span>
+                    </div>
+                </div>
+                <div class="pres-skill">
+                    <div class="pres-ico">5</div>
+                    <div>
+                        <b>Громкость и яркость</b>
+                        <span>Как настроить под себя и зачем нужна автояркость.</span>
+                    </div>
+                </div>
+                <div class="pres-skill">
+                    <div class="pres-ico">6</div>
+                    <div>
+                        <b>Размер текста</b>
+                        <span>Как увеличить шрифт, чтобы читать было удобно.</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        {# ============ СЛАЙД 3. Мини-словарь ============ #}
+        <section class="pres-screen">
+            <small class="pres-kicker">КОРОТКО О ГЛАВНОМ</small>
+            <h1 class="pres-h1">Мини-словарь урока</h1>
+
+            <dl class="pres-glossary">
+                <div class="pres-term">
+                    <dt>Операционная система</dt>
+                    <dd>«Мозг» телефона. Бывает Android или iOS — от неё зависит внешний вид меню.</dd>
+                </div>
+                <div class="pres-term">
+                    <dt>Сенсорный экран</dt>
+                    <dd>Реагирует на касания. Распознаёт не только место, но и тип жеста.</dd>
+                </div>
+                <div class="pres-term">
+                    <dt>Разъём зарядки</dt>
+                    <dd>Гнездо для кабеля. Современный стандарт — USB-C.</dd>
+                </div>
+                <div class="pres-term">
+                    <dt>Настройки</dt>
+                    <dd>Общий «пульт» телефона: звук, экран, яркость, шрифт, батарея.</dd>
+                </div>
+                <div class="pres-term">
+                    <dt>Свайп</dt>
+                    <dd>Проведение пальцем по экрану. Пролистывает страницы, переключает вкладки.</dd>
+                </div>
+                <div class="pres-term">
+                    <dt>Приложение</dt>
+                    <dd>Программа на телефоне: камера, звонки, мессенджеры, игры.</dd>
+                </div>
+            </dl>
+        </section>
+
+        {# ============ СЛАЙД 4. Типичные проблемы ============ #}
+        <section class="pres-screen">
+            <small class="pres-kicker">ЕСЛИ ЧТО-ТО НЕ ТАК</small>
+            <h1 class="pres-h1">Три частых вопроса</h1>
+
+            <div class="pres-problem-list">
+                <div class="pres-problem">
+                    <b>Буквы слишком мелкие</b>
+                    <p>Это не поломка. Идём в <code>Настройки → Экран → Размер текста</code>
+                       и увеличиваем шрифт под себя.</p>
+                </div>
+                <div class="pres-problem">
+                    <b>Пропал звук</b>
+                    <p>Сначала проверяем громкость, потом беззвучный режим, потом Bluetooth,
+                       и только затем думаем, что телефон сломан.</p>
+                </div>
+                <div class="pres-problem">
+                    <b>Экран слишком тёмный</b>
+                    <p>Тянем ползунок яркости в быстрых настройках. Если не помогло —
+                       проверяем энергосбережение и ночной режим.</p>
+                </div>
+            </div>
+        </section>
+
+        {# ============ СЛАЙД 5. Финал ============ #}
+        <section class="pres-screen">
+            <div class="pres-big-check">✓</div>
+            <small class="pres-kicker">ГОТОВО</small>
+            <h1 class="pres-h1">Смартфон — уже не набор кнопок</h1>
+            <p class="pres-subtitle">Сегодня получилось:</p>
+
+            <div class="pres-check-final">
+                <span>включить и разблокировать</span>
+                <span>открыть приложение</span>
+                <span>изменить громкость</span>
+                <span>настроить яркость</span>
+                <span>увеличить шрифт</span>
+                <span>найти причину проблемы</span>
+            </div>
+
+            <p class="pres-final-note">
+                Главное — не запомнить все кнопки, а научиться <b>разбираться</b>.
+                На следующем уроке — установка приложений, клавиатура и безопасность.
+            </p>
+        </section>
+    </div>
+
+    <div class="pres-controls">
+        <button onclick="presPrev()" aria-label="Назад">←</button>
+        <div class="pres-bar-wrap"><i id="presBar"></i></div>
+        <span id="presCounter">1 / 5</span>
+        <button onclick="presNext()" aria-label="Вперёд">→</button>
+        <button class="pres-exit" onclick="closePresentation()">Выйти</button>
+    </div>
+</div>
+
+<style>
+/* ============================================================
+   СТИЛИ РЕЖИМА ПОКАЗА — изолированный overlay
+   ============================================================ */
+.presentation-overlay{
+    position: fixed;
+    inset: 0;
+    background: linear-gradient(135deg, #0f1720 0%, #1a2a3a 100%);
+    color: #eef2f7;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    z-index: 9999;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity .25s ease, visibility .25s ease;
+    display: flex;
+    flex-direction: column;
+}
+.presentation-overlay.open{
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Верхняя строка */
+.presentation-overlay .pres-topline{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: .9rem 2rem;
+    font-size: .85rem;
+    letter-spacing: .5px;
+    color: #8ba0b6;
+    border-bottom: 1px solid rgba(255,255,255,.08);
+    flex-shrink: 0;
+}
+.presentation-overlay .pres-close{
+    background: transparent;
+    border: 1px solid rgba(255,255,255,.15);
+    color: #fff;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    font-size: 1.4rem;
+    line-height: 1;
+    cursor: pointer;
+    display: grid;
+    place-items: center;
+    font-family: inherit;
+    transition: background .15s, border-color .15s;
+}
+.presentation-overlay .pres-close:hover{
+    background: rgba(111,191,59,.2);
+    border-color: #6fbf3b;
+}
+
+/* Сцена */
+.presentation-overlay .pres-stage{
+    position: relative;
+    flex: 1;
+    overflow: hidden;
+}
+
+/* Слайды */
+.presentation-overlay .pres-screen{
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 3rem 5vw;
+    opacity: 0;
+    transform: translateY(24px) scale(.99);
+    transition: opacity .45s ease, transform .45s ease;
+    pointer-events: none;
+    text-align: center;
+    overflow-y: auto;
+}
+.presentation-overlay .pres-screen.active{
+    opacity: 1;
+    transform: none;
+    pointer-events: auto;
+}
+
+/* Заголовки */
+.presentation-overlay .pres-kicker{
+    display: inline-block;
+    font-size: .78rem;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: #6fbf3b;
+    background: rgba(111,191,59,.12);
+    border: 1px solid rgba(111,191,59,.35);
+    padding: .35rem .85rem;
+    border-radius: 999px;
+    margin-bottom: 1.5rem;
+    font-weight: 700;
+}
+.presentation-overlay .pres-h1{
+    font-size: clamp(1.8rem, 4.5vw, 3.2rem);
+    line-height: 1.1;
+    margin: 0 0 1rem;
+    font-weight: 800;
+    letter-spacing: -.5px;
+    color: #fff;
+}
+.presentation-overlay .pres-h1 em{
+    font-style: normal;
+    background: linear-gradient(90deg, #6fbf3b 0%, #8ee65a 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+.presentation-overlay .pres-subtitle{
+    font-size: clamp(1rem, 1.6vw, 1.2rem);
+    color: #a8bccd;
+    max-width: 760px;
+    margin: 0 auto;
+    line-height: 1.55;
+}
+
+/* Сетка навыков */
+.presentation-overlay .pres-skill-grid{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1rem;
+    max-width: 980px;
+    width: 100%;
+    margin: 1.5rem auto 0;
+    text-align: left;
+}
+.presentation-overlay .pres-skill{
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 1.2rem;
+    background: rgba(255,255,255,.04);
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 14px;
+}
+.presentation-overlay .pres-skill .pres-ico{
+    flex-shrink: 0;
+    width: 40px;
+    height: 40px;
+    display: grid;
+    place-items: center;
+    border-radius: 12px;
+    background: rgba(111,191,59,.15);
+    color: #8ee65a;
+    font-size: 1.1rem;
+    font-weight: 800;
+}
+.presentation-overlay .pres-skill b{
+    display: block;
+    font-size: .98rem;
+    color: #fff;
+    margin-bottom: .15rem;
+}
+.presentation-overlay .pres-skill span{
+    font-size: .85rem;
+    color: #a8bccd;
+    line-height: 1.4;
+}
+
+/* Мини-словарь */
+.presentation-overlay .pres-glossary{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: .8rem;
+    max-width: 980px;
+    width: 100%;
+    margin: 1rem auto 0;
+    text-align: left;
+}
+.presentation-overlay .pres-term{
+    padding: 1rem 1.2rem;
+    background: rgba(255,255,255,.04);
+    border-left: 3px solid #6fbf3b;
+    border-radius: 8px;
+}
+.presentation-overlay .pres-term dt{
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: .25rem;
+    font-size: .95rem;
+}
+.presentation-overlay .pres-term dd{
+    margin: 0;
+    color: #a8bccd;
+    font-size: .9rem;
+    line-height: 1.5;
+}
+
+/* Проблемы */
+.presentation-overlay .pres-problem-list{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1rem;
+    max-width: 1000px;
+    width: 100%;
+    margin: 1rem auto 0;
+    text-align: left;
+}
+.presentation-overlay .pres-problem{
+    padding: 1.1rem 1.2rem;
+    background: rgba(255,255,255,.04);
+    border-radius: 12px;
+    border: 1px solid rgba(255,255,255,.08);
+}
+.presentation-overlay .pres-problem b{
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    color: #fff;
+    font-size: .96rem;
+    margin-bottom: .5rem;
+}
+.presentation-overlay .pres-problem b::before{
+    content: "?";
+    display: inline-grid;
+    place-items: center;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: #f5b301;
+    color: #1a2a3a;
+    font-weight: 800;
+    font-size: .8rem;
+    flex-shrink: 0;
+}
+.presentation-overlay .pres-problem p{
+    margin: 0;
+    color: #a8bccd;
+    font-size: .9rem;
+    line-height: 1.5;
+}
+.presentation-overlay .pres-problem code{
+    background: rgba(111,191,59,.15);
+    color: #b8f085;
+    padding: .1rem .4rem;
+    border-radius: 4px;
+    font-size: .85em;
+}
+
+/* Финальный чек-лист */
+.presentation-overlay .pres-check-final{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: .6rem;
+    max-width: 900px;
+    margin: 1.5rem auto 0;
+}
+.presentation-overlay .pres-check-final span{
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+    padding: .6rem 1.1rem;
+    background: rgba(111,191,59,.12);
+    border: 1px solid rgba(111,191,59,.4);
+    border-radius: 999px;
+    font-size: .9rem;
+    color: #d6f5b8;
+    font-weight: 500;
+    animation: pres-popIn .5s ease backwards;
+}
+.presentation-overlay .pres-check-final span::before{
+    content: "✓";
+    color: #8ee65a;
+    font-weight: 800;
+}
+.presentation-overlay .pres-check-final span:nth-child(1){ animation-delay: .05s; }
+.presentation-overlay .pres-check-final span:nth-child(2){ animation-delay: .12s; }
+.presentation-overlay .pres-check-final span:nth-child(3){ animation-delay: .19s; }
+.presentation-overlay .pres-check-final span:nth-child(4){ animation-delay: .26s; }
+.presentation-overlay .pres-check-final span:nth-child(5){ animation-delay: .33s; }
+.presentation-overlay .pres-check-final span:nth-child(6){ animation-delay: .40s; }
+
+@keyframes pres-popIn{
+    from{ opacity: 0; transform: scale(.85); }
+    to  { opacity: 1; transform: none; }
+}
+
+.presentation-overlay .pres-big-check{
+    font-size: 4.5rem;
+    line-height: 1;
+    color: #6fbf3b;
+    margin-bottom: 1rem;
+    animation: pres-pulse 2s ease-in-out infinite;
+}
+@keyframes pres-pulse{
+    0%, 100%{ transform: scale(1); }
+    50%     { transform: scale(1.08); }
+}
+
+.presentation-overlay .pres-final-note{
+    max-width: 700px;
+    margin: 1.5rem auto 0;
+    color: #a8bccd;
+    font-size: .98rem;
+    line-height: 1.6;
+}
+
+/* Панель управления */
+.presentation-overlay .pres-controls{
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+    padding: .9rem 2rem;
+    background: rgba(15,23,32,.85);
+    border-top: 1px solid rgba(255,255,255,.08);
+    flex-shrink: 0;
+}
+.presentation-overlay .pres-controls button{
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    border: 1px solid rgba(255,255,255,.15);
+    background: rgba(255,255,255,.06);
+    color: #fff;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: all .15s ease;
+    display: grid;
+    place-items: center;
+    font-family: inherit;
+}
+.presentation-overlay .pres-controls button:hover{
+    background: rgba(111,191,59,.2);
+    border-color: #6fbf3b;
+    transform: scale(1.05);
+}
+.presentation-overlay .pres-bar-wrap{
+    flex: 1;
+    height: 6px;
+    background: rgba(255,255,255,.08);
+    border-radius: 999px;
+    overflow: hidden;
+}
+.presentation-overlay .pres-bar-wrap i{
+    display: block;
+    height: 100%;
+    width: 20%;
+    background: linear-gradient(90deg, #6fbf3b, #8ee65a);
+    border-radius: 999px;
+    transition: width .35s ease;
+}
+.presentation-overlay #presCounter{
+    font-variant-numeric: tabular-nums;
+    font-size: .9rem;
+    color: #8ba0b6;
+    min-width: 50px;
+    text-align: center;
+}
+.presentation-overlay .pres-exit{
+    width: auto !important;
+    padding: 0 1.1rem;
+    border-radius: 999px !important;
+    font-size: .88rem !important;
+    height: 38px !important;
+}
+.presentation-overlay .pres-exit:hover{
+    background: rgba(255,143,199,.2) !important;
+    border-color: #FF8FC7 !important;
+}
+
+/* Адаптив */
+@media (max-width: 720px){
+    .presentation-overlay .pres-screen{ padding: 2rem 1.2rem; justify-content: flex-start; padding-top: 2.5rem; }
+    .presentation-overlay .pres-controls{ padding: 0 .8rem; gap: .5rem; }
+    .presentation-overlay .pres-skill-grid,
+    .presentation-overlay .pres-glossary,
+    .presentation-overlay .pres-problem-list{ grid-template-columns: 1fr; }
+    .presentation-overlay .pres-h1{ font-size: 1.6rem; }
+    .presentation-overlay .pres-big-check{ font-size: 3.5rem; }
+    .presentation-overlay #presCounter{ min-width: 40px; font-size: .8rem; }
+}
+</style>
+
+<script>
+// Хелпер: текст слева — фото справа.
+function split(text, src, caption){
+    return `<div class="two">
+        <div class="two-text">${text}</div>
+        <figure class="slide-photo inline">
+            <img src="/static/img/${src}" alt="${caption}"
+                 onerror="this.style.display='none';this.parentElement.classList.add('is-missing');">
+        </figure>
+    </div>`;
+}
+
+// ============================================================
+// ТЕОРИЯ
+// ============================================================
+const THEORY = [
+
+["Смартфон с нуля",
+`<div class="hero">
+  <div>
+    <small>УРОК 1</small>
+    <h1>Смартфон<br><i>с нуля</i></h1>
+    <p>Не просто нажимаем кнопки — разбираемся, как устроен смартфон и как самостоятельно находить нужные функции.</p>
+    <p class="mini">Продолжительность: 45–60 минут. Практика на своих телефонах.</p>
+  </div>
+  <figure class="slide-photo inline">
+    <img src="/static/img/lesson1_hero.jpg" alt="Демонстрационный смартфон"
+         onerror="this.style.display='none';this.parentElement.classList.add('is-missing');">
+  </figure>
+</div>
+<div class="tip"><b>Правило урока:</b> «не знаю» — это нормально. Плохо только «не хочу разбираться».</div>`],
+
+["Что сегодня научимся делать?",
+`<div class="cards">
+${[
+ "Разобраться в устройстве смартфона",
+ "Определять разъём зарядки",
+ "Понимать разницу Android и iOS",
+ "Управлять сенсорным экраном и жестами",
+ "Менять громкость и яркость",
+ "Настраивать размер текста"
+].map((x,i)=>`<div class="card ${i==5?'lime':''}"><b>0${i+1}</b><span>${x}</span></div>`).join("")}
+</div>
+<div class="tip"><b>Все шесть пунктов разберём по порядку.</b> В конце — практические задания на каждый.</div>`],
+
+["Из чего состоит смартфон?",
+split(`
+    <h3>Физическая часть</h3>
+    <dl class="kv">
+      <dt>Экран</dt><dd>показывает изображение и принимает касания</dd>
+      <dt>Кнопки</dt><dd>включение, громкость, иногда «Домой»</dd>
+      <dt>Камеры</dt><dd>основная и фронтальная для селфи</dd>
+      <dt>Микрофон</dt><dd>записывает голос для звонков и видео</dd>
+      <dt>Динамик</dt><dd>воспроизводит звук звонка, музыки, видео</dd>
+      <dt>Разъём</dt><dd>для зарядки и подключения к компьютеру</dd>
+      <dt>Лоток SIM</dt><dd>сюда вставляется сим-карта оператора</dd>
+    </dl>
+    <h3>Программная часть</h3>
+    <dl class="kv">
+      <dt>ОС</dt><dd>Android или iOS — «мозг» телефона</dd>
+      <dt>Приложения</dt><dd>звонки, камера, мессенджеры, игры</dd>
+      <dt>Настройки</dt><dd>общий пульт управления всеми функциями</dd>
+      <dt>Файлы</dt><dd>фото, видео, документы, музыка</dd>
+    </dl>
+    <div class="tip"><b>Аналогия:</b> смартфон — это дом. Стены и двери — «железо». Мебель и правила — программа.</div>
+`, 'lesson1_parts.jpg', 'Основные элементы смартфона')],
+
+["Разъёмы зарядки",
+split(`
+    <p>За последние 20 лет разъёмы менялись. Важно уметь определить свой, чтобы не покупать неподходящий кабель.</p>
+    <dl class="kv">
+      <dt>USB-C</dt><dd>современный стандарт. Овальный, симметричный — вставляется любой стороной.</dd>
+      <dt>micro-USB</dt><dd>устаревший. Трапециевидный, вставляется только одной стороной.</dd>
+      <dt>Lightning</dt><dd>разъём Apple. Плоский, узкий. Только на iPhone до 15-й модели.</dd>
+    </dl>
+    <div class="warn"><b>Важно:</b> если штекер не входит легко — не давите. Можно повредить гнездо.</div>
+`, 'lesson1_connector.jpg', 'Разъём зарядки крупным планом')],
+
+["Android или iOS?",
+split(`
+    <p>Это две операционные системы. От них зависит внешний вид меню, названия кнопок и путь к настройкам.</p>
+    <dl class="kv">
+      <dt>Android</dt><dd>открытая система. Используют Samsung, Xiaomi, Honor, Huawei, Google, Nokia. У каждого производителя свой вид меню.</dd>
+      <dt>iOS</dt><dd>система Apple. Работает только на iPhone. Меню у всех моделей похоже.</dd>
+    </dl>
+    <div class="tip"><b>Совет:</b> в поиске всегда добавляйте модель телефона: «как увеличить шрифт Samsung A54».</div>
+`, 'lesson1_os.jpg', 'Меню Android и iOS')],
+
+["Что происходит при касании экрана?",
+split(`
+    <p>Сенсор экрана реагирует не только на <b>место</b> касания, но и на <b>тип</b> жеста.</p>
+    <dl class="kv">
+      <dt>Касание</dt><dd>открыть приложение, нажать кнопку</dd>
+      <dt>Долгое нажатие</dt><dd>вызвать меню, переставить иконку</dd>
+      <dt>Свайп</dt><dd>пролистать экран, переключить вкладку</dd>
+      <dt>Два пальца</dt><dd>увеличить фото, повернуть карту</dd>
+    </dl>
+    <div class="steps">
+      <b>Как потренироваться:</b>
+      <ol>
+        <li>Откройте «Галерею» и любую фотографию.</li>
+        <li>Разведите два пальца — фото увеличится.</li>
+        <li>Сведите два пальца — фото вернётся к обычному размеру.</li>
+      </ol>
+    </div>
+`, 'lesson1_touch.jpg', 'Управление жестами')],
+
+["Как менять громкость",
+split(`
+    <p>Громкость телефона можно менять. Есть два способа: физические кнопки и экранный регулятор.</p>
+    <h3>Физические кнопки</h3>
+    <p>Качелька на боковой грани телефона. Верхняя часть — громче, нижняя — тише.</p>
+    <h3>Экранный регулятор</h3>
+    <p>Нажмите на любую из физических кнопок — на экране появится ползунок. Его можно потянуть пальцем.</p>
+    <dl class="kv">
+      <dt>Звонок</dt><dd>громкость входящего звонка и уведомлений</dd>
+      <dt>Медиа</dt><dd>громкость музыки, видео, игр</dd>
+      <dt>Будильник</dt><dd>настраивается отдельно от остальных</dd>
+    </dl>
+    <div class="tip"><b>Совет:</b> не ставьте максимальную громкость звонка — это вредит слуху и динамику.</div>
+`, 'lesson1_volume.jpg', 'Кнопки громкости на боковой грани')],
+
+["Как менять яркость экрана",
+split(`
+    <p>Если экран слишком яркий или плохо виден — яркость можно изменить. Это влияет и на расход батареи.</p>
+    <h3>Быстрый способ</h3>
+    <p>Смахните пальцем сверху вниз — откроется панель быстрых настроек. Найдите ползунок яркости и потяните его.</p>
+    <h3>Через настройки</h3>
+    <p>Откройте <b>Настройки → Экран</b> (или «Дисплей») → <b>Яркость</b>.</p>
+    <div class="tip"><b>Совет:</b> включите «автояркость» — телефон сам будет подстраивать яркость под освещение. Это экономит батарею.</div>
+`, 'lesson1_brightness.jpg', 'Ползунок яркости в быстрых настройках')],
+
+["Как увеличить размер текста",
+split(`
+    <p>Если надписи на экране слишком мелкие — размер текста можно увеличить. Это делается в настройках.</p>
+    <h3>Путь к настройке</h3>
+    <p><b>Настройки → Экран → Размер текста</b>. Потяните ползунок вправо — буквы станут крупнее.</p>
+    <h3>Увеличение всего интерфейса</h3>
+    <p>Если текст увеличился, а иконки остались мелкими — рядом есть пункт <b>«Размер элементов»</b> или <b>«Масштаб экрана»</b>.</p>
+    <div class="tip"><b>Совет:</b> увеличивайте постепенно. Слишком крупный шрифт может не влезать в кнопки и меню.</div>
+`, 'lesson1_font.jpg', 'Настройка размера текста')]
+
+];
+
+// ============================================================
+// ПРАКТИКА
+// ============================================================
+const TASKS = [
+
+["Задание 1. Определите разъём",
+`<p>Нажмите на карточку, чтобы проверить. Затем найдите такой же разъём на своём телефоне.</p>
+<div class="cards">
+${[
+  ["USB-C","Современный стандарт. Овальный, симметричный — вставляется любой стороной."],
+  ["micro-USB","Устаревший. Трапециевидный, вставляется только одной стороной."],
+  ["Lightning","Разъём Apple. Плоский, узкий. Только на iPhone до 15-й модели."]
+].map((x,i)=>`<button class="card" onclick="pickConnector(${i})"><b>${x[0]}</b><span class="mini">Нажмите, чтобы проверить</span></button>`).join("")}
+</div>
+<div id="task-connector"></div>`],
+
+["Задание 2. Android или iOS?",
+`<p>Посмотрите на свой телефон и определите, какая у вас система. Нажмите на подходящую карточку.</p>
+<div class="os">
+  <button onclick="pickOS('Android')"><strong>Android</strong><small>Samsung, Xiaomi, Honor, Huawei, Google, Nokia</small></button>
+  <button onclick="pickOS('iOS')"><strong>iOS</strong><small>iPhone</small></button>
+</div>
+<div id="task-os"></div>`],
+
+["Задание 3. Настройте громкость",
+`<p>Возьмите телефон в руки и выполните по порядку:</p>
+<div class="steps">
+  <ol>
+    <li>Нажмите верхнюю часть качельки громкости — звук громче.</li>
+    <li>Нажмите нижнюю часть — тише.</li>
+    <li>Выберите комфортный для вас уровень.</li>
+    <li>Проверьте, что будильник не пропустит вас утром.</li>
+  </ol>
+</div>
+<div class="tip"><b>Вопрос:</b> где на вашем телефоне качелька громкости — слева или справа?</div>`],
+
+["Задание 4. Настройте яркость",
+`<p>Выполните по порядку:</p>
+<div class="steps">
+  <ol>
+    <li>Смахните пальцем сверху вниз — откройте панель быстрых настроек.</li>
+    <li>Найдите ползунок яркости.</li>
+    <li>Потяните его влево — экран станет темнее.</li>
+    <li>Потяните вправо — ярче.</li>
+    <li>Выберите уровень, при котором вам комфортно читать.</li>
+  </ol>
+</div>
+<div class="tip"><b>Совет:</b> включите автояркость, чтобы телефон сам подстраивался под освещение.</div>`],
+
+["Задание 5. Увеличьте размер текста",
+`<p>Найдите на своём телефоне настройку размера текста и увеличьте шрифт на один шаг.</p>
+<div class="steps">
+  <ol>
+    <li>Откройте <b>Настройки</b>.</li>
+    <li>Найдите раздел <b>Экран</b> (или «Дисплей»).</li>
+    <li>Откройте <b>Размер текста</b>.</li>
+    <li>Потяните ползунок вправо.</li>
+    <li>Вернитесь назад и посмотрите, как изменились надписи.</li>
+  </ol>
+</div>
+<div class="tip"><b>Не нашли?</b> Подумайте, к какой категории относится функция. Размер текста — это внешний вид экрана.</div>`],
+
+["Задание 6. Смартфон-детектив",
+`<div class="case">
+  <small>СИТУАЦИЯ</small>
+  <h2>У Светланы буквы слишком маленькие. Она думает, что телефон сломался.</h2>
+  <p>Что проверим сначала?</p>
+  ${["Купить новый телефон","Проверить настройки отображения","Перезагрузить десять раз","Ударить по экрану"].map((x,i)=>`<button onclick="pickDetective(${i})">${x}</button>`).join("")}
+  <div id="task-detective"></div>
+</div>`],
+
+["Задание 7. Если пропал звук",
+`<p>Видео запускается, но звука нет. Отметьте причины, которые стоит проверить.</p>
+<div class="cards">
+${[
+  ["Громкость","Нажмите верхнюю часть качельки громкости."],
+  ["Беззвучный режим","Переключатель на торце iPhone или иконка в Android."],
+  ["Bluetooth","Телефон подключён к наушникам — звук идёт туда."],
+  ["Настройки приложения","Звук может быть выключен внутри приложения."],
+  ["Само видео","У ролика нет звука."],
+  ["Режим экономии","Иногда ограничивает звук уведомлений."]
+].map(x=>`<button class="card" onclick="this.classList.toggle('lime')"><b>${x[0]}</b><span class="mini">${x[1]}</span></button>`).join("")}
+</div>
+<div class="tip"><b>Порядок проверки:</b> громкость → беззвучный режим → Bluetooth → настройки приложения → перезапуск.</div>`],
+
+["Задание 8. Найдите сами",
+`<p>Найдите на своём телефоне перечисленные пункты. Отмечайте галочкой то, что уже нашли.</p>
+<div class="check">
+${[
+  "модель телефона",
+  "версию Android / iOS",
+  "уровень заряда",
+  "тип разъёма",
+  "яркость экрана",
+  "размер текста",
+  "громкость звонка"
+].map((x,i)=>`<button onclick="toggleCheck(this)"><b>□</b> ${x}</button>`).join("")}
+</div>
+<details><summary>Подсказки (открывайте только если совсем не получается)</summary>
+<ul>
+  <li><b>Модель телефона:</b> Настройки → О телефоне.</li>
+  <li><b>Версия ОС:</b> Настройки → О телефоне → Версия Android / iOS.</li>
+  <li><b>Уровень заряда:</b> верхняя строка экрана или Настройки → Батарея.</li>
+  <li><b>Тип разъёма:</b> посмотреть на нижний торец телефона.</li>
+  <li><b>Яркость:</b> быстрые настройки — смахнуть сверху вниз.</li>
+  <li><b>Размер текста:</b> Настройки → Экран → Размер текста.</li>
+  <li><b>Громкость звонка:</b> Настройки → Звук → Громкость звонка.</li>
+</ul>
+</details>`],
+
+["Задание 9. Финальное испытание",
+`<div class="case">
+  <small>ЗАДАЧА</small>
+  <h2>Экран стал слишком тёмным.</h2>
+  <p>Объясните, что будете проверять и в каком порядке. Затем откройте возможный путь.</p>
+  <button onclick="document.getElementById('task-sol').hidden=false">Показать возможный путь</button>
+  <p id="task-sol" hidden>
+    <b>Один из вариантов:</b><br>
+    1. Быстрые настройки → ползунок яркости.<br>
+    2. Если не помогло — Настройки → Экран → Яркость.<br>
+    3. Проверить режим энергосбережения.<br>
+    4. Проверить «тёмный режим» или «ночной режим».<br>
+    5. Перезагрузить телефон.
+  </p>
+</div>
+<div class="steps">
+  <b>План рассуждения для любой проблемы:</b>
+  <ol>
+    <li>Что именно не работает?</li>
+    <li>Что за это отвечает?</li>
+    <li>Где эта настройка может лежать?</li>
+    <li>Что изменилось перед появлением проблемы?</li>
+  </ol>
+</div>`]
+
+];
+
+// ============================================================
+// РЕНДЕР УРОКА
+// ============================================================
+const app = document.getElementById('lesson-app');
+
+function renderSection(slides, startIndex){
+    return slides.map((s, i) => `
+        <article class="slidecard">
+            <div class="num">${String(startIndex + i).padStart(2,"0")}</div>
+            <div class="slidebody">
+                <small>${s[0]}</small>
+                <h2>${s[0]}</h2>
+                ${s[1]}
+            </div>
+        </article>
+    `).join('');
+}
+
+app.innerHTML =
+    renderSection(THEORY, 1) +
+    renderSection(TASKS, THEORY.length + 1);
+
+// ============================================================
+// ИНТЕРАКТИВ
+// ============================================================
+function pickConnector(i){
+    const data = [
+        {name:'USB-C',   ok:'Да, это современный стандарт. Овальный, симметричный — вставляется любой стороной.'},
+        {name:'micro-USB', ok:'Да, это устаревший разъём. Встречается на старых или дешёвых телефонах.'},
+        {name:'Lightning', ok:'Да, это разъём Apple. Только на iPhone до 15-й модели.'}
+    ];
+    document.getElementById('task-connector').innerHTML =
+        `<div class="notice"><b>${data[i].name}.</b> ${data[i].ok}<br>Найдите такой же разъём на своём телефоне.</div>`;
+}
+
+function pickOS(os){
+    const t = os === 'Android'
+        ? `<div class="notice"><b>Android.</b> Открытая система. Её используют Samsung, Xiaomi, Honor, Huawei, Google, Nokia.
+           <br><br>Путь к настройкам: <code>Настройки → Система / Экран / Звук</code>.</div>`
+        : `<div class="notice"><b>iOS.</b> Система Apple. Работает только на iPhone.
+           <br><br>Путь к настройкам: <code>Настройки → Основные / Экран и яркость / Звуки</code>.</div>`;
+    document.getElementById('task-os').innerHTML = t;
+}
+
+function pickDetective(i){
+    const good = "<div class='notice'><b>Верно.</b> Сначала проверяем настройки отображения: Настройки → Экран → Размер текста.</div>";
+    const bad  = "<div class='notice'><b>Не спешим.</b> Телефон исправен. Сначала найдём программную причину.</div>";
+    document.getElementById('task-detective').innerHTML = i === 1 ? good : bad;
+}
+
+function toggleCheck(btn){
+    btn.classList.toggle('lime');
+    const mark = btn.querySelector('b');
+    mark.textContent = btn.classList.contains('lime') ? '✓' : '□';
+}
+
+// ============================================================
+// КНОПКА «НАВЕРХ»
+// ============================================================
+const toTopBtn = document.getElementById('toTop');
+
+function scrollToTop(){
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+window.addEventListener('scroll', () => {
+    if (window.scrollY > 400) {
+        toTopBtn.classList.add('visible');
+    } else {
+        toTopBtn.classList.remove('visible');
+    }
+});
+
+// ============================================================
+// РЕЖИМ ПОКАЗА
+// ============================================================
+let presIndex = 0;
+const presOverlay = document.getElementById('presentation');
+const presScreens = [...document.querySelectorAll('.presentation-overlay .pres-screen')];
+const presCounter = document.getElementById('presCounter');
+const presBar = document.getElementById('presBar');
+
+function presRender(){
+    presScreens.forEach((s, n) => s.classList.toggle('active', n === presIndex));
+    presCounter.textContent = `${presIndex + 1} / ${presScreens.length}`;
+    presBar.style.width = ((presIndex + 1) / presScreens.length * 100) + '%';
+}
+
+function presNext(){ if(presIndex < presScreens.length - 1){ presIndex++; presRender(); } }
+function presPrev(){ if(presIndex > 0){ presIndex--; presRender(); } }
+
+function openPresentation(){
+    presIndex = 0;
+    presRender();
+    presOverlay.classList.add('open');
+    presOverlay.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+}
+
+function closePresentation(){
+    presOverlay.classList.remove('open');
+    presOverlay.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+}
+
+// Клавиатура
+document.addEventListener('keydown', e => {
+    const open = presOverlay.classList.contains('open');
+
+    if (open){
+        if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown'){ e.preventDefault(); presNext(); }
+        if (e.key === 'ArrowLeft' || e.key === 'PageUp'){ e.preventDefault(); presPrev(); }
+        if (e.key === 'Escape'){ e.preventDefault(); closePresentation(); }
+        if (e.key === 'Home'){ presIndex = 0; presRender(); }
+        if (e.key === 'End'){ presIndex = presScreens.length - 1; presRender(); }
+    }
+});
+
+// Свайпы в презентации
+let presX0 = null;
+presOverlay.addEventListener('touchstart', e => presX0 = e.touches[0].clientX);
+presOverlay.addEventListener('touchend', e => {
+    if(presX0 === null) return;
+    const dx = e.changedTouches[0].clientX - presX0;
+    if(Math.abs(dx) > 50) dx < 0 ? presNext() : presPrev();
+    presX0 = null;
+});
+
+presRender();
+</script>
+{% endblock %}

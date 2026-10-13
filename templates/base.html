@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>На «ты» с технологиями</title>
+    <link rel="stylesheet" href="{{ url_for('static',filename='style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display+SC:ital,wght@0,400;0,700;0,900;1,400;1,700;1,900&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<header>
+    <a href="/">На «ты» с технологиями</a>
+
+    <nav class="main-nav">
+        <div class="nav-item has-menu">
+            <a href="/" class="nav-link">Курс <span class="caret">▾</span></a>
+
+            <div class="course-menu">
+                <div class="course-menu-head">
+                    <small>16 уроков</small>
+                    <b>Программа курса</b>
+                </div>
+                <ol class="course-menu-list">
+                    {% for num, title in all_lessons %}
+                        <li>
+                            <a href="/lesson/{{ num|int }}">
+                                <span class="num">{{ num }}</span>
+                                <span class="ttl">{{ title }}</span>
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ol>
+            </div>
+        </div>
+    </nav>
+</header>
+
+{% block content %}{% endblock %}
+
+</body>
+</html>

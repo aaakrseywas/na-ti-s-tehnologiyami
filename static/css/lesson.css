@@ -1,0 +1,956 @@
+/* ==========================================================================
+   lesson.css — стили только для страницы урока.
+   Все правила вложены в .lesson-page, чтобы не влиять на другие страницы.
+   ========================================================================== */
+
+.lesson-page {
+    /* Локальные переменные — не утекают наружу */
+    --brand:        #6fbf3b;
+    --brand-dark:   #4f9c24;
+    --brand-soft:   #e8f7d4;
+    --ink:          #1f2733;
+    --ink-soft:     #4a5462;
+    --muted:        #7a8391;
+    --line:         #e3e7ee;
+    --surface:      #ffffff;
+    --surface-alt:  #f7f9fc;
+    --amber:        #f5b301;
+    --amber-soft:   #fff6db;
+    --blue:         #2b7cd3;
+    --blue-soft:    #e6f0fb;
+    --red:          #d9534f;
+    --red-soft:     #fdecec;
+    --white: #ffffff;
+    --radius:       14px;
+    --radius-sm:    10px;
+    --shadow-sm:    0 1px 2px rgba(20,30,50,.05);
+    --shadow-md:    0 6px 18px rgba(20,30,50,.08);
+
+    font-size: 16px;
+    line-height: 1.55;
+    color: var(--ink);
+}
+
+/* ============ Ссылка «назад» ============ */
+.lesson-page .back-link{
+    display:inline-block;
+    color: var(--muted);
+    text-decoration:none;
+    font-size:.9rem;
+    margin-bottom:.8rem;
+    transition: color .15s ease;
+}
+.lesson-page .back-link:hover{ color: var(--brand-dark); }
+
+.lesson-page .head-actions{ display:flex; gap:.5rem; flex-wrap:wrap; }
+
+/* ============ Карточка слайда ============ */
+.lesson-page #lesson-app h2{
+    font-size: 1.5rem;
+    line-height: 1.25;
+    margin: .2rem 0 .8rem;
+    color: var(--ink);
+}
+.lesson-page #lesson-app h3{
+    font-size: 1.05rem;
+    margin: 1rem 0 .4rem;
+    color: var(--ink);
+    letter-spacing:.2px;
+}
+.lesson-page #lesson-app p{ margin:.5rem 0; color: var(--ink-soft); }
+.lesson-page #lesson-app small{ color: var(--muted); }
+
+.lesson-page #lesson-app .slidecard{
+    display: grid;
+    grid-template-columns: 64px 1fr;
+    gap: 1.2rem;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 1.6rem 1.8rem;
+    box-shadow: var(--shadow-sm);
+    margin-bottom: 1.5rem;
+}
+.lesson-page #lesson-app .num{
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--white);
+    letter-spacing: 1px;
+    line-height: 1;
+    padding-top: .3rem;
+    border-right: 2px solid var(--brand-soft);
+    padding-right: 1rem;
+}
+.lesson-page #lesson-app .slidebody > small{
+    display:inline-block;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    font-size: .72rem;
+    font-weight: 700;
+    color: var(--brand-dark);
+    background: var(--brand-soft);
+    padding: .25rem .6rem;
+    border-radius: 999px;
+    margin-bottom: .5rem;
+}
+
+/* ============ Hero ============ */
+.lesson-page #lesson-app .hero{
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 2rem;
+    align-items: center;
+}
+.lesson-page #lesson-app .hero h1{
+    font-size: clamp(2rem, 4vw, 2.8rem);
+    line-height: 1.05;
+    margin: .3rem 0 .8rem;
+    color: var(--ink);
+}
+.lesson-page #lesson-app .hero i{
+    color: var(--brand);
+    font-style: normal;
+}
+.lesson-page #lesson-app .hero p{ color: var(--ink-soft); }
+
+.lesson-page #lesson-app .photo{
+    background:
+        repeating-linear-gradient(45deg, #fbfcfe 0 12px, #f4f7fb 12px 24px);
+    border: 2px dashed #cfd7e3;
+    padding: 2.2rem 1.5rem;
+    text-align: center;
+    border-radius: var(--radius);
+    color: var(--muted);
+    font-weight: 600;
+    letter-spacing: .5px;
+    min-height: 160px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:.4rem;
+}
+.lesson-page #lesson-app .photo.big{ font-size: 3.6rem; }
+.lesson-page #lesson-app .photo small{ font-weight:400; color:var(--muted); letter-spacing:0; }
+
+/* ============ Сетка карточек ============ */
+.lesson-page #lesson-app .cards{
+    display:grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: .9rem;
+}
+.lesson-page #lesson-app .card{
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    padding: 1rem 1.1rem;
+    display:flex;
+    flex-direction:column;
+    gap:.35rem;
+    transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease, background .15s ease;
+    color: var(--ink);
+}
+.lesson-page #lesson-app button.card{
+    cursor:pointer;
+    text-align:left;
+    font: inherit;
+    width:100%;
+}
+.lesson-page #lesson-app .card:hover{
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+    border-color: #d3dbe6;
+}
+.lesson-page #lesson-app .card:focus-visible{
+    outline: 3px solid var(--brand-soft);
+    outline-offset: 2px;
+}
+.lesson-page #lesson-app .card b{
+    font-size: 1.05rem;
+    color: var(--ink);
+    display:flex;
+    align-items:center;
+    gap:.4rem;
+}
+.lesson-page #lesson-app .card > b:first-child{ color: var(--brand-dark); font-weight:700; }
+.lesson-page #lesson-app .card.lime,
+.lesson-page #lesson-app .card.lime:hover{
+    background: var(--brand-soft);
+    border-color: var(--brand);
+}
+.lesson-page #lesson-app .card.lime b,
+.lesson-page #lesson-app .card.lime span{ color: var(--ink); }
+.lesson-page #lesson-app .mini{ color: var(--muted); font-size: .85rem; line-height:1.4; }
+
+/* ============ Двухколоночный блок ============ */
+.lesson-page #lesson-app .two{
+    display:grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 2rem;
+    align-items:start;
+}
+
+/* ============ Вопрос / подсказка / предупреждение ============ */
+.lesson-page #lesson-app .q{
+    background: var(--amber-soft);
+    border-left: 4px solid var(--amber);
+    padding: .9rem 1.1rem;
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    margin: 1rem 0;
+    color:#5a4400;
+    font-weight: 500;
+}
+.lesson-page #lesson-app .tip{
+    background: var(--brand-soft);
+    border-left: 4px solid var(--brand);
+    padding: .9rem 1.1rem;
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    margin: 1rem 0;
+    color:#284314;
+}
+.lesson-page #lesson-app .warn{
+    background: var(--red-soft);
+    border-left: 4px solid var(--red);
+    padding: .9rem 1.1rem;
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    margin: 1rem 0;
+    color:#5a1a18;
+}
+.lesson-page #lesson-app .notice{
+    background: var(--blue-soft);
+    border-left: 4px solid var(--blue);
+    padding: .9rem 1.1rem;
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    margin: 1rem 0;
+    color:#123a63;
+    animation: lesson-fadeIn .25s ease;
+}
+@keyframes lesson-fadeIn{
+    from{ opacity:0; transform: translateY(-3px); }
+    to  { opacity:1; transform: none; }
+}
+
+/* ============ Пошаговый блок ============ */
+.lesson-page #lesson-app .steps{
+    background: var(--surface-alt);
+    border: 1px dashed #c8d3e5;
+    border-radius: var(--radius-sm);
+    padding: 1rem 1.2rem;
+    margin: 1rem 0;
+}
+.lesson-page #lesson-app .steps ol{
+    margin:.5rem 0 .2rem 1.2rem;
+    padding:0;
+}
+.lesson-page #lesson-app .steps li{ margin:.3rem 0; color: var(--ink-soft); }
+
+/* ============ Определения ============ */
+.lesson-page #lesson-app .kv{
+    display:grid;
+    grid-template-columns: minmax(90px, .9fr) 1.6fr;
+    gap:.5rem 1.2rem;
+    margin:.6rem 0 1rem;
+    background: var(--surface-alt);
+    border-radius: var(--radius-sm);
+    padding: .9rem 1.1rem;
+    border: 1px solid var(--line);
+}
+.lesson-page #lesson-app .kv dt{
+    font-weight:600;
+    color: var(--ink);
+}
+.lesson-page #lesson-app .kv dd{
+    margin:0;
+    color: var(--ink-soft);
+}
+
+/* ============ OS-кнопки ============ */
+.lesson-page #lesson-app .os{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin: .5rem 0;
+}
+.lesson-page #lesson-app .os button{
+    padding: 1.4rem 1.2rem;
+    border: 2px solid var(--line);
+    border-radius: var(--radius);
+    background: var(--surface);
+    cursor: pointer;
+    text-align:left;
+    transition: border-color .15s ease, transform .15s ease, box-shadow .15s ease, background .15s ease;
+    font: inherit;
+}
+.lesson-page #lesson-app .os button:hover{
+    border-color: var(--brand);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+    background:#fbfef7;
+}
+.lesson-page #lesson-app .os button:focus-visible{
+    outline:3px solid var(--brand-soft);
+    outline-offset:2px;
+}
+.lesson-page #lesson-app .os button strong{
+    display:block;
+    font-size: 1.35rem;
+    color: var(--ink);
+    margin-bottom:.25rem;
+}
+.lesson-page #lesson-app .os button small{ color: var(--muted); }
+
+/* ============ Жесты ============ */
+.lesson-page #lesson-app .gestures{
+    display:grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: .9rem;
+}
+.lesson-page #lesson-app .gestures .card{
+    align-items:flex-start;
+    text-align:left;
+    background: #fbfcfe;
+}
+.lesson-page #lesson-app .gestures .card strong{
+    font-size: 1.8rem;
+    line-height:1;
+}
+
+/* ============ Case (кейс) ============ */
+.lesson-page #lesson-app .case{
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-left: 5px solid var(--brand);
+    border-radius: var(--radius-sm);
+    padding: 1.4rem 1.5rem;
+    box-shadow: var(--shadow-sm);
+    margin: .5rem 0;
+}
+.lesson-page #lesson-app .case > small{
+    display:inline-block;
+    text-transform:uppercase;
+    font-size:.72rem;
+    letter-spacing:1.2px;
+    font-weight:700;
+    color: var(--brand-dark);
+    background: var(--brand-soft);
+    padding:.2rem .55rem;
+    border-radius:999px;
+    margin-bottom:.5rem;
+}
+.lesson-page #lesson-app .case h2{
+    font-size: 1.2rem;
+    margin:.2rem 0 .8rem;
+}
+.lesson-page #lesson-app .case button{
+    display:block;
+    width:100%;
+    margin:.4rem 0;
+    padding:.85rem 1rem;
+    border:1px solid var(--line);
+    border-radius: var(--radius-sm);
+    background: var(--surface);
+    cursor:pointer;
+    text-align:left;
+    font: inherit;
+    color: var(--ink);
+    transition: background .15s ease, border-color .15s ease, transform .15s ease;
+}
+.lesson-page #lesson-app .case button:hover{
+    background: var(--surface-alt);
+    border-color:#cfd7e3;
+    transform: translateX(2px);
+}
+.lesson-page #lesson-app .case button:focus-visible{
+    outline:3px solid var(--brand-soft);
+    outline-offset:2px;
+}
+
+/* ============ Чек-лист ============ */
+.lesson-page #lesson-app .check{
+    display:grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: .7rem;
+    margin: .8rem 0;
+}
+.lesson-page #lesson-app .check button{
+    padding: .85rem 1rem;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    background: var(--surface);
+    cursor:pointer;
+    text-align:left;
+    font: inherit;
+    color: var(--ink);
+    transition: background .15s ease, border-color .15s ease, transform .15s ease;
+    display:flex;
+    align-items:center;
+    gap:.6rem;
+}
+.lesson-page #lesson-app .check button:hover{
+    background: var(--surface-alt);
+    transform: translateY(-1px);
+}
+.lesson-page #lesson-app .check button.lime{
+    background: var(--brand-soft);
+    border-color: var(--brand);
+    color: #2b4b13;
+    font-weight:600;
+}
+.lesson-page #lesson-app .check button b{
+    color: var(--brand-dark);
+    font-size: 1rem;
+}
+.lesson-page #lesson-app .check button:focus-visible{
+    outline:3px solid var(--brand-soft);
+    outline-offset:2px;
+}
+
+/* ============ Финал ============ */
+.lesson-page #lesson-app .finish{
+    text-align:center;
+    padding: .5rem 0 1rem;
+}
+.lesson-page #lesson-app .finish > div:first-child{
+    font-size: 3.4rem;
+    color: var(--brand);
+    line-height:1;
+    margin-bottom:.4rem;
+}
+.lesson-page #lesson-app .finish h2{
+    margin:.2rem 0 1.2rem;
+}
+.lesson-page #lesson-app .finish .cards{ text-align:left; }
+
+/* ============ Details ============ */
+.lesson-page #lesson-app details{
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    padding: .8rem 1.1rem;
+    margin: .6rem 0;
+    transition: box-shadow .15s ease;
+}
+.lesson-page #lesson-app details[open]{
+    box-shadow: var(--shadow-sm);
+    background: #fbfcfe;
+}
+.lesson-page #lesson-app details summary{
+    cursor:pointer;
+    font-weight:600;
+    color: var(--ink);
+    list-style:none;
+    position:relative;
+    padding-left:1.4rem;
+}
+.lesson-page #lesson-app details summary::before{
+    content:"▸";
+    position:absolute;
+    left:0;
+    top:0;
+    color: var(--brand);
+    transition: transform .2s ease;
+    display:inline-block;
+}
+.lesson-page #lesson-app details[open] summary::before{ transform: rotate(90deg); }
+.lesson-page #lesson-app details summary::-webkit-details-marker{ display:none; }
+.lesson-page #lesson-app details[open] summary{ margin-bottom:.5rem; }
+.lesson-page #lesson-app details ul{ margin:.3rem 0 .3rem 1.2rem; padding:0; }
+.lesson-page #lesson-app details li{ margin:.25rem 0; color: var(--ink-soft); }
+
+/* ============ Панель преподавателя ============ */
+.lesson-page .teacher-panel{
+    position: fixed;
+    right: 0; top: 0;
+    width: min(360px, 92vw);
+    height: 100vh;
+    background: #fff;
+    box-shadow: -12px 0 40px rgba(20,30,50,.18);
+    padding: 1.6rem 1.5rem 2rem;
+    transform: translateX(100%);
+    transition: transform .3s ease;
+    z-index: 1000;
+    overflow-y: auto;
+    border-left:1px solid var(--line);
+}
+.lesson-page .teacher-panel.open{ transform: translateX(0); }
+.lesson-page .teacher-panel .panel-close{
+    position:absolute;
+    top:.7rem; right:.9rem;
+    background: transparent;
+    border: none;
+    font-size: 1.6rem;
+    line-height:1;
+    cursor:pointer;
+    color: var(--muted);
+    padding:.2rem .4rem;
+    border-radius:6px;
+    transition: background .15s ease, color .15s ease;
+}
+.lesson-page .teacher-panel .panel-close:hover{
+    background: var(--surface-alt);
+    color: var(--ink);
+}
+.lesson-page .teacher-panel h2{
+    font-size: 1.1rem;
+    margin: 0 0 .4rem;
+    color: var(--ink);
+    padding-right:1.8rem;
+}
+.lesson-page .teacher-panel .panel-lead{
+    color: var(--ink-soft);
+    font-size:.92rem;
+    margin:0 0 1rem;
+}
+.lesson-page .teacher-panel hr{
+    border:0;
+    border-top:1px solid var(--line);
+    margin: 1rem 0;
+}
+.lesson-page .teacher-panel b{
+    display:block;
+    font-size:.78rem;
+    text-transform:uppercase;
+    letter-spacing:1px;
+    color: var(--brand-dark);
+    margin-top:1rem;
+}
+.lesson-page .teacher-panel p{
+    margin:.35rem 0 0;
+    color: var(--ink-soft);
+    font-size:.95rem;
+}
+
+.lesson-page .panel-backdrop{
+    position: fixed;
+    inset: 0;
+    background: rgba(15,20,30,.35);
+    opacity: 0;
+    pointer-events:none;
+    transition: opacity .25s ease;
+    z-index: 999;
+}
+.lesson-page .panel-backdrop.show{
+    opacity: 1;
+    pointer-events:auto;
+}
+
+/* ============ Футер урока ============ */
+.lesson-page .lesson-footer{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:1rem;
+    margin-top: 2rem;
+    padding: 1rem 0;
+    border-top: 1px solid var(--line);
+}
+.lesson-page .lesson-footer button{
+    padding: .7rem 1.4rem;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    background: var(--surface);
+    cursor:pointer;
+    font: inherit;
+    color: var(--ink);
+    transition: background .15s ease, border-color .15s ease, transform .15s ease;
+}
+.lesson-page .lesson-footer button:hover{
+    background: var(--surface-alt);
+    border-color:#cfd7e3;
+    transform: translateY(-1px);
+}
+.lesson-page .lesson-footer button:focus-visible{
+    outline:3px solid var(--brand-soft);
+    outline-offset:2px;
+}
+.lesson-page .lesson-footer strong{
+    color: var(--muted);
+    font-weight:600;
+    letter-spacing:.5px;
+}
+
+/* ============ Адаптив ============ */
+@media (max-width: 860px){
+    .lesson-page #lesson-app .hero{ grid-template-columns: 1fr; }
+    .lesson-page #lesson-app .two{ grid-template-columns: 1fr; gap: 1rem; }
+}
+@media (max-width: 720px){
+    .lesson-page #lesson-app .slidecard{
+        grid-template-columns: 1fr;
+        padding: 1.2rem 1.2rem;
+    }
+    .lesson-page #lesson-app .num{
+        border-right:0;
+        border-bottom:2px solid var(--brand-soft);
+        padding: 0 0 .5rem;
+        margin-bottom:.3rem;
+    }
+    .lesson-page #lesson-app .os{ grid-template-columns: 1fr; }
+    .lesson-page #lesson-app .kv{ grid-template-columns: 1fr; }
+    .lesson-page #lesson-app .kv dt{ margin-top:.4rem; }
+    .lesson-page .lesson-footer{ flex-wrap:wrap; justify-content:center; }
+    .lesson-page .lesson-footer strong{ order:-1; width:100%; text-align:center; }
+}
+
+/* ==========================================================================
+   ДОПОЛНЕНИЕ: отступы страницы + единый стиль всех кнопок
+   ========================================================================== */
+
+/* --- Контейнер страницы: отступы, ограничение ширины, центрирование --- */
+.lesson-page{
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 32px 32px 64px;
+}
+
+/* На узких экранах уменьшаем отступы */
+@media (max-width: 720px){
+    .lesson-page{ padding: 20px 16px 48px; }
+}
+
+/* Заголовок урока (.head) — чтобы не прилипал к краям */
+.lesson-page .head{
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
+}
+.lesson-page .head > div:first-child{ max-width: 640px; }
+.lesson-page .head h1{
+    font-size: clamp(1.8rem, 3.4vw, 2.4rem);
+    line-height: 1.15;
+    margin: .2rem 0 .5rem;
+    color: var(--ink);
+}
+.lesson-page .head p{ color: var(--ink-soft); margin: 0; }
+.lesson-page .head small{
+    display: inline-block;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    font-size: .72rem;
+    font-weight: 700;
+    color: var(--brand-dark);
+    background: var(--brand-soft);
+    padding: .25rem .6rem;
+    border-radius: 999px;
+    margin-bottom: .5rem;
+}
+
+/* Плашка «показываем → повторяем → …» */
+.lesson-page .note{
+    background: var(--surface-alt);
+    border: 1px dashed #c8d3e5;
+    border-radius: var(--radius-sm);
+    padding: .9rem 1.1rem;
+    margin: 1rem 0 1.5rem;
+    color: var(--ink-soft);
+    font-size: .95rem;
+}
+
+/* ==========================================================================
+   ЕДИНАЯ КНОПКА. Все кнопки внутри .lesson-page выглядят одинаково,
+   если у них нет собственного модификатора (card/os/check/case).
+   ========================================================================== */
+
+/* Общий вид кнопки */
+.lesson-page .btn,
+.lesson-page .go,
+.lesson-page .lesson-footer button,
+.lesson-page .head-actions button,
+.lesson-page .panel-close{
+    display: inline-flex;
+    align-items: center;
+    gap: .45rem;
+    padding: .65rem 1.15rem;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    background: var(--surface);
+    color: var(--ink);
+    font: inherit;
+    font-weight: 600;
+    font-size: .95rem;
+    line-height: 1;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background .15s ease, border-color .15s ease,
+                transform .15s ease, box-shadow .15s ease, color .15s ease;
+    box-shadow: var(--shadow-sm);
+}
+.lesson-page .btn:hover,
+.lesson-page .go:hover,
+.lesson-page .lesson-footer button:hover,
+.lesson-page .head-actions button:hover{
+    background: var(--surface-alt);
+    border-color: #cfd7e3;
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-md);
+}
+.lesson-page .btn:active,
+.lesson-page .go:active,
+.lesson-page .lesson-footer button:active,
+.lesson-page .head-actions button:active{
+    transform: translateY(0);
+    box-shadow: var(--shadow-sm);
+}
+.lesson-page .btn:focus-visible,
+.lesson-page .go:focus-visible,
+.lesson-page .lesson-footer button:focus-visible,
+.lesson-page .head-actions button:focus-visible,
+.lesson-page .panel-close:focus-visible{
+    outline: 3px solid var(--brand-soft);
+    outline-offset: 2px;
+}
+
+/* Главная кнопка — «Начать урок», «Показать путь», «Режим показа» */
+.lesson-page .go,
+.lesson-page .head-actions .btn:first-child{
+    background: var(--brand);
+    border-color: var(--brand);
+    color: #fff;
+}
+.lesson-page .go:hover,
+.lesson-page .head-actions .btn:first-child:hover{
+    background: var(--brand-dark);
+    border-color: var(--brand-dark);
+    color: #fff;
+}
+
+/* Кнопка «Преподаватель» — вторичная, с иконкой <kbd> */
+.lesson-page .head-actions .btn + .btn{
+    background: var(--surface);
+    color: var(--ink);
+}
+
+/* Крестик панели — компактный, без рамки */
+.lesson-page .panel-close{
+    position: absolute;
+    top: .7rem;
+    right: .9rem;
+    padding: .35rem .6rem;
+    font-size: 1.25rem;
+    line-height: 1;
+    border: none;
+    background: transparent;
+    box-shadow: none;
+    color: var(--muted);
+}
+.lesson-page .panel-close:hover{
+    background: var(--surface-alt);
+    color: var(--ink);
+    transform: none;
+    box-shadow: none;
+}
+
+/* Кнопки в панели преподавателя (если появятся в будущем) */
+.lesson-page .teacher-panel button{
+    font: inherit;
+    cursor: pointer;
+}
+
+/* ==========================================================================
+   <kbd> — горячая клавиша рядом с кнопкой «Преподаватель»
+   ========================================================================== */
+.lesson-page kbd{
+    display: inline-block;
+    padding: .1rem .45rem;
+    margin-left: .35rem;
+    font-family: ui-monospace, Menlo, Consolas, monospace;
+    font-size: .78rem;
+    line-height: 1.4;
+    color: var(--ink);
+    background: #fff;
+    border: 1px solid var(--line);
+    border-bottom-width: 2px;
+    border-radius: 6px;
+    box-shadow: 0 1px 0 rgba(20,30,50,.06);
+}
+/* Внутри зелёной кнопки «Преподаватель» на тёмном фоне kbd не нужен,
+   но если он окажется на светлой — оставляем как есть. */
+
+/* ==========================================================================
+   <details>/<summary> — сделать кликабельными и заметными
+   ========================================================================== */
+.lesson-page #lesson-app details summary{
+    padding: .3rem .2rem .3rem 1.4rem;
+    border-radius: 6px;
+    transition: background .15s ease;
+}
+.lesson-page #lesson-app details summary:hover{
+    background: var(--surface-alt);
+}
+.lesson-page #lesson-app details summary:focus-visible{
+    outline: 3px solid var(--brand-soft);
+    outline-offset: 2px;
+}
+
+/* ==========================================================================
+   Футер урока — отступ сверху и аккуратная линия
+   ========================================================================== */
+
+/* ==========================================================================
+   Ссылка «Все занятия» — заметная, с отступом
+   ========================================================================== */
+.lesson-page .back-link{
+    display: inline-flex;
+    align-items: center;
+    gap: .35rem;
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+/* ==========================================================================
+   Фотографии в слайдах урока — во всю свою ширину, без обрезки.
+   Блок подстраивается под размер картинки.
+   ========================================================================== */
+.lesson-page #lesson-app .slide-photo{
+    display: inline-block;          /* подстраивается под ширину картинки */
+    max-width: 100%;                /* но не шире слайда */
+    margin: 1.2rem 0 0;
+    padding: 0;
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    text-align: center;
+    vertical-align: top;
+}
+.lesson-page #lesson-app .slide-photo img{
+    display: block;
+    max-width: 100%;                /* не вылезает за слайд */
+    height: auto;                   /* сохраняет пропорции */
+    width: auto;                    /* не растягивается */
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-sm);
+    background: #f4f7fb;
+}
+.lesson-page #lesson-app .slide-photo figcaption{ display: none; }
+
+/* Компактный вариант — рядом с текстом в две колонки */
+.lesson-page #lesson-app .slide-photo.inline{
+    margin: 0;
+    display: block;
+    width: 100%;
+}
+.lesson-page #lesson-app .slide-photo.inline img{
+    width: 100%;                    /* растягивается на колонку */
+    height: auto;
+    max-height: none;               /* убрали обрезку */
+    object-fit: contain;            /* вписываем целиком */
+    box-shadow: var(--shadow-md);
+}
+
+/* Плейсхолдер, если фото ещё не добавлено */
+.lesson-page #lesson-app .slide-photo.is-missing{
+    display: block;
+    width: 100%;
+    background: repeating-linear-gradient(45deg, #fbfcfe 0 12px, #f4f7fb 12px 24px);
+    border: 2px dashed #cfd7e3;
+    border-radius: var(--radius);
+    padding: 2rem 1rem;
+    color: var(--muted);
+    text-align: center;
+}
+.lesson-page #lesson-app .slide-photo.is-missing::before{
+    content: "📷";
+    display: block;
+    font-size: 2.4rem;
+    margin-bottom: .5rem;
+}
+.lesson-page #lesson-app .slide-photo.is-missing::after{
+    content: "Место для фотографии";
+    display: block;
+    font-weight: 600;
+    letter-spacing: .3px;
+}
+
+/* =========================================================
+   РАЗДЕЛИТЕЛИ РАЗДЕЛОВ
+   ========================================================= */
+.lesson-page #lesson-app .section-title{
+    margin: 30px 0 24px;
+    padding: 22px 0 16px;
+    border-bottom: 2px solid #111;
+    position: relative;
+}
+.lesson-page #lesson-app .section-title:first-child{
+    margin-top: 0;
+}
+.lesson-page #lesson-app .section-title span{
+    display: inline-block;
+    padding: 8px 20px;
+    background: #111;
+    color: #D9FF35;
+    font-size: 18px;
+    font-weight: 900;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    border-radius: 10px;
+}
+.lesson-page #lesson-app .section-tasks span{
+    background: #B99CFF;
+    color: #111;
+}
+
+.lesson-page #lesson-app .two .slide-photo.inline img{
+    width: 100%;
+    height: auto;
+    border: none;
+    border-radius: 14px;
+    box-shadow: none;
+}
+
+/* =========================================================
+   КНОПКА «НАВЕРХ»
+   ========================================================= */
+.lesson-page .to-top{
+    position: fixed;
+    right: 28px;
+    bottom: 28px;
+    width: 52px;
+    height: 52px;
+    padding: 0;
+    border-radius: 50%;
+    background: #D9FF35;
+    color: #111;
+    font-size: 24px;
+    font-weight: 900;
+    line-height: 1;
+    cursor: pointer;
+    display: grid;
+    place-items: center;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(16px);
+    
+    z-index: 60;
+    font-family: inherit;
+}
+.lesson-page .to-top.visible{
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+.lesson-page .to-top:hover{
+    background: #B99CFF;
+    transform: translateY(-3px);
+    box-shadow: 0 14px 30px rgba(17,17,17,.2);
+}
+.lesson-page .to-top:active{
+    transform: translateY(0);
+}
+.lesson-page .to-top:focus-visible{
+    outline: 3px solid #111;
+    outline-offset: 3px;
+}
+
+/* На телефонах — меньше и ближе к краю */
+@media (max-width: 560px){
+    .lesson-page .to-top{
+        right: 16px;
+        bottom: 16px;
+        width: 44px;
+        height: 44px;
+        font-size: 20px;
+    }
+}

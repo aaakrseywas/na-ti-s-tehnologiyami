@@ -1,0 +1,851 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/lesson.css') }}">
+
+<main class="lesson-page">
+    <a href="/" class="back-link">← Все занятия</a>
+
+    <div class="head">
+        <div>
+            <small>УРОК 2 · ОСНОВНЫЕ ФУНКЦИИ ТЕЛЕФОНА</small>
+            <h1>Основные функции телефона</h1>
+            <p>Главный экран, приложения, уведомления, контакты и звонки. В конце — практические задания.</p>
+        </div>
+        <div class="head-actions">
+            <button class="btn" onclick="openPresentation()">Режим показа</button>
+        </div>
+    </div>
+
+    <div class="note">
+        Сначала теория с объяснением, затем практика с заданиями.
+        Итоги — в режиме показа по кнопке в шапке.
+    </div>
+
+    <div id="lesson-app"></div>
+
+    <button id="toTop" class="to-top" onclick="scrollToTop()" aria-label="Наверх">↑</button>
+</main>
+
+<!-- ============================================================
+     РЕЖИМ ПОКАЗА — встроенный полноэкранный overlay
+     ============================================================ -->
+<div id="presentation" class="presentation-overlay" aria-hidden="true">
+    <div class="pres-topline">
+        <span>На «ты» с технологиями</span>
+        <span>Урок 2 · Итоги</span>
+        <button class="pres-close" onclick="closePresentation()" aria-label="Закрыть">×</button>
+    </div>
+
+    <div class="pres-stage">
+
+        {# 1. Обложка #}
+        <section class="pres-screen active">
+            <small class="pres-kicker">УРОК 2 · ИТОГИ</small>
+            <h1 class="pres-h1">Основные функции<br><em>телефона</em></h1>
+            <p class="pres-subtitle">
+                Мы разобрались с главным экраном, приложениями, уведомлениями,
+                контактами и звонками. Ниже — короткое резюме урока.
+            </p>
+        </section>
+
+        {# 2. Шесть навыков #}
+        <section class="pres-screen">
+            <small class="pres-kicker">ЧТО ОСВОИЛИ</small>
+            <h1 class="pres-h1">Шесть ключевых навыков</h1>
+
+            <div class="pres-skill-grid">
+                <div class="pres-skill">
+                    <div class="pres-ico">1</div>
+                    <div>
+                        <b>Главный экран</b>
+                        <span>Значки приложений, часы, индикаторы, нижняя панель.</span>
+                    </div>
+                </div>
+                <div class="pres-skill">
+                    <div class="pres-ico">2</div>
+                    <div>
+                        <b>Приложения</b>
+                        <span>Телефон, контакты, сообщения, камера, настройки, браузер.</span>
+                    </div>
+                </div>
+                <div class="pres-skill">
+                    <div class="pres-ico">3</div>
+                    <div>
+                        <b>Уведомления</b>
+                        <span>Что сообщают, как открыть и почему не всем можно верить.</span>
+                    </div>
+                </div>
+                <div class="pres-skill">
+                    <div class="pres-ico">4</div>
+                    <div>
+                        <b>Контакты</b>
+                        <span>Имена, номера. Как открыть и как добавить новый.</span>
+                    </div>
+                </div>
+                <div class="pres-skill">
+                    <div class="pres-ico">5</div>
+                    <div>
+                        <b>Звонки</b>
+                        <span>Как позвонить, как завершить, где искать журнал вызовов.</span>
+                    </div>
+                </div>
+                <div class="pres-skill">
+                    <div class="pres-ico">6</div>
+                    <div>
+                        <b>Настройки</b>
+                        <span>Размер текста, громкость, яркость, звук звонка.</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        {# 3. Мини-словарь #}
+        <section class="pres-screen">
+            <small class="pres-kicker">КОРОТКО О ГЛАВНОМ</small>
+            <h1 class="pres-h1">Мини-словарь урока</h1>
+
+            <dl class="pres-glossary">
+                <div class="pres-term">
+                    <dt>Главный экран</dt>
+                    <dd>Экран после разблокировки. Отсюда открываются приложения.</dd>
+                </div>
+                <div class="pres-term">
+                    <dt>Приложение</dt>
+                    <dd>Программа с конкретной задачей: позвонить, снять фото, написать сообщение.</dd>
+                </div>
+                <div class="pres-term">
+                    <dt>Уведомление</dt>
+                    <dd>Сообщение о том, что произошло: пропущенный звонок, новое сообщение, обновление.</dd>
+                </div>
+                <div class="pres-term">
+                    <dt>Контакт</dt>
+                    <dd>Запись в телефонной книге: имя и номер.</dd>
+                </div>
+                <div class="pres-term">
+                    <dt>Журнал вызовов</dt>
+                    <dd>Список всех звонков. Пропущенные обычно помечены красным.</dd>
+                </div>
+                <div class="pres-term">
+                    <dt>Режим «В самолёте»</dt>
+                    <dd>Отключает сеть. Если включён — звонки не проходят.</dd>
+                </div>
+            </dl>
+        </section>
+
+        {# 4. Типичные проблемы #}
+        <section class="pres-screen">
+            <small class="pres-kicker">ЕСЛИ ЧТО-ТО НЕ ТАК</small>
+            <h1 class="pres-h1">Три частых вопроса</h1>
+
+            <div class="pres-problem-list">
+                <div class="pres-problem">
+                    <b>Не вижу пропущенный звонок</b>
+                    <p>Откройте приложение <code>Телефон</code> и загляните в журнал вызовов.
+                       Пропущенные обычно стоят красным.</p>
+                </div>
+                <div class="pres-problem">
+                    <b>Пришло странное уведомление</b>
+                    <p>Прочитайте, от кого оно. Не переходите по ссылкам и не вводите данные,
+                       даже если сообщение выглядит как от банка или госуслуг.</p>
+                </div>
+                <div class="pres-problem">
+                    <b>Звонок не проходит</b>
+                    <p>Проверьте три вещи: есть ли сеть, не включён ли режим «В самолёте»,
+                       и правильный ли номер вы набрали.</p>
+                </div>
+            </div>
+        </section>
+
+        {# 5. Финал #}
+        <section class="pres-screen">
+            <div class="pres-big-check">✓</div>
+            <small class="pres-kicker">ГОТОВО</small>
+            <h1 class="pres-h1">Телефон — уже не загадка</h1>
+            <p class="pres-subtitle">Сегодня получилось:</p>
+
+            <div class="pres-check-final">
+                <span>ориентироваться на главном экране</span>
+                <span>открывать приложения</span>
+                <span>читать уведомления</span>
+                <span>находить контакты</span>
+                <span>добавлять контакт</span>
+                <span>смотреть журнал вызовов</span>
+            </div>
+
+            <p class="pres-final-note">
+                Главное — не запомнить все кнопки, а уметь <b>ориентироваться</b>.
+                На следующем уроке — сообщения, мессенджеры и фотографии.
+            </p>
+        </section>
+
+    </div>
+
+    <div class="pres-controls">
+        <button onclick="presPrev()" aria-label="Назад">←</button>
+        <div class="pres-bar-wrap"><i id="presBar"></i></div>
+        <span id="presCounter">1 / 5</span>
+        <button onclick="presNext()" aria-label="Вперёд">→</button>
+        <button class="pres-exit" onclick="closePresentation()">Выйти</button>
+    </div>
+</div>
+
+<style>
+/* ============================================================
+   СТИЛИ РЕЖИМА ПОКАЗА — изолированный overlay
+   ============================================================ */
+.presentation-overlay{
+    position: fixed;
+    inset: 0;
+    background: linear-gradient(135deg, #0f1720 0%, #1a2a3a 100%);
+    color: #eef2f7;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    z-index: 9999;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity .25s ease, visibility .25s ease;
+    display: flex;
+    flex-direction: column;
+}
+.presentation-overlay.open{
+    opacity: 1;
+    visibility: visible;
+}
+.presentation-overlay .pres-topline{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: .9rem 2rem;
+    font-size: .85rem;
+    letter-spacing: .5px;
+    color: #8ba0b6;
+    border-bottom: 1px solid rgba(255,255,255,.08);
+    flex-shrink: 0;
+}
+.presentation-overlay .pres-close{
+    background: transparent;
+    border: 1px solid rgba(255,255,255,.15);
+    color: #fff;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    font-size: 1.4rem;
+    line-height: 1;
+    cursor: pointer;
+    display: grid;
+    place-items: center;
+    font-family: inherit;
+    transition: background .15s, border-color .15s;
+}
+.presentation-overlay .pres-close:hover{
+    background: rgba(111,191,59,.2);
+    border-color: #6fbf3b;
+}
+.presentation-overlay .pres-stage{
+    position: relative;
+    flex: 1;
+    overflow: hidden;
+}
+.presentation-overlay .pres-screen{
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 3rem 5vw;
+    opacity: 0;
+    transform: translateY(24px) scale(.99);
+    transition: opacity .45s ease, transform .45s ease;
+    pointer-events: none;
+    text-align: center;
+    overflow-y: auto;
+}
+.presentation-overlay .pres-screen.active{
+    opacity: 1;
+    transform: none;
+    pointer-events: auto;
+}
+.presentation-overlay .pres-kicker{
+    display: inline-block;
+    font-size: .78rem;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: #6fbf3b;
+    background: rgba(111,191,59,.12);
+    border: 1px solid rgba(111,191,59,.35);
+    padding: .35rem .85rem;
+    border-radius: 999px;
+    margin-bottom: 1.5rem;
+    font-weight: 700;
+}
+.presentation-overlay .pres-h1{
+    font-size: clamp(1.8rem, 4.5vw, 3.2rem);
+    line-height: 1.1;
+    margin: 0 0 1rem;
+    font-weight: 800;
+    letter-spacing: -.5px;
+    color: #fff;
+}
+.presentation-overlay .pres-h1 em{
+    font-style: normal;
+    background: linear-gradient(90deg, #6fbf3b 0%, #8ee65a 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+.presentation-overlay .pres-subtitle{
+    font-size: clamp(1rem, 1.6vw, 1.2rem);
+    color: #a8bccd;
+    max-width: 760px;
+    margin: 0 auto;
+    line-height: 1.55;
+}
+.presentation-overlay .pres-skill-grid{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1rem;
+    max-width: 980px;
+    width: 100%;
+    margin: 1.5rem auto 0;
+    text-align: left;
+}
+.presentation-overlay .pres-skill{
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 1.2rem;
+    background: rgba(255,255,255,.04);
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 14px;
+}
+.presentation-overlay .pres-skill .pres-ico{
+    flex-shrink: 0;
+    width: 40px;
+    height: 40px;
+    display: grid;
+    place-items: center;
+    border-radius: 12px;
+    background: rgba(111,191,59,.15);
+    color: #8ee65a;
+    font-size: 1.1rem;
+    font-weight: 800;
+}
+.presentation-overlay .pres-skill b{
+    display: block;
+    font-size: .98rem;
+    color: #fff;
+    margin-bottom: .15rem;
+}
+.presentation-overlay .pres-skill span{
+    font-size: .85rem;
+    color: #a8bccd;
+    line-height: 1.4;
+}
+.presentation-overlay .pres-glossary{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: .8rem;
+    max-width: 980px;
+    width: 100%;
+    margin: 1rem auto 0;
+    text-align: left;
+}
+.presentation-overlay .pres-term{
+    padding: 1rem 1.2rem;
+    background: rgba(255,255,255,.04);
+    border-left: 3px solid #6fbf3b;
+    border-radius: 8px;
+}
+.presentation-overlay .pres-term dt{
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: .25rem;
+    font-size: .95rem;
+}
+.presentation-overlay .pres-term dd{
+    margin: 0;
+    color: #a8bccd;
+    font-size: .9rem;
+    line-height: 1.5;
+}
+.presentation-overlay .pres-problem-list{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1rem;
+    max-width: 1000px;
+    width: 100%;
+    margin: 1rem auto 0;
+    text-align: left;
+}
+.presentation-overlay .pres-problem{
+    padding: 1.1rem 1.2rem;
+    background: rgba(255,255,255,.04);
+    border-radius: 12px;
+    border: 1px solid rgba(255,255,255,.08);
+}
+.presentation-overlay .pres-problem b{
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    color: #fff;
+    font-size: .96rem;
+    margin-bottom: .5rem;
+}
+.presentation-overlay .pres-problem b::before{
+    content: "?";
+    display: inline-grid;
+    place-items: center;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: #f5b301;
+    color: #1a2a3a;
+    font-weight: 800;
+    font-size: .8rem;
+    flex-shrink: 0;
+}
+.presentation-overlay .pres-problem p{
+    margin: 0;
+    color: #a8bccd;
+    font-size: .9rem;
+    line-height: 1.5;
+}
+.presentation-overlay .pres-problem code{
+    background: rgba(111,191,59,.15);
+    color: #b8f085;
+    padding: .1rem .4rem;
+    border-radius: 4px;
+    font-size: .85em;
+}
+.presentation-overlay .pres-check-final{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: .6rem;
+    max-width: 900px;
+    margin: 1.5rem auto 0;
+}
+.presentation-overlay .pres-check-final span{
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+    padding: .6rem 1.1rem;
+    background: rgba(111,191,59,.12);
+    border: 1px solid rgba(111,191,59,.4);
+    border-radius: 999px;
+    font-size: .9rem;
+    color: #d6f5b8;
+    font-weight: 500;
+    animation: pres-popIn .5s ease backwards;
+}
+.presentation-overlay .pres-check-final span::before{
+    content: "✓";
+    color: #8ee65a;
+    font-weight: 800;
+}
+.presentation-overlay .pres-check-final span:nth-child(1){ animation-delay: .05s; }
+.presentation-overlay .pres-check-final span:nth-child(2){ animation-delay: .12s; }
+.presentation-overlay .pres-check-final span:nth-child(3){ animation-delay: .19s; }
+.presentation-overlay .pres-check-final span:nth-child(4){ animation-delay: .26s; }
+.presentation-overlay .pres-check-final span:nth-child(5){ animation-delay: .33s; }
+.presentation-overlay .pres-check-final span:nth-child(6){ animation-delay: .40s; }
+
+@keyframes pres-popIn{
+    from{ opacity: 0; transform: scale(.85); }
+    to  { opacity: 1; transform: none; }
+}
+.presentation-overlay .pres-big-check{
+    font-size: 4.5rem;
+    line-height: 1;
+    color: #6fbf3b;
+    margin-bottom: 1rem;
+    animation: pres-pulse 2s ease-in-out infinite;
+}
+@keyframes pres-pulse{
+    0%, 100%{ transform: scale(1); }
+    50%     { transform: scale(1.08); }
+}
+.presentation-overlay .pres-final-note{
+    max-width: 700px;
+    margin: 1.5rem auto 0;
+    color: #a8bccd;
+    font-size: .98rem;
+    line-height: 1.6;
+}
+.presentation-overlay .pres-controls{
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+    padding: .9rem 2rem;
+    background: rgba(15,23,32,.85);
+    border-top: 1px solid rgba(255,255,255,.08);
+    flex-shrink: 0;
+}
+.presentation-overlay .pres-controls button{
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    border: 1px solid rgba(255,255,255,.15);
+    background: rgba(255,255,255,.06);
+    color: #fff;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: all .15s ease;
+    display: grid;
+    place-items: center;
+    font-family: inherit;
+}
+.presentation-overlay .pres-controls button:hover{
+    background: rgba(111,191,59,.2);
+    border-color: #6fbf3b;
+    transform: scale(1.05);
+}
+.presentation-overlay .pres-bar-wrap{
+    flex: 1;
+    height: 6px;
+    background: rgba(255,255,255,.08);
+    border-radius: 999px;
+    overflow: hidden;
+}
+.presentation-overlay .pres-bar-wrap i{
+    display: block;
+    height: 100%;
+    width: 20%;
+    background: linear-gradient(90deg, #6fbf3b, #8ee65a);
+    border-radius: 999px;
+    transition: width .35s ease;
+}
+.presentation-overlay #presCounter{
+    font-variant-numeric: tabular-nums;
+    font-size: .9rem;
+    color: #8ba0b6;
+    min-width: 50px;
+    text-align: center;
+}
+.presentation-overlay .pres-exit{
+    width: auto !important;
+    padding: 0 1.1rem;
+    border-radius: 999px !important;
+    font-size: .88rem !important;
+    height: 38px !important;
+}
+.presentation-overlay .pres-exit:hover{
+    background: rgba(255,143,199,.2) !important;
+    border-color: #FF8FC7 !important;
+}
+@media (max-width: 720px){
+    .presentation-overlay .pres-screen{ padding: 2rem 1.2rem; justify-content: flex-start; padding-top: 2.5rem; }
+    .presentation-overlay .pres-controls{ padding: 0 .8rem; gap: .5rem; }
+    .presentation-overlay .pres-skill-grid,
+    .presentation-overlay .pres-glossary,
+    .presentation-overlay .pres-problem-list{ grid-template-columns: 1fr; }
+    .presentation-overlay .pres-h1{ font-size: 1.6rem; }
+    .presentation-overlay .pres-big-check{ font-size: 3.5rem; }
+    .presentation-overlay #presCounter{ min-width: 40px; font-size: .8rem; }
+}
+</style>
+
+<script>
+// Хелпер: текст слева — фото справа.
+function split(text, src, caption){
+    return `<div class="two">
+        <div class="two-text">${text}</div>
+        <figure class="slide-photo inline">
+            <img src="/static/img/${src}" alt="${caption}"
+                 onerror="this.style.display='none';this.parentElement.classList.add('is-missing');">
+        </figure>
+    </div>`;
+}
+
+// ============================================================
+// ТЕОРИЯ
+// ============================================================
+const THEORY = [
+
+["Основные функции телефона",
+`<div class="hero">
+  <div>
+    <small>УРОК 2</small>
+    <h1>Телефон.<br><i>Всё под рукой.</i></h1>
+    <p>Главный экран, приложения, уведомления, контакты и звонки. В конце каждый попробует выполнить действия самостоятельно.</p>
+    <p class="mini">Продолжительность: 45–60 минут. Практика на своих телефонах.</p>
+  </div>
+  <figure class="slide-photo inline">
+    <img src="/static/img/lesson2_hero.jpg" alt="Главный экран смартфона"
+         onerror="this.style.display='none';this.parentElement.classList.add('is-missing');">
+  </figure>
+</div>
+<div class="tip"><b>Правило урока:</b> важнее научиться находить нужную функцию, чем запомнить все кнопки наизусть.</div>`],
+
+["Маршрут занятия",
+`<div class="cards">
+${[
+ "Главный экран",
+ "Приложения",
+ "Уведомления",
+ "Контакты и телефонная книга",
+ "Звонки",
+ "Размер текста и громкость"
+].map((x,i)=>`<div class="card ${i==5?'lime':''}"><b>0${i+1}</b><span>${x}</span></div>`).join("")}
+</div>
+<div class="tip"><b>Главная цель:</b> научиться находить нужную функцию и использовать телефон для повседневных задач.</div>`],
+
+["Главный экран — отправная точка",
+split(`
+    <p>Главный экран появляется, когда вы разблокировали телефон. Это точка, с которой начинается любое действие.</p>
+    <h3>Что на нём есть</h3>
+    <ul class="bullets">
+      <li>значки приложений — каждое открывает свою программу;</li>
+      <li>часы и индикаторы: заряд батареи, сеть, Wi-Fi;</li>
+      <li>нижняя панель избранных приложений — обычно там «Телефон» и «Сообщения»;</li>
+      <li>несколько страниц экранов — переключаются свайпом влево-вправо.</li>
+    </ul>
+    <div class="tip"><b>Внешний вид зависит от модели:</b> у Android и iPhone главные экраны выглядят по-разному, но логика одна.</div>
+`, 'lesson2_home.jpg', 'Главный экран смартфона')],
+
+["Приложение — это инструмент",
+split(`
+    <p>Приложение — это программа, которая выполняет конкретную задачу. На телефоне их обычно несколько десятков.</p>
+    <dl class="kv">
+      <dt>Телефон</dt><dd>звонки и журнал вызовов</dd>
+      <dt>Контакты</dt><dd>имена, номера, список людей</dd>
+      <dt>Сообщения</dt><dd>обычные SMS</dd>
+      <dt>Камера</dt><dd>фотографии и видео</dd>
+      <dt>Настройки</dt><dd>изменение работы самого телефона</dd>
+      <dt>Браузер</dt><dd>просмотр сайтов в интернете</dd>
+    </dl>
+    <div class="tip"><b>Приложение и настройки — не одно и то же.</b> Приложение выполняет задачу, а настройки меняют работу телефона.</div>
+`, 'lesson2_apps.jpg', 'Значки приложений')],
+
+["Уведомления: важное или лишнее?",
+split(`
+    <p>Уведомления сообщают о том, что произошло: пришло сообщение, кто-то звонил, что-то обновилось.</p>
+    <h3>О чём бывают уведомления</h3>
+    <ul class="bullets">
+      <li>пропущенный звонок;</li>
+      <li>новое SMS или сообщение в мессенджере;</li>
+      <li>напоминание из календаря;</li>
+      <li>обновление приложения;</li>
+      <li>рекламные рассылки магазинов.</li>
+    </ul>
+    <div class="tip"><b>Как открыть:</b> на большинстве телефонов панель уведомлений вызывается свайпом сверху вниз.</div>
+    <div class="warn"><b>Осторожно:</b> уведомление — не всегда срочная просьба. Сначала прочитайте, от кого оно. Не переходите по подозрительным ссылкам.</div>
+`, 'lesson2_notifications.jpg', 'Панель уведомлений')],
+
+["Контакты — телефонная книга",
+split(`
+    <p>Контакты — это список людей с их номерами. Сюда вы записываете близких, чтобы не запоминать номера наизусть.</p>
+    <h3>Что хранится в контакте</h3>
+    <ul class="bullets">
+      <li>имя;</li>
+      <li>номер телефона;</li>
+      <li>по желанию — фотография, электронная почта, день рождения.</li>
+    </ul>
+    <div class="tip"><b>Как открыть:</b> значок «Контакты» на главном экране или значок телефонной книги в приложении «Телефон».</div>
+`, 'lesson2_contacts.jpg', 'Список контактов')],
+
+["Добавляем новый контакт",
+split(`
+    <div class="steps">
+      <b>Порядок действий:</b>
+      <ol>
+        <li>Откройте «Контакты».</li>
+        <li>Нажмите «+» или «Создать».</li>
+        <li>Введите имя.</li>
+        <li>Введите номер телефона.</li>
+        <li>Нажмите «Сохранить».</li>
+      </ol>
+    </div>
+    <div class="tip"><b>Проверьте номер перед сохранением.</b> Одна неверная цифра — и звонок уйдёт не тому человеку.</div>
+    <div class="warn">Названия кнопок могут отличаться у разных моделей.</div>
+`, 'lesson2_add_contact.jpg', 'Форма нового контакта')],
+
+["Звоним и завершаем звонок",
+split(`
+    <p>Позвонить можно двумя способами: из контакта или набрав номер вручную.</p>
+    <div class="steps">
+      <b>Как позвонить:</b>
+      <ol>
+        <li>Откройте приложение «Телефон» или нужный контакт.</li>
+        <li>Нажмите кнопку вызова. Перед этим проверьте имя — не ошиблись ли.</li>
+        <li>Дождитесь ответа или завершите вызов красной кнопкой.</li>
+      </ol>
+    </div>
+    <div class="tip"><b>Если звонок не проходит:</b> проверьте сеть, режим «В самолёте» и правильность номера.</div>
+    <div class="note">Для тренировки не обязательно звонить по-настоящему — можно просто показать экран набора.</div>
+`, 'lesson2_call.jpg', 'Экран вызова')],
+
+["Настройки для удобства",
+split(`
+    <p>Настройки помогают сделать телефон удобнее именно для вас. Здесь меняются размер текста, громкость, яркость, звук звонка.</p>
+    <h3>Что стоит настроить</h3>
+    <ul class="bullets">
+      <li>размер текста — чтобы надписи читались;</li>
+      <li>громкость — чтобы звонок был слышен, но не оглушал;</li>
+      <li>яркость — чтобы экран не утомлял глаза;</li>
+      <li>звук звонка — чтобы узнавать свои вызовы.</li>
+    </ul>
+    <div class="tip"><b>Где искать:</b> разделы «Экран», «Дисплей», «Звук», «Специальные возможности». На Android — в общем меню «Настройки». На iPhone — «Экран и яркость», «Звуки».</div>
+`, 'lesson2_settings.jpg', 'Раздел настроек')]
+
+];
+
+// ============================================================
+// ПРАКТИКА
+// ============================================================
+const TASKS = [
+
+["Задание 1. Смартфон-детектив",
+`<div class="case">
+  <small>СИТУАЦИЯ</small>
+  <h2>Вам звонил знакомый, но вы не видите пропущенный звонок.</h2>
+  <p>Что стоит проверить?</p>
+  ${[
+    "Открыть «Телефон» и журнал вызовов",
+    "Удалить все приложения",
+    "Считать телефон сломанным"
+  ].map((x,i)=>`<button onclick="pickDetective2(${i})">${x}</button>`).join("")}
+  <div id="task-detective2"></div>
+</div>`],
+
+["Задание 2. Проверьте уведомления",
+`<p>Откройте панель уведомлений на своём телефоне и посмотрите, какие уведомления там есть.</p>
+<div class="steps">
+  <b>Что сделать:</b>
+  <ol>
+    <li>Смахните пальцем сверху вниз.</li>
+    <li>Прочитайте, какие уведомления пришли.</li>
+    <li>Определите отправителя — знакомый или нет.</li>
+    <li>Закройте панель свайпом вверх.</li>
+  </ol>
+</div>
+<button class="quiz-btn" onclick="showNoticeAnswer()">Показать правило</button>
+<div id="task-notice"></div>`],
+
+["Задание 3. Финальная практика",
+`<p>Выполните по порядку самостоятельно. Если застряли — подумайте, где логичнее искать эту функцию.</p>
+<div class="check">
+${[
+  "Вернуться на главный экран",
+  "Найти приложение «Телефон»",
+  "Открыть контакты и найти имя",
+  "Создать тестовый контакт",
+  "Показать журнал вызовов",
+  "Найти настройку размера текста"
+].map(x=>`<button onclick="toggleCheck(this)"><b>□</b> ${x}</button>`).join("")}
+</div>
+<div class="tip"><b>Время:</b> 8–12 минут. Важнее уверенность, чем скорость. Ошибаться можно — мы учимся.</div>`]
+
+];
+
+// ============================================================
+// РЕНДЕР
+// ============================================================
+const app = document.getElementById('lesson-app');
+
+function renderSection(slides, startIndex){
+    return slides.map((s, i) => `
+        <article class="slidecard">
+            <div class="num">${String(startIndex + i).padStart(2,"0")}</div>
+            <div class="slidebody">
+                <small>${s[0]}</small>
+                <h2>${s[0]}</h2>
+                ${s[1]}
+            </div>
+        </article>
+    `).join('');
+}
+
+app.innerHTML =
+    renderSection(THEORY, 1) +
+    renderSection(TASKS, THEORY.length + 1);
+
+// ============================================================
+// ИНТЕРАКТИВ
+// ============================================================
+function pickDetective2(i){
+    const good = "<div class='notice'><b>Верно.</b> Откройте приложение «Телефон» и посмотрите журнал вызовов. Пропущенные обычно помечены красным.</div>";
+    const bad  = "<div class='notice'><b>Не спешим.</b> Сначала проверяем журнал вызовов, а не удаляем приложения.</div>";
+    document.getElementById('task-detective2').innerHTML = i === 0 ? good : bad;
+}
+
+function showNoticeAnswer(){
+    document.getElementById('task-notice').innerHTML =
+        `<div class="notice"><b>Правило безопасности.</b> Прочитайте уведомление и проверьте отправителя.
+        Не переходите по подозрительным ссылкам и не вводите личные данные, даже если сообщение выглядит как от банка или госуслуг.</div>`;
+}
+
+function toggleCheck(btn){
+    btn.classList.toggle('lime');
+    const mark = btn.querySelector('b');
+    mark.textContent = btn.classList.contains('lime') ? '✓' : '□';
+}
+
+// ============================================================
+// КНОПКА «НАВЕРХ»
+// ============================================================
+const toTopBtn = document.getElementById('toTop');
+function scrollToTop(){ window.scrollTo({ top: 0, behavior: 'smooth' }); }
+window.addEventListener('scroll', () => {
+    toTopBtn.classList.toggle('visible', window.scrollY > 400);
+});
+
+// ============================================================
+// РЕЖИМ ПОКАЗА
+// ============================================================
+let presIndex = 0;
+const presOverlay = document.getElementById('presentation');
+const presScreens = [...document.querySelectorAll('.presentation-overlay .pres-screen')];
+const presCounter = document.getElementById('presCounter');
+const presBar = document.getElementById('presBar');
+
+function presRender(){
+    presScreens.forEach((s, n) => s.classList.toggle('active', n === presIndex));
+    presCounter.textContent = `${presIndex + 1} / ${presScreens.length}`;
+    presBar.style.width = ((presIndex + 1) / presScreens.length * 100) + '%';
+}
+
+function presNext(){ if(presIndex < presScreens.length - 1){ presIndex++; presRender(); } }
+function presPrev(){ if(presIndex > 0){ presIndex--; presRender(); } }
+
+function openPresentation(){
+    presIndex = 0;
+    presRender();
+    presOverlay.classList.add('open');
+    presOverlay.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+}
+
+function closePresentation(){
+    presOverlay.classList.remove('open');
+    presOverlay.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+}
+
+// Клавиатура
+document.addEventListener('keydown', e => {
+    const open = presOverlay.classList.contains('open');
+
+    if (open){
+        if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown'){ e.preventDefault(); presNext(); }
+        if (e.key === 'ArrowLeft' || e.key === 'PageUp'){ e.preventDefault(); presPrev(); }
+        if (e.key === 'Escape'){ e.preventDefault(); closePresentation(); }
+        if (e.key === 'Home'){ presIndex = 0; presRender(); }
+        if (e.key === 'End'){ presIndex = presScreens.length - 1; presRender(); }
+    }
+});
+
+// Свайпы в презентации
+let presX0 = null;
+presOverlay.addEventListener('touchstart', e => presX0 = e.touches[0].clientX);
+presOverlay.addEventListener('touchend', e => {
+    if(presX0 === null) return;
+    const dx = e.changedTouches[0].clientX - presX0;
+    if(Math.abs(dx) > 50) dx < 0 ? presNext() : presPrev();
+    presX0 = null;
+});
+
+presRender();
+</script>
+{% endblock %}

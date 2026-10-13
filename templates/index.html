@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block content %}
+<main>
+    <section class="hero">
+        <small>ЦИФРОВАЯ ГРАМОТНОСТЬ · СТАРШЕЕ ПОКОЛЕНИЕ</small>
+        <h1>На «ты»<br>с технологиями</h1>
+        <p>Освойте современные технологии, чтобы быть на связи, решать бытовые вопросы и чувствовать себя уверенно в цифровом мире!</p>
+        <a class="btn" href="/lesson/1">Начать обучение</a>
+    </section>
+
+    <section class="program">
+        <small>ПРОГРАММА</small>
+        <h2>Занятия курса</h2>
+        <div class="grid">
+            {% for n, t in lessons %}
+            <article>
+                <b>{{ n }}</b>
+                <h3>{{ t }}</h3>
+                {% if n == '01' %}
+                    <a href="/lesson/1">Материалы урока</a>
+                {% elif n == '02' %}
+                    <a href="/lesson/2">Материалы урока</a>
+                {% else %}
+                    <span>На будущих занятиях</span>
+                {% endif %}
+            </article>
+            {% endfor %}
+        </div>
+    </section>
+</main>
+
+<footer>
+    Центральная районная библиотека · п. Шипицыно · ул. Северная, 100
+</footer>
+{% endblock %}
