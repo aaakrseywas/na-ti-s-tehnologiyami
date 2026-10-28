@@ -1344,3 +1344,430 @@
     25%      { transform: translateX(-6px); }
     75%      { transform: translateX(6px); }
 }
+/* Кнопка «Показать правило» */
+.btn-rule {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 18px;
+    margin-top: 10px;
+    border: 2px solid #3b82f6;
+    background: #eff6ff;
+    color: #1d4ed8;
+    border-radius: 12px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all .2s ease;
+}
+.btn-rule:hover {
+    background: #3b82f6;
+    color: #fff;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(59, 130, 246, .3);
+}
+.btn-rule.active {
+    background: #3b82f6;
+    color: #fff;
+}
+
+/* Блок с правилом */
+.rule-box {
+    margin-top: 10px;
+    padding: 14px 16px;
+    background: #fefce8;
+    border-left: 4px solid #facc15;
+    border-radius: 10px;
+    font-size: 15px;
+    line-height: 1.55;
+    animation: rule-in .25s ease;
+}
+@keyframes rule-in {
+    from { opacity: 0; transform: translateY(-4px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+.btn-ghost {
+    background: transparent;
+    border: 2px solid #cbd5e1;
+    color: #475569;
+    padding: 10px 18px;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 15px;
+    cursor: pointer;
+    transition: all .2s ease;
+}
+.btn-ghost:hover {
+    border-color: #94a3b8;
+    background: #f1f5f9;
+    color: #1e293b;
+}
+
+/* ============================================================
+   Вопросы в окне «Повторение урока 1»
+   ============================================================ */
+.review-quiz {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+    margin: 22px auto 0;
+    max-width: 940px;
+}
+
+.review-q {
+    background: #ffffff;
+    border: 2px solid #e2e8f0;
+    border-radius: 22px;
+    padding: 26px 28px;
+    box-shadow: 0 4px 14px rgba(15, 23, 42, 0.06);
+    transition: border-color .25s ease, background .25s ease, box-shadow .25s ease;
+}
+
+.review-q.answered-ok {
+    border-color: #10b981;
+    background: linear-gradient(180deg, #f0fdf4, #ffffff);
+    box-shadow: 0 6px 22px rgba(16, 185, 129, 0.18);
+}
+
+/* Заголовок вопроса: номер + текст */
+.review-q-title {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    font-size: 21px;
+    font-weight: 700;
+    color: #0f172a;
+    margin-bottom: 20px;
+    line-height: 1.4;
+}
+
+.review-q-num {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
+    color: #fff;
+    border-radius: 50%;
+    font-size: 18px;
+    font-weight: 800;
+    box-shadow: 0 3px 10px rgba(59, 130, 246, 0.35);
+    transition: background .25s ease, box-shadow .25s ease;
+}
+
+.review-q.answered-ok .review-q-num {
+    background: linear-gradient(135deg, #10b981, #059669);
+    box-shadow: 0 3px 10px rgba(16, 185, 129, 0.4);
+}
+
+/* Сетка вариантов */
+.review-q-options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+@media (max-width: 680px) {
+    .review-q-options { grid-template-columns: 1fr; }
+    .review-q { padding: 20px 18px; border-radius: 18px; }
+    .review-q-title { font-size: 19px; gap: 12px; }
+    .review-q-num { width: 34px; height: 34px; font-size: 16px; }
+}
+ 
+/* ============================================================
+   Вопросы в окне «Повторение урока 1» — тёмная тема
+   ============================================================ */
+
+/* --- Скролл и отступ под хедер --- */
+#review .pres-stage {
+    /* Убиваем flex/grid-центрирование, которое прячет верх */
+    display: block !important;
+    align-items: stretch !important;
+    justify-content: flex-start !important;
+    place-items: stretch !important;
+
+    /* Фиксированная высота + скролл только внутри stage */
+    height: 100vh !important;
+    min-height: auto !important;
+    max-height: 100vh !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+
+    /* Отступы: верх под хедер, низ под панель со стрелками */
+    padding: 130px 24px 110px !important;
+    box-sizing: border-box !important;
+
+    /* Убираем возможные трансформы */
+    transform: none !important;
+}
+
+/* Слайд — обычный блок, не абсолютный, не flex */
+#review .pres-screen {
+    display: none !important;
+    position: static !important;
+    top: auto !important;
+    left: auto !important;
+    right: auto !important;
+    bottom: auto !important;
+    inset: auto !important;
+    transform: none !important;
+    opacity: 1 !important;
+
+    max-height: none !important;
+    overflow: visible !important;
+
+    width: 100% !important;
+    max-width: 1000px !important;
+    margin: 0 auto !important;
+    padding: 0 !important;
+}
+
+#review .pres-screen.active {
+    display: block !important;
+}
+
+/* Скроллбар stage */
+#review .pres-stage::-webkit-scrollbar {
+    width: 10px;
+}
+#review .pres-stage::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+}
+#review .pres-stage::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.25);
+    border-radius: 10px;
+}
+#review .pres-stage::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.45);
+}
+
+/* Адаптив */
+@media (max-width: 640px) {
+    #review .pres-stage {
+        padding: 110px 14px 90px !important;
+    }
+}
+
+/* --- Контейнер вопросов --- */
+.review-quiz {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+    margin: 22px auto 0;
+    max-width: 940px;
+    width: 100%;
+}
+
+/* --- Карточка вопроса --- */
+.review-q {
+    background: rgba(30, 41, 59, 0.92);
+    border: 2px solid rgba(148, 163, 184, 0.22);
+    border-radius: 22px;
+    padding: 26px 28px;
+    box-shadow: 0 8px 26px rgba(0, 0, 0, 0.35);
+    backdrop-filter: blur(6px);
+    transition: border-color .25s ease, background .25s ease, box-shadow .25s ease;
+}
+
+.review-q.answered-ok {
+    border-color: rgba(16, 185, 129, 0.65);
+    background: linear-gradient(180deg, rgba(16, 185, 129, 0.14), rgba(30, 41, 59, 0.92));
+    box-shadow: 0 8px 30px rgba(16, 185, 129, 0.22);
+}
+
+/* --- Заголовок вопроса: номер + текст --- */
+.review-q-title {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    font-size: 22px;
+    font-weight: 700;
+    color: #f1f5f9;
+    margin-bottom: 20px;
+    line-height: 1.4;
+}
+
+.review-q-num {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
+    color: #fff;
+    border-radius: 50%;
+    font-size: 19px;
+    font-weight: 800;
+    box-shadow: 0 4px 14px rgba(59, 130, 246, 0.45);
+    transition: background .25s ease, box-shadow .25s ease;
+}
+
+.review-q.answered-ok .review-q-num {
+    background: linear-gradient(135deg, #10b981, #059669);
+    box-shadow: 0 4px 14px rgba(16, 185, 129, 0.5);
+}
+
+/* --- Сетка вариантов --- */
+.review-q-options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+@media (max-width: 680px) {
+    .review-q-options { grid-template-columns: 1fr; }
+    .review-q { padding: 20px 18px; border-radius: 18px; }
+    .review-q-title { font-size: 19px; gap: 12px; }
+    .review-q-num { width: 36px; height: 36px; font-size: 17px; }
+}
+
+/* --- Кнопка варианта --- */
+.review-opt {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 16px 18px;
+    background: rgba(51, 65, 85, 0.55);
+    border: 2px solid rgba(148, 163, 184, 0.28);
+    border-radius: 16px;
+    font-size: 18px;
+    font-weight: 500;
+    color: #e2e8f0;
+    text-align: left;
+    cursor: pointer;
+    transition: all .18s ease;
+    line-height: 1.45;
+}
+
+.review-opt:hover:not(.correct):not(.disabled):not(.wrong) {
+    background: rgba(59, 130, 246, 0.22);
+    border-color: #60a5fa;
+    color: #dbeafe;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(59, 130, 246, 0.25);
+}
+
+/* --- Буква варианта --- */
+.review-opt-letter {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    background: rgba(148, 163, 184, 0.25);
+    color: #cbd5e1;
+    border-radius: 10px;
+    font-weight: 800;
+    font-size: 16px;
+    transition: all .18s ease;
+}
+
+.review-opt:hover:not(.correct):not(.disabled):not(.wrong) .review-opt-letter {
+    background: #3b82f6;
+    color: #fff;
+}
+
+.review-opt-text {
+    flex: 1;
+}
+
+/* --- Правильный ответ --- */
+.review-opt.correct {
+    background: linear-gradient(135deg, #10b981, #047857);
+    border-color: #34d399;
+    color: #ffffff;
+    cursor: default;
+    box-shadow: 0 8px 22px rgba(16, 185, 129, 0.4);
+    transform: translateY(-1px);
+}
+
+.review-opt.correct .review-opt-letter {
+    background: rgba(255, 255, 255, 0.3);
+    color: #fff;
+}
+
+.review-opt.correct .review-opt-text::after {
+    content: " ✓";
+    font-weight: 800;
+}
+
+/* --- Неправильный клик --- */
+.review-opt.wrong {
+    background: rgba(239, 68, 68, 0.22);
+    border-color: #f87171;
+    color: #fecaca;
+    animation: rq-shake .4s ease;
+}
+
+.review-opt.wrong .review-opt-letter {
+    background: #ef4444;
+    color: #fff;
+}
+
+/* --- Отключённые варианты после верного ответа --- */
+.review-opt.disabled {
+    opacity: 0.4;
+    cursor: default;
+    filter: grayscale(0.5);
+}
+
+@keyframes rq-shake {
+    0%, 100% { transform: translateX(0); }
+    20%      { transform: translateX(-6px); }
+    60%      { transform: translateX(6px); }
+    80%      { transform: translateX(-3px); }
+}
+
+/* --- Плашки результата --- */
+.review-q-result {
+    margin-top: 16px;
+    font-size: 17px;
+    line-height: 1.55;
+}
+
+.review-q-ok {
+    background: rgba(16, 185, 129, 0.18);
+    border-left: 5px solid #10b981;
+    color: #a7f3d0;
+    padding: 16px 20px;
+    border-radius: 14px;
+    animation: rq-fade-in .3s ease;
+}
+
+.review-q-ok b {
+    color: #6ee7b7;
+}
+
+.review-q-no {
+    background: rgba(239, 68, 68, 0.16);
+    border-left: 5px solid #ef4444;
+    color: #fecaca;
+    padding: 16px 20px;
+    border-radius: 14px;
+    animation: rq-fade-in .25s ease;
+}
+
+.review-q-no b {
+    color: #fca5a5;
+}
+
+@keyframes rq-fade-in {
+    from { opacity: 0; transform: translateY(-4px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* --- Небольшой адаптив --- */
+@media (max-width: 640px) {
+    #review .pres-stage {
+        padding: 90px 14px 70px !important;
+    }
+    .review-q-title { font-size: 18px; }
+    .review-opt { font-size: 17px; padding: 14px 16px; }
+    .review-q { padding: 18px 16px; }
+}

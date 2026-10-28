@@ -13,8 +13,9 @@
             <p>Как находить и открывать приложения, смотреть уведомления, сохранять номера и звонить контактам.</p>
         </div>
         <div class="head-actions">
-            <button class="btn" onclick="openPresentation()">Режим показа</button>
-        </div>
+    <button class="btn btn-ghost" onclick="openReview()">Повторение предыдущего урока </button>
+    <button class="btn" onclick="openPresentation()">Режим показа</button>
+</div>
     </div>
 
     <div class="note">
@@ -185,6 +186,170 @@
         <span id="presCounter">1 / 5</span>
         <button onclick="presNext()" aria-label="Вперёд">→</button>
         <button class="pres-exit" onclick="closePresentation()">Выйти</button>
+    </div>
+</div>
+
+<!-- ============================================================
+     ПОВТОРЕНИЕ УРОКА 1 — встроенный overlay
+     ============================================================ -->
+<div id="review" class="presentation-overlay" aria-hidden="true">
+    <div class="pres-topline">
+        <span>На «ты» с технологиями</span>
+        <span>Урок 1 · Повторение</span>
+        <button class="pres-close" onclick="closeReview()" aria-label="Закрыть">×</button>
+    </div>
+
+    <div class="pres-stage">
+        {# ============ СЛАЙД 1. Обложка ============ #}
+        <section class="pres-screen active">
+            <small class="pres-kicker">УРОК 1 · ПОВТОРЕНИЕ</small>
+            <h1 class="pres-h1">Смартфон<br><em>с нуля</em></h1>
+            <p class="pres-subtitle">
+                Прежде чем двигаться дальше — короткое напоминание, что мы прошли
+                на прошлом занятии. Листайте стрелками или свайпом.
+            </p>
+        </section>
+
+        {# ============ СЛАЙД 2. Шесть навыков ============ #}
+        <section class="pres-screen">
+            <small class="pres-kicker">ЧТО ПРОШЛИ</small>
+            <h1 class="pres-h1">Шесть ключевых навыков</h1>
+
+            <div class="pres-skill-grid">
+                <div class="pres-skill">
+                    <div class="pres-ico">1</div>
+                    <div>
+                        <b>Устройство смартфона</b>
+                        <span>Экран, кнопки, камеры, динамик, микрофон, разъём, лоток SIM.</span>
+                    </div>
+                </div>
+                <div class="pres-skill">
+                    <div class="pres-ico">2</div>
+                    <div>
+                        <b>Разъёмы зарядки</b>
+                        <span>USB-C, Lightning, micro-USB — и как определить свой.</span>
+                    </div>
+                </div>
+                <div class="pres-skill">
+                    <div class="pres-ico">3</div>
+                    <div>
+                        <b>Android и iOS</b>
+                        <span>Чем отличаются системы и почему инструкции не всегда совпадают.</span>
+                    </div>
+                </div>
+                <div class="pres-skill">
+                    <div class="pres-ico">4</div>
+                    <div>
+                        <b>Жесты на экране</b>
+                        <span>Касание, долгое нажатие, свайп, движение двумя пальцами.</span>
+                    </div>
+                </div>
+                <div class="pres-skill">
+                    <div class="pres-ico">5</div>
+                    <div>
+                        <b>Громкость и яркость</b>
+                        <span>Как настроить под себя и зачем нужна автояркость.</span>
+                    </div>
+                </div>
+                <div class="pres-skill">
+                    <div class="pres-ico">6</div>
+                    <div>
+                        <b>Размер текста</b>
+                        <span>Как увеличить шрифт, чтобы читать было удобно.</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        {# ============ СЛАЙД 3. Мини-словарь ============ #}
+        <section class="pres-screen">
+            <small class="pres-kicker">КОРОТКО О ГЛАВНОМ</small>
+            <h1 class="pres-h1">Мини-словарь урока 1</h1>
+
+            <dl class="pres-glossary">
+                <div class="pres-term">
+                    <dt>Операционная система</dt>
+                    <dd>«Мозг» телефона. Android или iOS — от неё зависит внешний вид меню.</dd>
+                </div>
+                <div class="pres-term">
+                    <dt>Сенсорный экран</dt>
+                    <dd>Реагирует на касания. Распознаёт не только место, но и тип жеста.</dd>
+                </div>
+                <div class="pres-term">
+                    <dt>Разъём зарядки</dt>
+                    <dd>Гнездо для кабеля. Современный стандарт — USB-C.</dd>
+                </div>
+                <div class="pres-term">
+                    <dt>Настройки</dt>
+                    <dd>Общий «пульт» телефона: звук, экран, яркость, шрифт, батарея.</dd>
+                </div>
+                <div class="pres-term">
+                    <dt>Свайп</dt>
+                    <dd>Проведение пальцем по экрану. Пролистывает страницы, переключает вкладки.</dd>
+                </div>
+                <div class="pres-term">
+                    <dt>Приложение</dt>
+                    <dd>Программа на телефоне: камера, звонки, мессенджеры, игры.</dd>
+                </div>
+            </dl>
+        </section>
+
+        {# ============ СЛАЙД 4. Если что-то не так ============ #}
+        <section class="pres-screen">
+            <small class="pres-kicker">ЕСЛИ ЧТО-ТО НЕ ТАК</small>
+            <h1 class="pres-h1">Три частых вопроса</h1>
+
+            <div class="pres-problem-list">
+                <div class="pres-problem">
+                    <b>Буквы слишком мелкие</b>
+                    <p>Это не поломка. <code>Настройки → Экран → Размер текста</code> — и увеличиваем шрифт под себя.</p>
+                </div>
+                <div class="pres-problem">
+                    <b>Пропал звук</b>
+                    <p>Сначала громкость, потом беззвучный режим, потом Bluetooth, и только затем думаем, что телефон сломан.</p>
+                </div>
+                <div class="pres-problem">
+                    <b>Экран слишком тёмный</b>
+                    <p>Ползунок яркости в быстрых настройках. Если не помогло — проверяем энергосбережение и ночной режим.</p>
+                </div>
+            </div>
+        </section>
+
+        {# ============ СЛАЙД 5. Проверим, что помним ============ #}
+        <section class="pres-screen">
+            <small class="pres-kicker">ПРОВЕРИМ СЕБЯ</small>
+            <h1 class="pres-h1">Что помним из предыдущего занятия?</h1>
+            <p class="pres-subtitle">
+                Нажимайте на варианты. Правильный ответ подсветится зелёным и покажет пояснение.
+            </p>
+
+            <div class="review-quiz" id="review-quiz">
+                ${'' /* сюда JS вставит вопросы */}
+            </div>
+            </section>
+
+        {# ============ СЛАЙД 6. Переход к уроку 2 ============ #}
+        <section class="pres-screen">
+            <div class="pres-big-check"></div>
+            <small class="pres-kicker">ВСПОМНИЛИ</small>
+            <h1 class="pres-h1">Теперь — к приложениям</h1>
+            <p class="pres-subtitle">
+                Сегодня разберёмся, как находить и открывать приложения, смотреть уведомления
+                и сохранять контакты. Всё это опирается на то, что мы уже знаем.
+            </p>
+            <p class="pres-final-note">
+                Если что-то из урока 1 подзабылось — не страшно. В любой момент можно
+                вернуться к теории или спросить.
+            </p>
+        </section>
+    </div>
+
+    <div class="pres-controls">
+        <button onclick="reviewPrev()" aria-label="Назад">←</button>
+        <div class="pres-bar-wrap"><i id="reviewBar"></i></div>
+        <span id="reviewCounter">1 / 5</span>
+        <button onclick="reviewNext()" aria-label="Вперёд">→</button>
+        <button class="pres-exit" onclick="closeReview()">Выйти</button>
     </div>
 </div>
 
@@ -541,6 +706,14 @@ const TASKS = [
   </ol>
 </div>
 <button class="btn" onclick="toggleCheck(this)"><b>□</b> Панель открылась</button>
+
+<button class="btn-rule" onclick="toggleRule(this, 'rule-panel')">Показать правило</button>
+<div id="rule-panel" class="rule-box" hidden>
+  <b>Правило:</b> панель уведомлений открывается <b>свайпом сверху вниз</b> от верхнего края экрана.
+  Работает одинаково на Android и iPhone, но выглядит по-разному.
+  Закрывается свайпом вверх или кнопкой «Назад».
+</div>
+
 <div class="tip"><b>Вопрос:</b> какие уведомления вы увидели?</div>`],
 
 ["Задание 3. Найдите уведомление",
@@ -650,7 +823,6 @@ function renderSection(slides, startIndex){
             <div class="num">${String(startIndex + i).padStart(2, "0")}</div>
             <div class="slidebody">
                 <small>${s[0]}</small>
-                <h2>${s[0]}</h2>
                 ${s[1]}
             </div>
         </article>
@@ -673,6 +845,15 @@ function toggleCheck(btn){
     btn.classList.toggle('lime');
     const mark = btn.querySelector('b');
     if (mark) mark.textContent = btn.classList.contains('lime') ? '✓' : '□';
+}
+
+function toggleRule(btn, id){
+    const box = document.getElementById(id);
+    if (!box) return;
+    const isHidden = box.hidden;
+    box.hidden = !isHidden;
+    btn.classList.toggle('active', isHidden);
+    btn.textContent = isHidden ? 'Скрыть правило' : 'Показать правило';
 }
 
 function checkQuiz(qi, oi){
@@ -742,14 +923,23 @@ function closePresentation(){
 
 // Клавиатура
 document.addEventListener('keydown', e => {
-    const open = presOverlay.classList.contains('open');
+    const presOpen   = presOverlay.classList.contains('open');
+    const reviewOpen = reviewOverlay.classList.contains('open');
 
-    if (open){
+    if (presOpen){
         if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown'){ e.preventDefault(); presNext(); }
-        if (e.key === 'ArrowLeft' || e.key === 'PageUp'){ e.preventDefault(); presPrev(); }
+        if (e.key === 'ArrowLeft'  || e.key === 'PageUp'){ e.preventDefault(); presPrev(); }
         if (e.key === 'Escape'){ e.preventDefault(); closePresentation(); }
         if (e.key === 'Home'){ presIndex = 0; presRender(); }
         if (e.key === 'End'){ presIndex = presScreens.length - 1; presRender(); }
+    }
+
+    if (reviewOpen){
+        if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown'){ e.preventDefault(); reviewNext(); }
+        if (e.key === 'ArrowLeft'  || e.key === 'PageUp'){ e.preventDefault(); reviewPrev(); }
+        if (e.key === 'Escape'){ e.preventDefault(); closeReview(); }
+        if (e.key === 'Home'){ reviewIndex = 0; reviewRender(); }
+        if (e.key === 'End'){ reviewIndex = reviewScreens.length - 1; reviewRender(); }
     }
 });
 
@@ -763,6 +953,172 @@ presOverlay.addEventListener('touchend', e => {
     presX0 = null;
 });
 
+// ============================================================
+// ВОПРОСЫ ДЛЯ ПОВТОРЕНИЯ УРОКА 1
+// ============================================================
+const REVIEW_QUIZ = [
+    {
+        q: "Что входит в устройство смартфона?",
+        options: [
+            "Экран, кнопки, камеры, динамик, микрофон",
+            "Только экран",
+            "Только кнопки",
+            "Только камеры"
+        ],
+        correct: 0,
+        hint: "У смартфона есть экран, кнопки, камеры, динамик, микрофон, разъём и лоток SIM."
+    },
+    {
+        q: "Какой разъём зарядки считается современным?",
+        options: [
+            "micro-USB",
+            "Lightning",
+            "USB-C",
+            "mini-USB"
+        ],
+        correct: 2,
+        hint: "USB-C — овальный, симметричный, вставляется любой стороной. Это современный стандарт."
+    },
+    {
+        q: "Какие бывают операционные системы на смартфонах?",
+        options: [
+            "Android и iOS",
+            "Windows и Linux",
+            "Android и Windows",
+            "macOS и iOS"
+        ],
+        correct: 0,
+        hint: "Android — открытая система (Samsung, Xiaomi и др.). iOS — только на iPhone."
+    },
+    {
+        q: "Что такое свайп?",
+        options: [
+            "Закрытие телефона",
+            "Проведение пальцем по экрану",
+            "Увеличение громкости",
+            "Включение камеры"
+        ],
+        correct: 1,
+        hint: "Свайп — это проведение пальцем по экрану. Им листают страницы и переключают вкладки."
+    },
+    {
+        q: "Где менять размер текста?",
+        options: [
+            "В калькуляторе",
+            "В камере",
+            "Настройки → Экран → Размер текста",
+            "Настройки → Звук"
+        ],
+        correct: 2,
+        hint: "Размер шрифта — это настройка экрана. Путь: Настройки → Экран → Размер текста."
+    },
+    {
+        q: "Зачем нужна автояркость?",
+        options: [
+            "Экономит батарею и подстраивается под освещение",
+            "Ускоряет интернет",
+            "Увеличивает громкость",
+            "Делает фото лучше"
+        ],
+        correct: 0,
+        hint: "Автояркость сама подстраивает экран под свет вокруг. Это и удобно, и экономит заряд."
+    }
+];
+
+function renderReviewQuiz(){
+    const box = document.getElementById('review-quiz');
+    if (!box) return;
+
+    const letters = ['A', 'B', 'C', 'D', 'E'];
+
+    box.innerHTML = REVIEW_QUIZ.map((item, i) => `
+        <div class="review-q" data-qi="${i}">
+            <div class="review-q-title">
+                <span class="review-q-num">${i + 1}</span>
+                <span>${item.q}</span>
+            </div>
+            <div class="review-q-options">
+                ${item.options.map((opt, j) =>
+                    `<button class="review-opt" onclick="checkReviewQuiz(${i}, ${j})">
+                        <span class="review-opt-letter">${letters[j]}</span>
+                        <span class="review-opt-text">${opt}</span>
+                    </button>`
+                ).join("")}
+            </div>
+            <div class="review-q-result" id="rq-${i}"></div>
+        </div>
+    `).join("");
+}
+
+function checkReviewQuiz(qi, oi){
+    const item = REVIEW_QUIZ[qi];
+    const questionEl = document.querySelector(`.review-q[data-qi="${qi}"]`);
+    if (!questionEl || questionEl.classList.contains('answered-ok')) return;
+
+    const buttons = questionEl.querySelectorAll('.review-opt');
+    const result = document.getElementById('rq-' + qi);
+
+    if (oi === item.correct){
+        // Верный ответ: подсветить, отключить остальные
+        questionEl.classList.add('answered-ok');
+        buttons[oi].classList.add('correct');
+        buttons.forEach((b, j) => {
+            if (j !== oi) b.classList.add('disabled');
+        });
+        result.innerHTML = `<div class="review-q-ok"><b>✓ Верно!</b> ${item.hint}</div>`;
+    } else {
+        // Ошибка: короткая тряска + красное сообщение
+        buttons[oi].classList.add('wrong');
+        setTimeout(() => buttons[oi].classList.remove('wrong'), 650);
+        result.innerHTML = `<div class="review-q-no"><b>Пока не точно.</b> Попробуйте другой вариант.</div>`;
+    }
+}
+
+// ============================================================
+// ПОВТОРЕНИЕ УРОКА 1
+// ============================================================
+let reviewIndex = 0;
+const reviewOverlay = document.getElementById('review');
+const reviewScreens = [...document.querySelectorAll('#review .pres-screen')];
+const reviewCounter = document.getElementById('reviewCounter');
+const reviewBar = document.getElementById('reviewBar');
+
+function reviewRender(){
+    reviewScreens.forEach((s, n) => s.classList.toggle('active', n === reviewIndex));
+    reviewCounter.textContent = `${reviewIndex + 1} / ${reviewScreens.length}`;
+    reviewBar.style.width = ((reviewIndex + 1) / reviewScreens.length * 100) + '%';
+}
+
+function reviewNext(){ if (reviewIndex < reviewScreens.length - 1){ reviewIndex++; reviewRender(); } }
+function reviewPrev(){ if (reviewIndex > 0){ reviewIndex--; reviewRender(); } }
+
+function openReview(){
+    reviewIndex = 0;
+    renderReviewQuiz();     
+    reviewRender();
+    reviewOverlay.classList.add('open');
+    reviewOverlay.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeReview(){
+    reviewOverlay.classList.remove('open');
+    reviewOverlay.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+}
+
+// Свайпы в повторении
+let reviewX0 = null;
+reviewOverlay.addEventListener('touchstart', e => reviewX0 = e.touches[0].clientX);
+reviewOverlay.addEventListener('touchend', e => {
+    if (reviewX0 === null) return;
+    const dx = e.changedTouches[0].clientX - reviewX0;
+    if (Math.abs(dx) > 50) dx < 0 ? reviewNext() : reviewPrev();
+    reviewX0 = null;
+});
+
 presRender();
+reviewRender();
+
 </script>
 {% endblock %}
