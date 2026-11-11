@@ -1771,3 +1771,64 @@
     .review-opt { font-size: 17px; padding: 14px 16px; }
     .review-q { padding: 18px 16px; }
 }
+
+.lesson-page {
+    width: 100%;
+    max-width: 1100px;
+    margin-left: auto;
+    margin-right: auto;
+    box-sizing: border-box;
+}
+
+.lesson-page .slidecard {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+.lesson-page .slidebody {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+}
+
+.lesson-page .slidebody h2,
+.lesson-page .slidebody p,
+.lesson-page .slidebody ul,
+.lesson-page .slidebody .tip {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow-wrap: break-word;
+}
+
+.lesson-page .kv-table {
+    display: table;
+    width: 100%;
+    table-layout: auto;
+}
+
+.lesson-page .kv-table th,
+.lesson-page .kv-table td {
+    overflow-wrap: break-word;
+    word-break: normal;
+}
+
+@media (max-width: 768px) {
+    .lesson-page {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+
+    .lesson-page .slidebody {
+        padding: 18px;
+    }
+
+    .lesson-page .kv-table {
+        font-size: 13px;
+    }
+}

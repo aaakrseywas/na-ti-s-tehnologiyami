@@ -203,6 +203,7 @@ def lesson():
 LESSON_ROUTES = {
     1: 'lesson1.html',
     2: 'lesson2.html',
+    3: 'lesson3.html',
 }
 
 
@@ -212,6 +213,10 @@ def lesson_by_num(n):
     """
     template = LESSON_ROUTES.get(n, 'lesson1.html')
     return render_template(template)
+
+@app.route('/privacy')
+def privacy():
+    return render_template('privacy.html')
 
 
 if __name__ == '__main__':

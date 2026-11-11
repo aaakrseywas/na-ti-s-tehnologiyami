@@ -1,0 +1,964 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/lesson.css') }}">
+
+<main class="lesson-page">
+    <a href="/" class="back-link">← Все занятия</a>
+
+    <div class="head">
+        <div>
+            <small>УРОК 3 · СООБЩЕНИЯ, МЕССЕНДЖЕРЫ И ФОТОГРАФИИ</small>
+            <h1>Сообщения, мессенджеры и фотографии</h1>
+            <p>Полезные функции переписки ВКонтакте, голосовые сообщения, работа с фотографиями и редактирование снимков.</p>
+        </div>
+        <div class="head-actions">
+            <button class="btn btn-ghost" onclick="openReview()">Повторение урока 2</button>
+            <button class="btn" onclick="openPresentation()">Режим показа</button>
+        </div>
+    </div>
+
+    <div class="note">
+        Сначала теория с объяснением, затем практика с заданиями.
+        Итоги — в режиме показа по кнопке в шапке.
+    </div>
+
+    <div id="lesson-app"></div>
+
+    <button id="toTop" class="to-top" onclick="scrollToTop()" aria-label="Наверх">↑</button>
+</main>
+
+<!-- ============================================================
+     РЕЖИМ ПОКАЗА — 16 слайдов
+     ============================================================ -->
+<div id="presentation" class="presentation-overlay" aria-hidden="true">
+    <div class="pres-topline">
+        <span>На «ты» с технологиями</span>
+        <span>Урок 3 · Показ урока</span>
+        <button class="pres-close" onclick="closePresentation()" aria-label="Закрыть">×</button>
+    </div>
+
+    <div class="pres-stage">
+
+        {# 1. Обложка #}
+        <section class="pres-screen active">
+            <small class="pres-kicker">УРОК 3 · СООБЩЕНИЯ, МЕССЕНДЖЕРЫ И ФОТОГРАФИИ</small>
+            <h1 class="pres-h1">Сообщения,<br>мессенджеры<br><em>и фотографии</em></h1>
+            <p class="pres-subtitle">
+                Сегодня — не про то, как открыть чат. А про то, что в переписке и фотографиях
+                можно делать удобнее, быстрее и интереснее.
+            </p>
+            <p class="pres-final-note">60–70 минут · Практика на своих смартфонах</p>
+        </section>
+
+        {# 2. Как зайти в сообщения ВК #}
+        <section class="pres-screen">
+            <small class="pres-kicker">ВХОДИМ В ПЕРЕПИСКУ</small>
+            <h1 class="pres-h1">Как зайти в сообщения ВКонтакте</h1>
+            <div class="pres-problem-list">
+                <div class="pres-problem">
+                    <b>Способ 1 — нижняя панель</b>
+                    <p>Открыть приложение → значок <b>«Сообщения»</b> (диалоговое облачко) внизу экрана → список переписок.</p>
+                </div>
+                <div class="pres-problem">
+                    <b>Способ 2 — значок вверху</b>
+                    <p>В верхней части экрана — тот же значок сообщений. Нажимаем — открывается тот же список.</p>
+                </div>
+            </div>
+            <p class="pres-final-note">На Android и iPhone расположение может немного отличаться — но значок узнаваемый.</p>
+        </section>
+
+        {# 3. Как мы общаемся #}
+        <section class="pres-screen">
+            <small class="pres-kicker">СПОСОБЫ ОБЩЕНИЯ</small>
+            <h1 class="pres-h1">Как мы общаемся</h1>
+            <div class="pres-skill-grid">
+                <div class="pres-skill"><div class="pres-ico">💬</div><div><b>Текстовые сообщения</b><span>печатаем</span></div></div>
+                <div class="pres-skill"><div class="pres-ico">🎙</div><div><b>Голосовые</b><span>говорим</span></div></div>
+                <div class="pres-skill"><div class="pres-ico">📷</div><div><b>Фото и видео</b><span>показываем</span></div></div>
+                <div class="pres-skill"><div class="pres-ico">📞</div><div><b>Аудио- и видеозвонки</b><span>слышим и видим</span></div></div>
+                <div class="pres-skill"><div class="pres-ico">👥</div><div><b>Групповые беседы</b><span>общаемся вместе</span></div></div>
+                <div class="pres-skill"><div class="pres-ico">📎</div><div><b>Вложения</b><span>отправляем файлы</span></div></div>
+            </div>
+        </section>
+
+        {# 4. Голосовые сообщения #}
+        <section class="pres-screen">
+            <small class="pres-kicker">БЕЗ КЛАВИАТУРЫ</small>
+            <h1 class="pres-h1">Голосовые сообщения</h1>
+            <div class="pres-problem-list">
+                <div class="pres-problem"><b>Записать</b><p>Нажать и удерживать кнопку микрофона, говорить, отпустить.</p></div>
+                <div class="pres-problem"><b>Прослушать перед отправкой</b><p>Если функция доступна — нажать на запись, не отправляя её.</p></div>
+                <div class="pres-problem"><b>Прослушать полученное</b><p>Нажать на воспроизведение — динамик или наушники.</p></div>
+                <div class="pres-problem"><b>Расшифровать в текст</b><p>В VK Мессенджере доступна расшифровка. Удобно, если нельзя включить звук.</p></div>
+            </div>
+            <p class="pres-final-note">Наличие функции зависит от версии приложения. Если расшифровки нет — просто слушаем голосовое.</p>
+        </section>
+
+        {# 5. Полезные возможности переписки #}
+        <section class="pres-screen">
+            <small class="pres-kicker">ФУНКЦИИ ЧАТА</small>
+            <h1 class="pres-h1">Полезное в переписке</h1>
+            <div class="pres-skill-grid">
+                <div class="pres-skill"><div class="pres-ico">↩</div><div><b>Ответ на конкретное</b><span>не путаем темы</span></div></div>
+                <div class="pres-skill"><div class="pres-ico">↪</div><div><b>Переслать</b><span>другому человеку</span></div></div>
+                <div class="pres-skill"><div class="pres-ico">📋</div><div><b>Копировать</b><span>текст сообщения</span></div></div>
+                <div class="pres-skill"><div class="pres-ico">✏️</div><div><b>Редактировать</b><span>если доступно</span></div></div>
+                <div class="pres-skill"><div class="pres-ico">🗑</div><div><b>Удалить</b><span>у себя или у всех</span></div></div>
+                <div class="pres-skill"><div class="pres-ico">📌</div><div><b>Закрепить</b><span>важное наверху</span></div></div>
+            </div>
+        </section>
+
+        {# 6. Как не потерять важное #}
+        <section class="pres-screen">
+            <small class="pres-kicker">ПОИСК И ЗАКРЕПЛЕНИЕ</small>
+            <h1 class="pres-h1">Как не потерять важное</h1>
+            <div class="pres-problem-list">
+                <div class="pres-problem"><b>Поиск по переписке</b><p>Строка поиска — вводим слово или имя, находим нужное сообщение.</p></div>
+                <div class="pres-problem"><b>Закрепление сообщения</b><p>Долгое нажатие → «Закрепить». Важное всегда наверху чата.</p></div>
+                <div class="pres-problem"><b>Закрепление чата</b><p>Сам чат тоже можно закрепить — он будет первым в списке.</p></div>
+                <div class="pres-problem"><b>Поиск по фото и файлам</b><p>В переписке можно найти старые снимки и документы.</p></div>
+            </div>
+            <p class="pres-final-note">Это одна из самых полезных тем для тех, кто получает много сообщений от родственников.</p>
+        </section>
+
+        {# 7. Групповые чаты #}
+        <section class="pres-screen">
+            <small class="pres-kicker">ГРУППОВЫЕ БЕСЕДЫ</small>
+            <h1 class="pres-h1">Общение в группе</h1>
+            <div class="pres-problem-list">
+                <div class="pres-problem"><b>Личная переписка</b><p>Один на один. Всё только между вами.</p></div>
+                <div class="pres-problem"><b>Групповая беседа</b><p>Несколько человек. Отвечать можно конкретному участнику — через «ответ».</p></div>
+                <div class="pres-problem"><b>Уведомления группы</b><p>Слишком активную беседу можно заглушить, не выходя из неё.</p></div>
+                <div class="pres-problem"><b>Оформление чата</b><p>Если настройка доступна — можно сменить фон или тему.</p></div>
+            </div>
+        </section>
+
+        {# 8. Где живут фотографии #}
+        <section class="pres-screen">
+            <small class="pres-kicker">ФОТОГРАФИИ</small>
+            <h1 class="pres-h1">Где хранятся снимки</h1>
+            <div class="pres-skill-grid">
+                <div class="pres-skill"><div class="pres-ico">📷</div><div><b>Камера</b><span>создаёт снимок</span></div></div>
+                <div class="pres-skill"><div class="pres-ico">🖼</div><div><b>Галерея / «Фото»</b><span>просмотр снимков</span></div></div>
+                <div class="pres-skill"><div class="pres-ico">📁</div><div><b>Альбомы</b><span>сортировка</span></div></div>
+                <div class="pres-skill"><div class="pres-ico">☁️</div><div><b>Облако</b><span>копии в интернете</span></div></div>
+            </div>
+            <p class="pres-final-note">Камера делает снимок. Галерея показывает. Альбомы наводят порядок. Облако хранит копию.</p>
+        </section>
+
+        {# 9. Несколько фото сразу #}
+        <section class="pres-screen">
+            <small class="pres-kicker">ГРУППОВЫЕ ДЕЙСТВИЯ</small>
+            <h1 class="pres-h1">Выбрать несколько снимков</h1>
+            <div class="pres-problem-list">
+                <div class="pres-problem"><b>Как выделить</b><p>Долгое нажатие на первый снимок — и дальше отмечаем остальные.</p></div>
+                <div class="pres-problem"><b>Отправить подборкой</b><p>Несколько фото уходят в одном сообщении.</p></div>
+                <div class="pres-problem"><b>В альбом</b><p>Добавить разом все выделенные снимки.</p></div>
+                <div class="pres-problem"><b>Удалить</b><p>Но перед этим — обязательно проверить, что отметили.</p></div>
+            </div>
+        </section>
+
+        {# 10. Отправка фото #}
+        <section class="pres-screen">
+            <small class="pres-kicker">СПОСОБЫ ОТПРАВКИ</small>
+            <h1 class="pres-h1">Как отправить фотографию</h1>
+            <div class="pres-problem-list">
+                <div class="pres-problem"><b>Через скрепку в чате</b><p>Открываем чат → 📎 → «Фото» → выбираем снимок.</p></div>
+                <div class="pres-problem"><b>Через «Поделиться» в галерее</b><p>Нажимаем «Поделиться» → выбираем ВКонтакте → чат.</p></div>
+                <div class="pres-problem"><b>Несколько сразу</b><p>Выделяем все нужные снимки и отправляем одним действием.</p></div>
+            </div>
+            <p class="pres-final-note">Второй способ удобнее, когда снимок уже открыт в галерее и хочется сразу отправить — не заходя в приложение.</p>
+        </section>
+
+        {# 11. Улучшаем фотографии #}
+        <section class="pres-screen">
+            <small class="pres-kicker">РЕДАКТОР</small>
+            <h1 class="pres-h1">Улучшаем снимок</h1>
+            <div class="pres-skill-grid">
+                <div class="pres-skill"><div class="pres-ico">✂️</div><div><b>Обрезка</b><span>убрать лишнее</span></div></div>
+                <div class="pres-skill"><div class="pres-ico">🔄</div><div><b>Поворот</b><span>выровнять горизонт</span></div></div>
+                <div class="pres-skill"><div class="pres-ico">☀️</div><div><b>Яркость</b><span>сделать светлее</span></div></div>
+                <div class="pres-skill"><div class="pres-ico">🌗</div><div><b>Контраст</b><span>выразительнее</span></div></div>
+                <div class="pres-skill"><div class="pres-ico">🎨</div><div><b>Фильтры</b><span>настроение</span></div></div>
+                <div class="pres-skill"><div class="pres-ico">↩</div><div><b>Отменить</b><span>вернуть оригинал</span></div></div>
+            </div>
+        </section>
+
+        {# 12. Рисуем на фото #}
+        <section class="pres-screen">
+            <small class="pres-kicker">РАЗМЕТКА</small>
+            <h1 class="pres-h1">Рисуем и подписываем</h1>
+            <p class="pres-subtitle">Инструменты разметки позволяют показать важное прямо на снимке.</p>
+            <div class="pres-problem-list">
+                <div class="pres-problem"><b>Стрелка</b><p>Показать на нужную часть изображения.</p></div>
+                <div class="pres-problem"><b>Обвести</b><p>Выделить объект кружком или линией.</p></div>
+                <div class="pres-problem"><b>Подпись</b><p>Добавить текст — дату, имя, пояснение.</p></div>
+            </div>
+            <p class="pres-final-note">Пример: сфотографировать объявление или страницу книги и обвести нужную дату или строчку.</p>
+        </section>
+
+        {# 13. Альбомы #}
+        <section class="pres-screen">
+            <small class="pres-kicker">ПОРЯДОК В СНИМКАХ</small>
+            <h1 class="pres-h1">Создаём альбомы</h1>
+            <p class="pres-subtitle">Альбомы помогают не искать нужный снимок среди сотен других.</p>
+            <div class="pres-skill-grid">
+                <div class="pres-skill"><div class="pres-ico">👨‍👩‍👧</div><div><b>Семья</b><span>родные и близкие</span></div></div>
+                <div class="pres-skill"><div class="pres-ico">🧒</div><div><b>Внуки</b><span>самые любимые кадры</span></div></div>
+                <div class="pres-skill"><div class="pres-ico">✈️</div><div><b>Путешествия</b><span>поездки и отдых</span></div></div>
+                <div class="pres-skill"><div class="pres-ico">🎉</div><div><b>Праздники</b><span>дни рождения и встречи</span></div></div>
+            </div>
+        </section>
+
+        {# 14. Избранное и скрытое #}
+        <section class="pres-screen">
+            <small class="pres-kicker">ДОПОЛНИТЕЛЬНО</small>
+            <h1 class="pres-h1">Избранное и скрытые</h1>
+            <div class="pres-problem-list">
+                <div class="pres-problem"><b>Избранное</b><p>Снимок всегда под рукой — не нужно искать по всей галерее.</p></div>
+                <div class="pres-problem"><b>Поиск по датам</b><p>Находим нужный кадр, вспоминая, когда он был сделан.</p></div>
+                <div class="pres-problem"><b>Скрытие снимков</b><p>Если функция доступна — снимок прячется из общей галереи.</p></div>
+                <div class="pres-problem"><b>Куда сохраняются фото из чатов</b><p>Проверьте, складываются ли они в отдельную папку.</p></div>
+            </div>
+            <p class="pres-final-note">Скрытие фото — не то же самое, что защита паролем. Не храните в обычном альбоме личные снимки.</p>
+        </section>
+
+        {# 15. Что освоили #}
+        <section class="pres-screen">
+            <small class="pres-kicker">ЧТО ОСВОИЛИ</small>
+            <h1 class="pres-h1">Восемь новых возможностей</h1>
+            <div class="pres-skill-grid">
+                <div class="pres-skill"><div class="pres-ico">1</div><div><b>Вход в сообщения</b><span>нижняя панель или значок</span></div></div>
+                <div class="pres-skill"><div class="pres-ico">2</div><div><b>Голосовые сообщения</b><span>запись и расшифровка</span></div></div>
+                <div class="pres-skill"><div class="pres-ico">3</div><div><b>Ответ на сообщение</b><span>без путаницы тем</span></div></div>
+                <div class="pres-skill"><div class="pres-ico">4</div><div><b>Поиск и закрепление</b><span>важное не теряется</span></div></div>
+                <div class="pres-skill"><div class="pres-ico">5</div><div><b>Групповые чаты</b><span>уведомления под контролем</span></div></div>
+                <div class="pres-skill"><div class="pres-ico">6</div><div><b>Выбор и отправка фото</b><span>по несколько сразу</span></div></div>
+                <div class="pres-skill"><div class="pres-ico">7</div><div><b>Редактор снимков</b><span>обрезка, яркость, фильтры</span></div></div>
+                <div class="pres-skill"><div class="pres-ico">8</div><div><b>Альбомы и избранное</b><span>порядок в фотографиях</span></div></div>
+            </div>
+        </section>
+
+        {# 16. Финал #}
+        <section class="pres-screen">
+            <div class="pres-big-check">✓</div>
+            <small class="pres-kicker">ГОТОВО</small>
+            <h1 class="pres-h1">Смартфон общается за нас</h1>
+            <p class="pres-subtitle">Сегодня получилось:</p>
+            <div class="pres-check-final">
+                <span>зайти в сообщения</span>
+                <span>записать голосовое</span>
+                <span>расшифровать его</span>
+                <span>ответить на сообщение</span>
+                <span>найти старое</span>
+                <span>отправить несколько фото</span>
+                <span>отредактировать снимок</span>
+                <span>создать альбом</span>
+            </div>
+            <p class="pres-final-note">
+                Главное — пробовать и не бояться нажимать: смартфон не сломается.<br>
+                На следующем уроке — безопасность и полезные мелочи.
+            </p>
+        </section>
+    </div>
+
+    <div class="pres-controls">
+        <button onclick="presPrev()" aria-label="Назад">←</button>
+        <div class="pres-bar-wrap"><i id="presBar"></i></div>
+        <span id="presCounter">1 / 16</span>
+        <button onclick="presNext()" aria-label="Вперёд">→</button>
+        <button class="pres-exit" onclick="closePresentation()">Выйти</button>
+    </div>
+</div>
+
+<!-- ============================================================
+     ПОВТОРЕНИЕ УРОКА 2
+     ============================================================ -->
+<div id="review" class="presentation-overlay" aria-hidden="true">
+    <div class="pres-topline">
+        <span>На «ты» с технологиями</span>
+        <span>Урок 2 · Повторение</span>
+        <button class="pres-close" onclick="closeReview()" aria-label="Закрыть">×</button>
+    </div>
+
+    <div class="pres-stage">
+        <section class="pres-screen active">
+            <small class="pres-kicker">УРОК 2 · ПОВТОРЕНИЕ</small>
+            <h1 class="pres-h1">Приложения,<br>уведомления<br><em>и контакты</em></h1>
+            <p class="pres-subtitle">
+                Прежде чем двигаться дальше — короткое напоминание, что мы прошли на прошлом занятии.
+            </p>
+        </section>
+
+        <section class="pres-screen">
+            <small class="pres-kicker">ЧТО ПРОШЛИ</small>
+            <h1 class="pres-h1">Шесть навыков урока 2</h1>
+            <div class="pres-skill-grid">
+                <div class="pres-skill"><div class="pres-ico">1</div><div><b>Значки приложений</b><span>где искать программы</span></div></div>
+                <div class="pres-skill"><div class="pres-ico">2</div><div><b>Открытие приложения</b><span>одно касание</span></div></div>
+                <div class="pres-skill"><div class="pres-ico">3</div><div><b>Панель уведомлений</b><span>свайп сверху вниз</span></div></div>
+                <div class="pres-skill"><div class="pres-ico">4</div><div><b>Сохранение контактов</b><span>имя и номер</span></div></div>
+                <div class="pres-skill"><div class="pres-ico">5</div><div><b>Поиск контактов</b><span>по имени</span></div></div>
+                <div class="pres-skill"><div class="pres-ico">6</div><div><b>Звонок контакту</b><span>кнопка трубки</span></div></div>
+            </div>
+        </section>
+
+        <section class="pres-screen">
+            <small class="pres-kicker">ПРОВЕРИМ СЕБЯ</small>
+            <h1 class="pres-h1">Что помним из урока 2?</h1>
+            <p class="pres-subtitle">Нажимайте на варианты — правильный ответ подсветится зелёным.</p>
+            <div class="review-quiz" id="review-quiz"></div>
+        </section>
+
+        <section class="pres-screen">
+            <small class="pres-kicker">ВСПОМНИЛИ</small>
+            <h1 class="pres-h1">Теперь — к сообщениям</h1>
+            <p class="pres-subtitle">
+                Сегодня научимся удобнее общаться в переписке и работать с фотографиями.
+            </p>
+        </section>
+    </div>
+
+    <div class="pres-controls">
+        <button onclick="reviewPrev()" aria-label="Назад">←</button>
+        <div class="pres-bar-wrap"><i id="reviewBar"></i></div>
+        <span id="reviewCounter">1 / 4</span>
+        <button onclick="reviewNext()" aria-label="Вперёд">→</button>
+        <button class="pres-exit" onclick="closeReview()">Выйти</button>
+    </div>
+</div>
+
+<script>
+// Хелпер: текст слева — фото справа.
+function split(text, src, caption){
+    return `<div class="two">
+        <div class="two-text">${text}</div>
+        <figure class="slide-photo inline">
+            <img src="/static/img/${src}" alt="${caption}"
+                 onerror="this.style.display='none';this.parentElement.classList.add('is-missing');">
+        </figure>
+    </div>`;
+}
+
+// ============================================================
+// ВИКТОРИНА УРОКА 3
+// ============================================================
+
+const QUIZ = [
+    {
+        q: "Как записать голосовое сообщение в чате?",
+        options: [
+            "Нажать на микрофон один раз",
+            "Нажать и удерживать микрофон",
+            "Смахнуть по экрану вправо",
+            "Нажать на скрепку внизу"
+        ],
+        correct: 1,
+        hint: "Голосовое записывается, пока палец держит микрофон. Отпустили — запись готова."
+    },
+    {
+        q: "Что даёт расшифровка голосового сообщения?",
+        options: [
+            "Проигрывает его быстрее",
+            "Показывает текст этого сообщения",
+            "Переводит его на другой язык",
+            "Убирает фоновый шум"
+        ],
+        correct: 1,
+        hint: "Расшифровка — это текст голосового. Удобно, когда нельзя включить звук."
+    },
+    {
+        q: "Зачем закрепляют сообщение в переписке?",
+        options: [
+            "Чтобы оно не удалилось при очистке чата",
+            "Чтобы его нельзя было переслать",
+            "Чтобы оно всегда было наверху чата",
+            "Чтобы его видел только отправитель"
+        ],
+        correct: 2,
+        hint: "Закрепление — это «полка» наверху. Само сообщение остаётся в истории, но его легко найти."
+    },
+    {
+        q: "Как отправить сразу несколько фотографий одним сообщением?",
+        options: [
+            "Отправить их по одной — по-другому нельзя",
+            "Выделить несколько снимков и отправить вместе",
+            "Сначала объединить их в один файл",
+            "Отправить первую, остальные придут сами"
+        ],
+        correct: 1,
+        hint: "Долгое нажатие выделяет несколько снимков — уходят одним действием."
+    },
+    {
+        q: "Что делает обрезка фотографии?",
+        options: [
+            "Уменьшает вес файла",
+            "Убирает лишние края снимка",
+            "Делает фото чётче",
+            "Меняет его формат"
+        ],
+        correct: 1,
+        hint: "Обрезка убирает часть изображения по краям. Вес файла она почти не меняет, чёткость — тоже."
+    }
+];
+
+function renderQuiz() {
+    return QUIZ.map((item, i) => `
+        <div class="case">
+            <small>ВОПРОС ${i + 1}</small>
+            <h2>${item.q}</h2>
+            ${item.options.map((opt, j) =>
+                `<button onclick="checkQuiz(${i}, ${j})">${opt}</button>`
+            ).join("")}
+            <div id="quiz-${i}-result"></div>
+        </div>
+    `).join("");
+}
+
+// ============================================================
+// ВОПРОСЫ ДЛЯ ПОВТОРЕНИЯ УРОКА 2
+// ============================================================
+const REVIEW_QUIZ = [
+    {
+        q: "Что такое приложение на смартфоне?",
+        options: [
+            "Значок на рабочем столе",
+            "Программа для конкретной задачи",
+            "Настройка внутри телефона",
+            "Файл, который хранится в памяти"
+        ],
+        correct: 1,
+        hint: "Значок — это только ярлык. Само приложение — программа: камера, калькулятор, мессенджер."
+    },
+    {
+        q: "Как открыть панель уведомлений на большинстве смартфонов?",
+        options: [
+            "Смахнуть пальцем снизу вверх",
+            "Смахнуть пальцем сверху вниз",
+            "Нажать на кнопку громкости",
+            "Дважды нажать на главный экран"
+        ],
+        correct: 1,
+        hint: "Свайп сверху вниз от верхнего края. Снизу вверх — это, наоборот, закрыть панель или открыть список приложений."
+    },
+    {
+        q: "Что произойдёт с сообщением, если убрать уведомление о нём?",
+        options: [
+            "Сообщение тоже удалится",
+            "Сообщение останется, но пропадёт напоминание",
+            "Сообщение уйдёт в архив",
+            "Придёт повторное уведомление позже"
+        ],
+        correct: 1,
+        hint: "Уведомление — это напоминание. Само сообщение остаётся в приложении, пока вы его не прочитаете или не удалите."
+    },
+    {
+        q: "Где создаётся новый контакт в смартфоне?",
+        options: [
+            "В приложении «Телефон» через журнал звонков",
+            "В приложении «Контакты» через кнопку «+»",
+            "В настройках смартфона через раздел «Звук»",
+            "В любом приложении, где есть поле ввода"
+        ],
+        correct: 1,
+        hint: "Новый контакт создаётся в «Контактах». В «Телефоне» чаще только журнал звонков, а не создание записи."
+    },
+    {
+        q: "Как быстро найти сохранённый контакт по имени?",
+        options: [
+            "Пролистать весь список контактов",
+            "Открыть поиск в «Контактах» и ввести имя",
+            "Позвонить на последний номер и спросить",
+            "Посмотреть в уведомлениях телефона"
+        ],
+        correct: 1,
+        hint: "В «Контактах» есть строка поиска. Достаточно первых букв имени — телефон сам подскажет."
+    }
+];
+
+function renderReviewQuiz(){
+    const box = document.getElementById('review-quiz');
+    if (!box) return;
+    const letters = ['A', 'B', 'C', 'D', 'E'];
+
+    box.innerHTML = REVIEW_QUIZ.map((item, i) => `
+        <div class="review-q" data-qi="${i}">
+            <div class="review-q-title">
+                <span class="review-q-num">${i + 1}</span>
+                <span>${item.q}</span>
+            </div>
+            <div class="review-q-options">
+                ${item.options.map((opt, j) =>
+                    `<button class="review-opt" onclick="checkReviewQuiz(${i}, ${j})">
+                        <span class="review-opt-letter">${letters[j]}</span>
+                        <span class="review-opt-text">${opt}</span>
+                    </button>`
+                ).join("")}
+            </div>
+            <div class="review-q-result" id="rq-${i}"></div>
+        </div>
+    `).join("");
+}
+
+function checkReviewQuiz(qi, oi){
+    const item = REVIEW_QUIZ[qi];
+    const questionEl = document.querySelector(`.review-q[data-qi="${qi}"]`);
+    if (!questionEl || questionEl.classList.contains('answered-ok')) return;
+
+    const buttons = questionEl.querySelectorAll('.review-opt');
+    const result = document.getElementById('rq-' + qi);
+
+    if (oi === item.correct){
+        questionEl.classList.add('answered-ok');
+        buttons[oi].classList.add('correct');
+        buttons.forEach((b, j) => {
+            if (j !== oi) b.classList.add('disabled');
+        });
+        result.innerHTML = `<div class="review-q-ok"><b>✓ Верно!</b> ${item.hint}</div>`;
+    } else {
+        buttons[oi].classList.add('wrong');
+        setTimeout(() => buttons[oi].classList.remove('wrong'), 650);
+        result.innerHTML = `<div class="review-q-no"><b>Пока не точно.</b> Попробуйте другой вариант.</div>`;
+    }
+}
+
+// ============================================================
+// ТЕОРИЯ
+// ============================================================
+const THEORY = [
+
+["Сообщения, мессенджеры и фотографии",
+`<div class="hero">
+  <div>
+    <small>УРОК 3</small>
+    <h1>Сообщения, мессенджеры<br><i>и фотографии</i></h1>
+    <p>Сегодня — не про базовые действия, а про полезные функции, которые делают общение удобнее.</p>
+    <p class="mini">Продолжительность: 60–70 минут. Практика на своих телефонах.</p>
+  </div>
+  <figure class="slide-photo inline">
+    <img src="/static/img/lesson3_hero.jpg" alt="Переписка и фотографии"
+         onerror="this.style.display='none';this.parentElement.classList.add('is-missing');">
+  </figure>
+</div>
+<div class="tip"><b>Что разберём:</b> голосовые сообщения, ответы, поиск в переписке, групповые чаты, работу с фотографиями и редактор снимков.</div>`],
+
+["Как зайти в сообщения ВКонтакте",
+split(`
+    <p>Начнём с самого простого — как открыть переписку в приложении ВКонтакте.</p>
+    <div class="steps">
+      <b>Способ 1 — нижняя панель:</b>
+      <ol>
+        <li>Откройте приложение ВКонтакте.</li>
+        <li>Внизу экрана найдите значок <b>«Сообщения»</b> — это диалоговое облачко.</li>
+        <li>Нажмите на него — откроется список переписок.</li>
+      </ol>
+    </div>
+    <div class="steps">
+      <b>Способ 2 — значок вверху:</b>
+      <ol>
+        <li>Откройте приложение ВКонтакте.</li>
+        <li>В верхней части экрана найдите значок сообщений.</li>
+        <li>Нажмите на него — откроется тот же список переписок.</li>
+      </ol>
+    </div>
+    <div class="tip"><b>Совет:</b> на Android и iPhone расположение может немного отличаться, но значок диалогового облачка узнаваем. Если не видно — пролистайте нижнюю панель или воспользуйтесь поиском приложения.</div>
+`, 'lesson3_enter.jpg', 'Значок «Сообщения» в ВКонтакте')],
+
+["Как мы общаемся",
+`<div class="cards">
+${[
+  "Текстовые сообщения",
+  "Голосовые сообщения",
+  "Фото и видео",
+  "Аудио- и видеозвонки",
+  "Групповые беседы",
+  "Вложения и файлы"
+].map((x, i) => `<div class="card ${i === 1 ? 'lime' : ''}"><b>0${i + 1}</b><span>${x}</span></div>`).join("")}
+</div>
+<div class="tip"><b>Вопрос:</b> а каким способом вы чаще всего общаетесь с родными и знакомыми?</div>`],
+
+["Голосовые сообщения",
+split(`
+    <p>Голосовое сообщение — это короткая запись голоса прямо в переписке. Не нужно печатать текст.</p>
+    <h3>Как записать</h3>
+    <ol>
+      <li>Нажать и удерживать кнопку микрофона.</li>
+      <li>Говорить, не отпуская.</li>
+      <li>Отпустить — запись готова.</li>
+      <li>Отправить.</li>
+    </ol>
+    <h3>Полезная функция — расшифровка</h3>
+    <p>В VK Мессенджере голосовое можно <b>прочитать</b> — если функция расшифровки доступна. Это удобно, когда нельзя включить звук.</p>
+    <div class="warn"><b>Важно:</b> наличие расшифровки зависит от версии приложения. Если её нет — просто слушаем.</div>
+`, 'lesson3_voice.jpg', 'Запись голосового сообщения')],
+
+["Полезные возможности переписки",
+`<h3>Что можно делать с сообщениями</h3>
+<dl class="kv">
+  <dt>Ответить</dt><dd>на конкретное сообщение — не путать темы</dd>
+  <dt>Переслать</dt><dd>другому человеку</dd>
+  <dt>Копировать</dt><dd>текст сообщения</dd>
+  <dt>Редактировать</dt><dd>если функция доступна</dd>
+  <dt>Удалить</dt><dd>у себя или у всех</dd>
+</dl>
+<div class="tip"><b>Совет:</b> в переписке с несколькими вопросами «ответ на конкретное сообщение» помогает не запутаться.</div>`],
+
+["Как не потерять важное",
+`<h3>Поиск и закрепление</h3>
+<dl class="kv">
+  <dt>Поиск по переписке</dt><dd>вводим слово или имя — находим нужное сообщение</dd>
+  <dt>Закрепление сообщения</dt><dd>важное всегда наверху чата</dd>
+  <dt>Закрепление чата</dt><dd>сам чат будет первым в списке</dd>
+  <dt>Поиск фото и файлов</dt><dd>старые снимки и документы в переписке</dd>
+</dl>
+<div class="tip"><b>Пример:</b> сообщение с адресом поликлиники пришло месяц назад. Поиск по слову «поликлиника» — и оно найдено.</div>`],
+
+["Групповые чаты",
+split(`
+    <p>Групповая беседа — это общение нескольких человек одновременно.</p>
+    <h3>Что полезно знать</h3>
+    <dl class="kv">
+      <dt>Личная переписка</dt><dd>один на один</dd>
+      <dt>Группа</dt><dd>несколько человек. Можно ответить конкретному участнику</dd>
+      <dt>Уведомления группы</dt><dd>слишком активную беседу можно заглушить, не выходя из неё</dd>
+      <dt>Оформление</dt><dd>если настройка доступна — можно сменить фон</dd>
+    </dl>
+    <div class="tip"><b>Совет:</b> в семейной беседе с десятком сообщений в день иногда удобнее «приглушить» уведомления, а не выходить.</div>
+`, 'lesson3_group.jpg', 'Групповая беседа')],
+
+["Где хранятся фотографии",
+`<h3>Камера, галерея, альбомы, облако</h3>
+<dl class="kv">
+  <dt>Камера</dt><dd>создаёт снимок</dd>
+  <dt>Галерея / «Фото»</dt><dd>показывает снимки</dd>
+  <dt>Альбомы</dt><dd>сортируют по темам</dd>
+  <dt>Облако</dt><dd>хранит копии в интернете</dd>
+</dl>
+<div class="tip"><b>Разница:</b> камера — «сделать». Галерея — «посмотреть». Альбомы — «навести порядок». Облако — «сохранить на случай потери телефона».</div>`],
+
+["Несколько фотографий сразу",
+`<h3>Как выбрать несколько снимков</h3>
+<div class="steps">
+  <ol>
+    <li>Долгое нажатие на первый снимок.</li>
+    <li>Отмечаем остальные — по одному.</li>
+    <li>Дальше — одно действие для всех: отправить, удалить, в альбом.</li>
+  </ol>
+</div>
+<div class="warn"><b>Перед удалением</b> обязательно проверьте, что отметили именно нужные снимки.</div>
+<div class="tip"><b>Польза:</b> отправить 5 фотографий с дачи — одно действие, а не пять отдельных сообщений.</div>`],
+
+["Как отправить фотографию",
+`<h3>Три способа</h3>
+<dl class="kv">
+  <dt>Через скрепку в чате</dt><dd>📎 → «Фото» → выбрать снимок</dd>
+  <dt>Через «Поделиться» в галерее</dt><dd>открыть снимок → «Поделиться» → ВКонтакте → чат</dd>
+  <dt>Несколько сразу</dt><dd>выделить все → отправить одним действием</dd>
+</dl>
+<div class="tip"><b>Когда какой:</b> если снимок уже открыт в галерее — быстрее через «Поделиться». Если вы в чате — через скрепку.</div>`],
+
+["Улучшаем фотографии",
+split(`
+    <p>В каждом смартфоне есть встроенный редактор. Он открывается, когда вы нажимаете «Изменить» на снимке.</p>
+    <h3>Что можно сделать</h3>
+    <dl class="kv">
+      <dt>Обрезать</dt><dd>убрать лишние края</dd>
+      <dt>Повернуть</dt><dd>выровнять горизонт</dd>
+      <dt>Яркость</dt><dd>сделать светлее</dd>
+      <dt>Контраст</dt><dd>сделать выразительнее</dd>
+      <dt>Фильтры</dt><dd>изменить настроение</dd>
+    </dl>
+    <div class="tip"><b>Отмена:</b> в редакторе всегда есть «Отменить» — можно вернуться к оригиналу, если что-то пошло не так.</div>
+`, 'lesson3_edit.jpg', 'Редактор фотографий')],
+
+["Рисуем и подписываем",
+`<h3>Разметка прямо на снимке</h3>
+<dl class="kv">
+  <dt>Стрелка</dt><dd>показать на нужную часть</dd>
+  <dt>Обвести</dt><dd>выделить объект кружком</dd>
+  <dt>Подпись</dt><dd>добавить текст — дату, имя, пояснение</dd>
+</dl>
+<div class="tip"><b>Пример:</b> сфотографировать объявление и обвести нужную дату — сразу понятно, о чём речь.</div>`],
+
+];
+
+// ============================================================
+// ПРАКТИКА
+// ============================================================
+const TASKS = [
+
+["Задание 1. Откройте сообщения ВКонтакте",
+`<p>Откройте приложение ВКонтакте и зайдите в раздел «Сообщения».</p>
+<div class="steps">
+  <ol>
+    <li>Найдите на телефоне приложение ВКонтакте.</li>
+    <li>Откройте его.</li>
+    <li>Внизу экрана найдите значок «Сообщения» — диалоговое облачко.</li>
+    <li>Нажмите на него.</li>
+    <li>Посмотрите на список переписок — это ваши чаты.</li>
+  </ol>
+</div>`],
+
+["Задание 2. Запишите голосовое сообщение",
+`<p>Запишите короткое приветствие голосовым сообщением.</p>
+<div class="steps">
+  <ol>
+    <li>Откройте любой чат с согласованным собеседником.</li>
+    <li>Нажмите и удерживайте кнопку микрофона.</li>
+    <li>Скажите: «Здравствуйте, это моё первое голосовое сообщение».</li>
+    <li>Отпустите — запись готова.</li>
+    <li>Отправьте её.</li>
+  </ol>
+</div>
+<div class="tip"><b>Совет:</b> если запись получилась неудачной — её можно удалить и записать заново.</div>`],
+
+["Задание 3. Найдите расшифровку",
+`<p>Попробуйте найти функцию расшифровки голосового сообщения.</p>
+<div class="steps">
+  <ol>
+    <li>Откройте любое полученное голосовое сообщение.</li>
+    <li>Долгое нажатие или кнопка меню рядом с ним.</li>
+    <li>Ищите пункт «Расшифровать» или «Показать текст».</li>
+  </ol>
+</div>
+<div class="warn"><b>Если функции нет</b> — это зависит от версии приложения. Не страшно: просто слушаем голосовое обычным способом.</div>`],
+
+["Задание 4. Ответ на конкретное сообщение",
+`<p>Научитесь отвечать на конкретное сообщение, а не просто в чат.</p>
+<div class="steps">
+  <ol>
+    <li>Откройте любую переписку.</li>
+    <li>Сделайте долгое нажатие на сообщение, на которое хотите ответить.</li>
+    <li>Выберите «Ответить».</li>
+    <li>Напишите короткий ответ и отправьте.</li>
+  </ol>
+</div>`],
+
+["Задание 5. Поиск в переписке",
+`<p>Найдите в переписке сообщение с каким-либо словом или фразой.</p>
+<div class="steps">
+  <ol>
+    <li>Откройте чат.</li>
+    <li>Вверху найдите строку поиска (значок лупы).</li>
+    <li>Введите слово, которое точно было в переписке.</li>
+    <li>Выберите из результатов нужное сообщение.</li>
+  </ol>
+</div>
+<div class="tip"><b>Совет:</b> полезно для поиска адресов, дат, номеров — всё находится за пару секунд.</div>`],
+
+["Задание 6. Выделите несколько фотографий",
+`<p>Потренируйтесь выбирать несколько снимков одновременно.</p>
+<div class="steps">
+  <ol>
+    <li>Откройте галерею телефона.</li>
+    <li>Долгое нажатие на первый снимок.</li>
+    <li>Отметьте ещё два.</li>
+    <li>Пока ничего не удаляйте и не отправляйте.</li>
+  </ol>
+</div>
+<div class="warn"><b>Осторожно:</b> перед удалением проверяйте, что выделены именно нужные снимки.</div>`],
+
+["Задание 7. Отредактируйте фотографию",
+`<p>Откройте любую фотографию в редакторе и примените к ней простые изменения.</p>
+<div class="steps">
+  <ol>
+    <li>Откройте снимок в галерее.</li>
+    <li>Нажмите «Изменить» или значок карандаша.</li>
+    <li>Потяните яркость немного вправо.</li>
+    <li>Обрежьте лишние края.</li>
+    <li>Сохраните результат.</li>
+  </ol>
+</div>
+<div class="tip"><b>Отмена:</b> если не понравилось — в редакторе есть «Отменить». Всегда можно вернуться к оригиналу.</div>`],
+
+["Задание 8. Отправьте фотографию",
+`<p>Отправьте снимок удобным способом.</p>
+<div class="steps">
+  <ol>
+    <li><b>Способ 1:</b> откройте чат → 📎 → «Фото» → выберите снимок.</li>
+    <li><b>Способ 2:</b> откройте снимок в галерее → «Поделиться» → ВКонтакте → чат.</li>
+  </ol>
+</div>`],
+
+["Задание 9. Проверим, что запомнили",
+`<p>Ответьте на вопросы. Нажимайте на варианты — правильный ответ подсветится.</p>
+${renderQuiz()}`],
+
+];
+
+// ============================================================
+// РЕНДЕР
+// ============================================================
+const app = document.getElementById('lesson-app');
+
+function renderSection(slides, startIndex){
+    return slides.map((s, i) => `
+        <article class="slidecard">
+            <div class="num">${String(startIndex + i).padStart(2, "0")}</div>
+            <div class="slidebody">
+                <small>${s[0]}</small>
+                <h2>${s[0]}</h2>
+                ${s[1]}
+            </div>
+        </article>
+    `).join('');
+}
+
+app.innerHTML =
+    renderSection(THEORY, 1) +
+    renderSection(TASKS, THEORY.length + 1);
+
+// ============================================================
+// ИНТЕРАКТИВ
+// ============================================================
+function toggleCheck(btn){
+    btn.classList.toggle('lime');
+    const mark = btn.querySelector('b');
+    if (mark) mark.textContent = btn.classList.contains('lime') ? '✓' : '□';
+}
+
+function checkQuiz(qi, oi){
+    const item = QUIZ[qi];
+    const result = document.getElementById('quiz-' + qi + '-result');
+    if (oi === item.correct){
+        result.innerHTML = `<div class="notice"><b>Верно!</b> ${item.hint}</div>`;
+    } else {
+        result.innerHTML = "<div class='notice'><b>Пока не точно.</b> Попробуйте другой вариант.</div>";
+    }
+}
+
+function pickDetectivePhoto(i){
+    const good = "<div class='notice'><b>Верно.</b> Скорее всего, снимок сохранён в отдельной папке (например, «VK» или «Messenger»), а не в общей галерее. Проверьте её в первую очередь.</div>";
+    const bad  = "<div class='notice'><b>Не спешим.</b> Снимок почти наверняка на месте — просто в другой папке.</div>";
+    document.getElementById('task-detective-photo').innerHTML = i === 1 ? good : bad;
+}
+
+// ============================================================
+// КНОПКА «НАВЕРХ»
+// ============================================================
+const toTopBtn = document.getElementById('toTop');
+
+function scrollToTop(){
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+window.addEventListener('scroll', () => {
+    if (window.scrollY > 400){
+        toTopBtn.classList.add('visible');
+    } else {
+        toTopBtn.classList.remove('visible');
+    }
+});
+
+// ============================================================
+// РЕЖИМ ПОКАЗА
+// ============================================================
+let presIndex = 0;
+const presOverlay = document.getElementById('presentation');
+const presScreens = [...document.querySelectorAll('#presentation .pres-screen')];
+const presCounter = document.getElementById('presCounter');
+const presBar = document.getElementById('presBar');
+
+function presRender(){
+    presScreens.forEach((s, n) => s.classList.toggle('active', n === presIndex));
+    presCounter.textContent = `${presIndex + 1} / ${presScreens.length}`;
+    presBar.style.width = ((presIndex + 1) / presScreens.length * 100) + '%';
+}
+
+function presNext(){ if (presIndex < presScreens.length - 1){ presIndex++; presRender(); } }
+function presPrev(){ if (presIndex > 0){ presIndex--; presRender(); } }
+
+function openPresentation(){
+    presIndex = 0;
+    presRender();
+    presOverlay.classList.add('open');
+    presOverlay.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+}
+
+function closePresentation(){
+    presOverlay.classList.remove('open');
+    presOverlay.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+}
+
+// ============================================================
+// ПОВТОРЕНИЕ УРОКА 2
+// ============================================================
+let reviewIndex = 0;
+const reviewOverlay = document.getElementById('review');
+const reviewScreens = [...document.querySelectorAll('#review .pres-screen')];
+const reviewCounter = document.getElementById('reviewCounter');
+const reviewBar = document.getElementById('reviewBar');
+
+function reviewRender(){
+    reviewScreens.forEach((s, n) => s.classList.toggle('active', n === reviewIndex));
+    reviewCounter.textContent = `${reviewIndex + 1} / ${reviewScreens.length}`;
+    reviewBar.style.width = ((reviewIndex + 1) / reviewScreens.length * 100) + '%';
+}
+
+function reviewNext(){ if (reviewIndex < reviewScreens.length - 1){ reviewIndex++; reviewRender(); } }
+function reviewPrev(){ if (reviewIndex > 0){ reviewIndex--; reviewRender(); } }
+
+function openReview(){
+    reviewIndex = 0;
+    renderReviewQuiz();
+    reviewRender();
+    reviewOverlay.classList.add('open');
+    reviewOverlay.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeReview(){
+    reviewOverlay.classList.remove('open');
+    reviewOverlay.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+}
+
+// Клавиатура
+document.addEventListener('keydown', e => {
+    const presOpen   = presOverlay.classList.contains('open');
+    const reviewOpen = reviewOverlay.classList.contains('open');
+
+    if (presOpen){
+        if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown'){ e.preventDefault(); presNext(); }
+        if (e.key === 'ArrowLeft'  || e.key === 'PageUp'){ e.preventDefault(); presPrev(); }
+        if (e.key === 'Escape'){ e.preventDefault(); closePresentation(); }
+        if (e.key === 'Home'){ presIndex = 0; presRender(); }
+        if (e.key === 'End'){ presIndex = presScreens.length - 1; presRender(); }
+    }
+
+    if (reviewOpen){
+        if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown'){ e.preventDefault(); reviewNext(); }
+        if (e.key === 'ArrowLeft'  || e.key === 'PageUp'){ e.preventDefault(); reviewPrev(); }
+        if (e.key === 'Escape'){ e.preventDefault(); closeReview(); }
+        if (e.key === 'Home'){ reviewIndex = 0; reviewRender(); }
+        if (e.key === 'End'){ reviewIndex = reviewScreens.length - 1; reviewRender(); }
+    }
+});
+
+// Свайпы в презентации
+let presX0 = null;
+presOverlay.addEventListener('touchstart', e => presX0 = e.touches[0].clientX);
+presOverlay.addEventListener('touchend', e => {
+    if (presX0 === null) return;
+    const dx = e.changedTouches[0].clientX - presX0;
+    if (Math.abs(dx) > 50) dx < 0 ? presNext() : presPrev();
+    presX0 = null;
+});
+
+// Свайпы в повторении
+let reviewX0 = null;
+reviewOverlay.addEventListener('touchstart', e => reviewX0 = e.touches[0].clientX);
+reviewOverlay.addEventListener('touchend', e => {
+    if (reviewX0 === null) return;
+    const dx = e.changedTouches[0].clientX - reviewX0;
+    if (Math.abs(dx) > 50) dx < 0 ? reviewNext() : reviewPrev();
+    reviewX0 = null;
+});
+
+presRender();
+reviewRender();
+</script>
+{% endblock %}

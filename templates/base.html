@@ -10,7 +10,10 @@
 <body>
 
 <header>
-    <a href="/">На «ты» с технологиями</a>
+        <a href="/" class="brand" aria-label="На ты с технологиями — главная">
+        <span class="brand-mark">✳</span>
+        <span>На «ты» с технологиями</span>
+    </a>
 
     <nav class="main-nav">
         <div class="nav-item has-menu">
@@ -37,6 +40,52 @@
 </header>
 
 {% block content %}{% endblock %}
+<!-- ============================================================
+     КУКИ-БАННЕР
+     ============================================================ -->
+<div id="cookie-banner" class="cookie-banner" role="dialog" aria-live="polite" hidden>
+    <div class="cookie-banner__text">
+        <b>Мы используем куки</b>
+        <p>
+            Только технические - чтобы сайт работал и чтобы не показывать это сообщение каждый раз.
+            Никакой рекламы и аналитики.
+            <a href="/privacy" target="_blank" rel="noopener">Подробнее →</a>
+        </p>
+    </div>
 
+    <div class="cookie-banner__actions">
+        <button class="cookie-btn cookie-btn--ghost" onclick="setCookieConsent('necessary')">Только необходимые</button>
+        <button class="cookie-btn cookie-btn--primary" onclick="setCookieConsent('all')">Принять</button>
+    </div>
+
+    <button class="cookie-close" onclick="setCookieConsent('necessary')" aria-label="Закрыть">×</button>
+</div>
+
+<script>
+(function(){
+    const KEY = 'cookie_consent';
+    const banner = document.getElementById('cookie-banner');
+
+    function getConsent(){
+        try { return localStorage.getItem(KEY); } catch(e){ return null; }
+    }
+    function hasConsent(){
+        try { return document.cookie.split('; ').some(c => c.indexOf(KEY + '=') === 0); } catch(e){ return false; }
+    }
+
+    if (!hasConsent() && !getConsent()){
+        banner.hidden = false;
+    }
+
+    window.setCookieConsent = function(value){
+        // сохраняем в cookie на 1 год
+        const expires = new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toUTCString();
+        document.cookie = KEY + '=' + encodeURIComponent(value) + '; expires=' + expires + '; path=/; SameSite=Lax';
+        // дублируем в localStorage на случай, если куки отключены
+        try { localStorage.setItem(KEY, value); } catch(e){}
+        banner.hidden = true;
+    };
+})();
+</script>
 </body>
 </html>
