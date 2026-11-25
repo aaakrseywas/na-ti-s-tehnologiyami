@@ -1,0 +1,792 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/lesson.css') }}">
+
+<main class="lesson-page">
+    <a href="/" class="back-link">← Все занятия</a>
+
+    <div class="head">
+        <div>
+            <small>УРОК 4 · ПРИЛОЖЕНИЯ НА СМАРТФОНЕ</small>
+            <h1>Приложения на смартфоне: как находить, устанавливать и обновлять</h1>
+            <p>Цель занятия: научить участников самостоятельно находить, устанавливать, обновлять и удалять приложения, а также безопасно пользоваться магазинами приложений.</p>
+        </div>
+        <div class="head-actions">
+            <button class="btn btn-ghost" onclick="openReview()">Повторение урока 3</button>
+            <button class="btn" onclick="openPresentation()">Режим показа</button>
+        </div>
+    </div>
+
+    <div class="note">
+        Сначала теория с объяснением (Блоки 1–4), затем практика и проверка знаний (Блок 5).
+        Слайды занятия и итоги — в режиме показа по кнопке в шапке.
+    </div>
+
+    <div id="lesson-app"></div>
+
+    <button id="toTop" class="to-top" onclick="scrollToTop()" aria-label="Наверх">↑</button>
+</main>
+
+<!-- ============================================================
+     РЕЖИМ ПОКАЗА — 15 слайдов урока 4
+     ============================================================ -->
+<div id="presentation" class="presentation-overlay" aria-hidden="true">
+    <div class="pres-topline">
+        <span>На «ты» с технологиями</span>
+        <span>Урок 4 · Приложения на смартфоне</span>
+        <button class="pres-close" onclick="closePresentation()" aria-label="Закрыть">×</button>
+    </div>
+
+    <div class="pres-stage">
+
+        {# Слайд 1. Тема занятия #}
+        <section class="pres-screen active">
+            <small class="pres-kicker">БЛОК 1 · СЛАЙД 1</small>
+            <h1 class="pres-h1">Приложения на смартфоне:<br>как находить,<br><em>устанавливать и обновлять</em></h1>
+            <p class="pres-subtitle">
+                Учимся самостоятельно находить, устанавливать, обновлять и удалять приложения,
+                а также безопасно пользоваться магазинами приложений.
+            </p>
+        </section>
+
+        {# Слайд 2. Где можно скачивать приложения? #}
+        <section class="pres-screen">
+            <small class="pres-kicker">БЛОК 1 · СЛАЙД 2</small>
+            <h1 class="pres-h1">Где можно скачивать приложения?</h1>
+            <div class="pres-problem-list">
+                <div class="pres-problem"><b>Google Play и App Store</b><p>Google Play — для большинства Android-смартфонов; App Store — для iPhone.</p></div>
+                <div class="pres-problem"><b>Отличия и безопасность</b><p>Разные платформы, интерфейсы и правила публикации; официальные магазины проверяют программы и защищают от угроз.</p></div>
+                <div class="pres-problem"><b>Неизвестные сайты</b><p>Скачивать программы со сторонних сайтов опасно — легко поймать мошенников или вредоносный файл.</p></div>
+            </div>
+        </section>
+
+        {# Слайд 3. Как найти нужное приложение? #}
+        <section class="pres-screen">
+            <small class="pres-kicker">БЛОК 1 · СЛАЙД 3</small>
+            <h1 class="pres-h1">Как найти нужное приложение?</h1>
+            <div class="pres-problem-list">
+                <div class="pres-problem"><b>Порядок поиска</b><p>Открываем магазин приложений → находим строку поиска → вводим название программы → смотрим результаты.</p></div>
+                <div class="pres-problem"><b>Как отличить от похожих</b><p>Смотрим точное название, разработчика, рейтинг, отзывы и значок.</p></div>
+            </div>
+            <p class="pres-final-note">Практика: найдите в магазине заранее выбранное приложение.</p>
+        </section>
+
+        {# Слайд 4. Как установить приложение на Android? #}
+        <section class="pres-screen">
+            <small class="pres-kicker">БЛОК 2 · СЛАЙД 4</small>
+            <h1 class="pres-h1">Установка на Android</h1>
+            <div class="pres-skill-grid">
+                <div class="pres-skill"><div class="pres-ico">1</div><div><b>Google Play</b><span>Откройте магазин приложений.</span></div></div>
+                <div class="pres-skill"><div class="pres-ico">2</div><div><b>Поиск</b><span>Введите название приложения.</span></div></div>
+                <div class="pres-skill"><div class="pres-ico">3</div><div><b>Выбор</b><span>Выберите нужный результат.</span></div></div>
+                <div class="pres-skill"><div class="pres-ico">4</div><div><b>«Установить»</b><span>Нажмите кнопку установки.</span></div></div>
+                <div class="pres-skill"><div class="pres-ico">5</div><div><b>Загрузка</b><span>Дождитесь завершения загрузки.</span></div></div>
+                <div class="pres-skill"><div class="pres-ico">6</div><div><b>«Открыть»</b><span>Запустите установленное приложение.</span></div></div>
+            </div>
+        </section>
+
+        {# Слайд 5. Как установить приложение на iPhone? #}
+        <section class="pres-screen">
+            <small class="pres-kicker">БЛОК 2 · СЛАЙД 5</small>
+            <h1 class="pres-h1">Установка на iPhone</h1>
+            <div class="pres-skill-grid">
+                <div class="pres-skill"><div class="pres-ico">1</div><div><b>App Store</b><span>Откройте магазин приложений.</span></div></div>
+                <div class="pres-skill"><div class="pres-ico">2</div><div><b>Поиск</b><span>Перейдите в раздел поиска.</span></div></div>
+                <div class="pres-skill"><div class="pres-ico">3</div><div><b>Название</b><span>Введите название приложения.</span></div></div>
+                <div class="pres-skill"><div class="pres-ico">4</div><div><b>Результат</b><span>Выберите нужное приложение.</span></div></div>
+                <div class="pres-skill"><div class="pres-ico">5</div><div><b>«Загрузить» / облако</b><span>Нажмите «Загрузить» или кнопку со значком облака.</span></div></div>
+                <div class="pres-skill"><div class="pres-ico">6</div><div><b>Подтверждение</b><span>Подтвердите установку при необходимости.</span></div></div>
+            </div>
+        </section>
+
+        {# Слайд 6. Что означают кнопки в магазине приложений? #}
+        <section class="pres-screen">
+            <small class="pres-kicker">БЛОК 2 · СЛАЙД 6</small>
+            <h1 class="pres-h1">Кнопки и цены в магазине</h1>
+            <div class="pres-glossary">
+                <div class="pres-term"><dt>Установить / Загрузить</dt><dd>Скачивает и ставит приложение на телефон.</dd></div>
+                <div class="pres-term"><dt>Открыть</dt><dd>Приложение уже установлено — запускаем его.</dd></div>
+                <div class="pres-term"><dt>Обновить</dt><dd>Вышла новая версия — ставим обновления.</dd></div>
+                <div class="pres-term"><dt>Значок облака</dt><dd>Приложение уже скачивалось ранее — загружаем из облака.</dd></div>
+                <div class="pres-term"><dt>Цена и «Покупки...»</dt><dd>Показывают платную установку или платные функции / подписки внутри.</dd></div>
+                <div class="pres-term"><dt>Важно помнить</dt><dd>Бесплатная установка не всегда означает отсутствие платных функций или подписок.</dd></div>
+            </div>
+        </section>
+
+        {# Слайд 7. Как понять, хорошее ли приложение? #}
+        <section class="pres-screen">
+            <small class="pres-kicker">БЛОК 2 · СЛАЙД 7</small>
+            <h1 class="pres-h1">Как выбрать надёжное приложение?</h1>
+            <div class="pres-skill-grid">
+                <div class="pres-skill"><div class="pres-ico">1</div><div><b>Название и разработчик</b><span>Проверяем, кто создал программу.</span></div></div>
+                <div class="pres-skill"><div class="pres-ico">2</div><div><b>Рейтинг и отзывы</b><span>Оцениваем опыт других пользователей.</span></div></div>
+                <div class="pres-skill"><div class="pres-ico">3</div><div><b>Скриншоты и описание</b><span>Смотрим, как выглядит интерфейс и что умеет.</span></div></div>
+                <div class="pres-skill"><div class="pres-ico">4</div><div><b>Дата обновления</b><span>Показывает, поддерживается ли приложение.</span></div></div>
+                <div class="pres-skill"><div class="pres-ico">5</div><div><b>Возраст</b><span>Возрастные ограничения.</span></div></div>
+                <div class="pres-skill"><div class="pres-ico">6</div><div><b>Покупки и подписки</b><span>Есть ли платные опции внутри.</span></div></div>
+            </div>
+            <p class="pres-final-note">Практика: сравните два похожих приложения и выберите более надёжное.</p>
+        </section>
+
+        {# Слайд 8. Как обновлять приложения? #}
+        <section class="pres-screen">
+            <small class="pres-kicker">БЛОК 3 · СЛАЙД 8</small>
+            <h1 class="pres-h1">Как обновлять приложения?</h1>
+            <div class="pres-problem-list">
+                <div class="pres-problem"><b>Зачем нужны обновления</b><p>Исправляют ошибки, улучшают работу и усиливают защиту.</p></div>
+                <div class="pres-problem"><b>Как обновлять</b><p>Открываем список обновлений в магазине: можно обновить одно приложение или настроить автообновление.</p></div>
+                <div class="pres-problem"><b>Wi-Fi при крупных загрузках</b><p>Крупные обновления лучше качать по Wi-Fi, чтобы не тратить мобильный интернет и не ждать долго.</p></div>
+            </div>
+        </section>
+
+        {# Слайд 9. Как удалить ненужное приложение? #}
+        <section class="pres-screen">
+            <small class="pres-kicker">БЛОК 3 · СЛАЙД 9</small>
+            <h1 class="pres-h1">Удаление приложений</h1>
+            <div class="pres-problem-list">
+                <div class="pres-problem"><b>Где и как удалять</b><p>Через список установленных приложений в настройках или с экрана на Android и iPhone.</p></div>
+                <div class="pres-problem"><b>Удалить vs убрать значок</b><p>Удаление значка убирает ярлык с экрана, а удаление приложения стирает программу (и обычно её локальные данные).</p></div>
+            </div>
+            <p class="pres-final-note">Практика: найдите давно неиспользуемое приложение и посмотрите меню удаления — ничего не удаляйте без необходимости.</p>
+        </section>
+
+        {# Слайд 10. Как освободить место, если приложение занимает много памяти? #}
+        <section class="pres-screen">
+            <small class="pres-kicker">БЛОК 3 · СЛАЙД 10</small>
+            <h1 class="pres-h1">Память и кэш приложения</h1>
+            <div class="pres-problem-list">
+                <div class="pres-problem"><b>Размер и память</b><p>Посмотреть, сколько места занимают приложения, можно в настройках памяти / приложений.</p></div>
+                <div class="pres-problem"><b>Кэш vs данные</b><p>Кэш — временные файлы для ускорения работы. Очистка кэша удаляет временные файлы, а очистка данных сбрасывает работу приложения к исходному состоянию (может потребоваться повторный вход).</p></div>
+                <div class="pres-problem"><b>Будьте осторожны</b><p>Не удаляйте данные приложения, не понимая последствий.</p></div>
+            </div>
+        </section>
+
+        {# Слайд 11. Что делать, если приложение не устанавливается? #}
+        <section class="pres-screen">
+            <small class="pres-kicker">БЛОК 3 · СЛАЙД 11</small>
+            <h1 class="pres-h1">Если приложение не ставится</h1>
+            <div class="pres-skill-grid">
+                <div class="pres-skill"><div class="pres-ico">💾</div><div><b>Мало памяти</b><span>Освободите место в памяти телефона.</span></div></div>
+                <div class="pres-skill"><div class="pres-ico">📶</div><div><b>Нет интернета</b><span>Проверьте Wi-Fi или мобильную связь.</span></div></div>
+                <div class="pres-skill"><div class="pres-ico">📱</div><div><b>Несовместимость</b><span>Устройство может не подходить под требования.</span></div></div>
+                <div class="pres-skill"><div class="pres-ico">⚙</div><div><b>Система и магазин</b><span>Проверьте обновление системы и ошибки магазина.</span></div></div>
+            </div>
+        </section>
+
+        {# Слайд 12. Как не скачать поддельное приложение? #}
+        <section class="pres-screen">
+            <small class="pres-kicker">БЛОК 4 · СЛАЙД 12</small>
+            <h1 class="pres-h1">Защита от подделок</h1>
+            <div class="pres-problem-list">
+                <div class="pres-problem"><b>Проверяйте источник</b><p>Сверяйте название и разработчика, не переходите по подозрительным ссылкам и не скачивайте неизвестные APK-файлы.</p></div>
+                <div class="pres-problem"><b>Незнакомцы и коды</b><p>Не ставьте приложения по просьбе незнакомцев и никому не сообщайте пароли и коды подтверждения.</p></div>
+            </div>
+        </section>
+
+        {# Слайд 13. Разрешения приложений: что можно разрешать? #}
+        <section class="pres-screen">
+            <small class="pres-kicker">БЛОК 4 · СЛАЙД 13</small>
+            <h1 class="pres-h1">Разрешения приложений</h1>
+            <div class="pres-problem-list">
+                <div class="pres-problem"><b>Камера, микрофон, местоположение</b><p>Разрешайте только тогда, когда это нужно для работы функции (например, камера для съёмки, карты — для навигации).</p></div>
+                <div class="pres-problem"><b>Контакты и фотографии</b><p>Всегда оценивайте, действительно ли приложению необходим такой доступ.</p></div>
+            </div>
+        </section>
+
+        {# Слайд 14. Практическое задание #}
+        <section class="pres-screen">
+            <small class="pres-kicker">БЛОК 5 · СЛАЙД 14</small>
+            <h1 class="pres-h1">Практическое задание</h1>
+            <div class="pres-check-final">
+                <span>1. Магазин приложений</span>
+                <span>2. Найти программу</span>
+                <span>3. Название, разработчик, отзывы</span>
+                <span>4. Описание и функции</span>
+                <span>5. Проверить установку</span>
+                <span>6. Установить под контролем</span>
+                <span>7. Раздел обновлений</span>
+            </div>
+        </section>
+
+        {# Слайд 15. Проверяем знания и итог занятия #}
+        <section class="pres-screen">
+            <div class="pres-big-check">✓</div>
+            <small class="pres-kicker">БЛОК 5 · ИТОГ ЗАНЯТИЯ</small>
+            <h1 class="pres-h1">Проверяем знания и итоги</h1>
+            <p class="pres-subtitle">
+                Теперь мы умеем самостоятельно находить нужные приложения, проверять информацию о них,
+                устанавливать и обновлять программы, а также удалять ненужные приложения и безопаснее пользоваться магазином.
+            </p>
+        </section>
+
+    </div>
+
+    <div class="pres-controls">
+        <button onclick="presPrev()" aria-label="Назад">←</button>
+        <div class="pres-bar-wrap"><i id="presBar"></i></div>
+        <span id="presCounter">1 / 15</span>
+        <button onclick="presNext()" aria-label="Вперёд"></button>
+        <button class="pres-exit" onclick="closePresentation()">Выйти</button>
+    </div>
+</div>
+
+<!-- ============================================================
+     ПОВТОРЕНИЕ УРОКА 3 — встроенный overlay
+     ============================================================ -->
+<div id="review" class="presentation-overlay" aria-hidden="true">
+    <div class="pres-topline">
+        <span>На «ты» с технологиями</span>
+        <span>Урок 3 · Повторение</span>
+        <button class="pres-close" onclick="closeReview()" aria-label="Закрыть">×</button>
+    </div>
+
+    <div class="pres-stage">
+        <section class="pres-screen active">
+            <small class="pres-kicker">УРОК 3 · ПОВТОРЕНИЕ</small>
+            <h1 class="pres-h1">Сообщения,<br>мессенджеры<br><em>и фотографии</em></h1>
+            <p class="pres-subtitle">
+                Коротко вспомним ключевые навыки прошлого урока перед работой с магазином приложений.
+            </p>
+        </section>
+
+        <section class="pres-screen">
+            <small class="pres-kicker">ЧТО ПРОШЛИ</small>
+            <h1 class="pres-h1">Главное из урока 3</h1>
+            <div class="pres-skill-grid">
+                <div class="pres-skill"><div class="pres-ico">1</div><div><b>Голосовые сообщения</b><span>запись, прослушивание и расшифровка в текст</span></div></div>
+                <div class="pres-skill"><div class="pres-ico">2</div><div><b>Ответ на сообщение</b><span>отвечаем на конкретную фразу в чате</span></div></div>
+                <div class="pres-skill"><div class="pres-ico">3</div><div><b>Поиск и закрепление</b><span>важное закрепляем наверху или ищем по слову</span></div></div>
+                <div class="pres-skill"><div class="pres-ico">4</div><div><b>Групповые чаты</b><span>уведомления беседы можно приглушить</span></div></div>
+                <div class="pres-skill"><div class="pres-ico">5</div><div><b>Работа с фото</b><span>выбор нескольких снимков, отправка, альбомы</span></div></div>
+                <div class="pres-skill"><div class="pres-ico">6</div><div><b>Редактор снимков</b><span>обрезка, яркость, поворот и отмена</span></div></div>
+            </div>
+        </section>
+
+        <section class="pres-screen">
+            <small class="pres-kicker">ПРОВЕРИМ СЕБЯ</small>
+            <h1 class="pres-h1">Что помним из урока 3?</h1>
+            <p class="pres-subtitle">Нажимайте на варианты — правильный ответ подсветится зелёным.</p>
+            <div class="review-quiz" id="review-quiz"></div>
+        </section>
+
+        <section class="pres-screen">
+            <div class="pres-big-check"></div>
+            <small class="pres-kicker">ВСПОМНИЛИ</small>
+            <h1 class="pres-h1">Теперь — к приложениям</h1>
+            <p class="pres-subtitle">
+                Разберёмся, как находить, устанавливать, обновлять и удалять приложения безопасно.
+            </p>
+        </section>
+    </div>
+
+    <div class="pres-controls">
+        <button onclick="reviewPrev()" aria-label="Назад">←</button>
+        <div class="pres-bar-wrap"><i id="reviewBar"></i></div>
+        <span id="reviewCounter">1 / 4</span>
+        <button onclick="reviewNext()" aria-label="Вперёд">→</button>
+        <button class="pres-exit" onclick="closeReview()">Выйти</button>
+    </div>
+</div>
+
+<script>
+// Хелпер: текст слева — фото справа.
+function split(text, src, caption){
+    return `<div class="two">
+        <div class="two-text">${text}</div>
+        <figure class="slide-photo inline">
+            <img src="/static/img/${src}" alt="${caption}"
+                 onerror="this.style.display='none';this.parentElement.classList.add('is-missing');">
+        </figure>
+    </div>`;
+}
+
+// ============================================================
+// ВОПРОСЫ ДЛЯ ПОВТОРЕНИЯ УРОКА 3
+// ============================================================
+const REVIEW_QUIZ = [
+    {
+        q: "Как записать голосовое сообщение?",
+        options: [
+            "Нажать и удерживать кнопку микрофона",
+            "Открыть камеру",
+            "Нажать на значок скрепки",
+            "Открыть настройки телефона"
+        ],
+        correct: 0,
+        hint: "Запись голосового — удержание микрофона. Отпустили — запись готова."
+    },
+    {
+        q: "Что делает расшифровка голосового сообщения?",
+        options: [
+            "Переводит голос в текст",
+            "Удаляет сообщение",
+            "Ускоряет воспроизведение",
+            "Меняет голос"
+        ],
+        correct: 0,
+        hint: "Расшифровка превращает голосовое в текст — удобно, если нельзя включить звук."
+    },
+    {
+        q: "Зачем нужно закрепление сообщения в чате?",
+        options: [
+            "Чтобы сообщение удалилось",
+            "Чтобы важное всегда было наверху",
+            "Чтобы сменить фон",
+            "Чтобы очистить память"
+        ],
+        correct: 1,
+        hint: "Закреплённое сообщение остаётся наверху переписки — его легко найти."
+    },
+    {
+        q: "Как выбрать сразу несколько фотографий в галерее?",
+        options: [
+            "Долгое нажатие на первый снимок, затем отметить остальные",
+            "Только через настройки телефона",
+            "Перезагрузить телефон",
+            "Нельзя выбрать больше одного фото"
+        ],
+        correct: 0,
+        hint: "Долгое нажатие включает режим выбора нескольких снимков одновременно."
+    },
+    {
+        q: "Что делает обрезка фотографии?",
+        options: [
+            "Убирает лишние края",
+            "Ускоряет интернет",
+            "Меняет шрифт",
+            "Удаляет альбом"
+        ],
+        correct: 0,
+        hint: "Обрезка убирает лишние края, оставляя главное на снимке."
+    }
+];
+
+function renderReviewQuiz(){
+    const box = document.getElementById('review-quiz');
+    if (!box) return;
+    const letters = ['A', 'B', 'C', 'D', 'E'];
+
+    box.innerHTML = REVIEW_QUIZ.map((item, i) => `
+        <div class="review-q" data-qi="${i}">
+            <div class="review-q-title">
+                <span class="review-q-num">${i + 1}</span>
+                <span>${item.q}</span>
+            </div>
+            <div class="review-q-options">
+                ${item.options.map((opt, j) =>
+                    `<button class="review-opt" onclick="checkReviewQuiz(${i}, ${j})">
+                        <span class="review-opt-letter">${letters[j]}</span>
+                        <span class="review-opt-text">${opt}</span>
+                    </button>`
+                ).join("")}
+            </div>
+            <div class="review-q-result" id="rq-${i}"></div>
+        </div>
+    `).join("");
+}
+
+function checkReviewQuiz(qi, oi){
+    const item = REVIEW_QUIZ[qi];
+    const questionEl = document.querySelector(`.review-q[data-qi="${qi}"]`);
+    if (!questionEl || questionEl.classList.contains('answered-ok')) return;
+
+    const buttons = questionEl.querySelectorAll('.review-opt');
+    const result = document.getElementById('rq-' + qi);
+
+    if (oi === item.correct){
+        questionEl.classList.add('answered-ok');
+        buttons[oi].classList.add('correct');
+        buttons.forEach((b, j) => {
+            if (j !== oi) b.classList.add('disabled');
+        });
+        result.innerHTML = `<div class="review-q-ok"><b>✓ Верно!</b> ${item.hint}</div>`;
+    } else {
+        buttons[oi].classList.add('wrong');
+        setTimeout(() => buttons[oi].classList.remove('wrong'), 650);
+        result.innerHTML = `<div class="review-q-no"><b>Пока не точно.</b> Попробуйте другой вариант.</div>`;
+    }
+}
+
+// ============================================================
+// ТЕОРИЯ — БЛОКИ 1–4 И ИТОГ
+// ============================================================
+const THEORY = [
+
+["Тема занятия",
+`<div class="hero">
+  <div>
+    <small>БЛОК 1 · СЛАЙД 1</small>
+    <h1>Приложения на смартфоне:<br><i>как находить, устанавливать и обновлять</i></h1>
+    <p><b>Цель занятия:</b> научить участников самостоятельно находить, устанавливать, обновлять и удалять приложения, а также безопасно пользоваться магазинами приложений.</p>
+    <p class="mini">Практика на своих смартфонах · Простыми словами</p>
+  </div>
+</div>`],
+
+["Где можно скачивать приложения?",
+split(`
+    <dl class="kv">
+      <dt>Google Play</dt><dd>магазин приложений для большинства Android-смартфонов</dd>
+      <dt>App Store</dt><dd>магазин приложений для iPhone</dd>
+      <dt>Чем отличаются</dt><dd>предназначены для разных систем (Android и iOS), имеют свой интерфейс и правила проверки программ</dd>
+      <dt>Почему официальные магазины</dt><dd>приложения проходят проверку, безопаснее устанавливаются и удобно обновляются</dd>
+      <dt>Почему не неизвестные сайты</dt><dd>риск скачать подделку, рекламный мусор или вредоносную программу</dd>
+    </dl>
+`, 'lesson4_stores.jpg', 'Главный экран магазина приложений Google Play или App Store со строкой поиска')],
+
+["Как найти нужное приложение?",
+`<div class="steps">
+  <b>Порядок поиска:</b>
+  <ol>
+    <li>Открываем магазин приложений.</li>
+    <li>Находим строку поиска.</li>
+    <li>Вводим название программы.</li>
+    <li>Рассматриваем результаты поиска.</li>
+  </ol>
+</div>
+<div class="tip"><b>Как отличить нужное приложение от похожих:</b> сверяйте название, имя разработчика, рейтинг, отзывы и значок — рядом с официальными программами часто много клонов и похожих утилит.</div>
+<div class="steps">
+  <b>Практика:</b> найдите в магазине заранее выбранное приложение.
+</div>`],
+
+["Как установить приложение на Android?",
+split(`
+    <div class="steps">
+      <b>Пошагово на Android:</b>
+      <ol>
+        <li>Открыть <b>Google Play</b>.</li>
+        <li>Ввести название приложения в поиске.</li>
+        <li>Выбрать нужный результат.</li>
+        <li>Нажать <b>«Установить»</b>.</li>
+        <li>Дождаться завершения загрузки.</li>
+        <li>Открыть приложение.</li>
+      </ol>
+    </div>
+`, 'lesson4_android_install.jpg', 'Карточка приложения в Google Play с кнопкой установки или открытия')],
+
+["Как установить приложение на iPhone?",
+split(`
+    <div class="steps">
+      <b>Пошагово на iPhone:</b>
+      <ol>
+        <li>Открыть <b>App Store</b>.</li>
+        <li>Перейти в поиск.</li>
+        <li>Ввести название приложения.</li>
+        <li>Выбрать нужный результат.</li>
+        <li>Нажать <b>«Загрузить»</b> или кнопку с облаком.</li>
+        <li>Подтвердить установку при необходимости.</li>
+      </ol>
+    </div>
+`, 'lesson4_ios_install.jpg', 'Карточка приложения в App Store с кнопкой загрузки или значком облака')],
+
+["Что означают кнопки в магазине приложений?",
+`<dl class="kv">
+  <dt>«Установить» / «Загрузить»</dt><dd>приложение скачивается и устанавливается на смартфон</dd>
+  <dt>«Открыть»</dt><dd>приложение уже установлено — можно сразу запустить</dd>
+  <dt>«Обновить»</dt><dd>доступна новая версия программы</dd>
+  <dt>Значок облака</dt><dd>приложение уже было связано с вашим аккаунтом ранее — загружаем его повторно</dd>
+  <dt>Цена и «Покупки в приложении»</dt><dd>указывают на стоимость или наличие платных функций и подписок внутри</dd>
+</dl>
+<div class="warn"><b>Важно:</b> бесплатная установка не всегда означает отсутствие платных функций или подписок — обращайте внимание на условия внутри приложения.</div>`],
+
+["Как понять, хорошее ли приложение?",
+split(`
+    <dl class="kv">
+      <dt>Название и разработчик</dt><dd>убедитесь, что это именно нужная организация или проверенный автор</dd>
+      <dt>Рейтинг и количество отзывов</dt><dd>высокая оценка и много реальных отзывов — хороший ориентир</dd>
+      <dt>Скриншоты и описание</dt><dd>показывают интерфейс и возможности программы до установки</dd>
+      <dt>Дата последнего обновления</dt><dd>показывает, что приложение активно поддерживается</dd>
+      <dt>Возрастные ограничения</dt><dd>информация о возрастной категории контента</dd>
+      <dt>Возможные покупки и подписки</dt><dd>предупреждение о платных опциях внутри</dd>
+    </dl>
+    <div class="steps">
+      <b>Практика:</b> сравните два похожих приложения и определите, какое выглядит более надёжным.
+    </div>
+`, 'lesson4_store_card.jpg', 'Страница приложения с рейтингом, отзывами, кнопкой обновления или покупками внутри')],
+
+["Как обновлять приложения?",
+`<dl class="kv">
+  <dt>Зачем выпускают обновления</dt><dd>разработчики исправляют ошибки, добавляют удобства и закрывают уязвимости безопасности</dd>
+  <dt>Список обновлений</dt><dd>находится в профиле/меню магазина приложений в разделе управления приложениями и обновлениями</dd>
+  <dt>Отдельное приложение</dt><dd>нажмите «Обновить» напротив конкретной программы</dd>
+  <dt>Автоматическое обновление</dt><dd>включается в настройках магазина — программы обновляются сами</dd>
+  <dt>Зачем нужен Wi-Fi</dt><dd>крупные обновления могут тратить много мобильного трафика и дольше качаться по мобильной сети</dd>
+</dl>`],
+
+["Как удалить ненужное приложение?",
+`<dl class="kv">
+  <dt>Список приложений</dt><dd>находится в настройках телефона (раздел «Приложения») или на экранах приложений</dd>
+  <dt>Удаление на Android</dt><dd>долгое нажатие на значок или пункт «Удалить» в настройках приложения</dd>
+  <dt>Удаление на iPhone</dt><dd>долгое нажатие на значок → «Удалить приложение»</dd>
+  <dt>Значок vs приложение</dt><dd>удаление значка с экрана убирает только ярлык, а удаление приложения удаляет саму программу</dd>
+  <dt>Что с данными</dt><dd>при удалении приложения локальные файлы и настройки внутри него обычно удаляются вместе с программой</dd>
+</dl>
+<div class="tip"><b>Практика:</b> найдите приложение, которое давно не используется, и посмотрите, как выглядит меню удаления. <b>Не удаляйте ничего без необходимости.</b></div>`],
+
+["Как освободить место, если приложение занимает много памяти?",
+split(`
+    <dl class="kv">
+      <dt>Где посмотреть размер</dt><dd>в настройках телефона в разделах «Память» или «Приложения»</dd>
+      <dt>Что такое кэш</dt><dd>временные файлы, которые приложение сохраняет для быстрой работы</dd>
+      <dt>Кэш vs данные</dt><dd>очистка кэша удаляет временные файлы; очистка данных сбрасывает работу приложения к исходному состоянию (может потребоваться повторный вход)</dd>
+      <dt>Проверка памяти</dt><dd>откройте список приложений и посмотрите, какие из них занимают больше всего места</dd>
+    </dl>
+    <div class="warn"><b>Важно:</b> не удаляйте данные приложения, не понимая последствий — можно потерять несохранённые данные или выйти из аккаунта.</div>
+`, 'lesson4_app_storage.jpg', 'Раздел памяти или приложений в настройках телефона с кэшем и данными')],
+
+["Что делать, если приложение не устанавливается?",
+`<dl class="kv">
+  <dt>Не хватает памяти</dt><dd>освободите место, удалив ненужные файлы или старые программы</dd>
+  <dt>Нет интернета</dt><dd>проверьте подключение к Wi-Fi или мобильному интернету</dd>
+  <dt>Устройство несовместимо</dt><dd>приложение может не подходить под модель или версию системы телефона</dd>
+  <dt>Требуется обновление системы</dt><dd>иногда программе нужна более новая версия Android или iOS</dd>
+  <dt>Ошибка магазина</dt><dd>перезапустите магазин приложений или сам телефон и повторите попытку</dd>
+</dl>
+<div class="tip"><b>Что проверить самостоятельно:</b> интернет, свободную память, перезапуск магазина/телефона и описание совместимости.</div>`],
+
+["Как не скачать поддельное приложение?",
+`<div class="steps">
+  <b>Правила безопасности при установке:</b>
+  <ol>
+    <li>Проверяйте название и разработчика.</li>
+    <li>Не переходите по подозрительным ссылкам.</li>
+    <li>Не устанавливайте приложения по просьбе незнакомцев.</li>
+    <li>Не скачивайте неизвестные APK-файлы.</li>
+    <li>Не сообщать пароли и коды подтверждения.</li>
+  </ol>
+</div>
+<div class="warn"><b>Помните:</b> никакие сотрудники банков, служб или «помощники» не должны просить установить программу по ссылке или назвать код из СМС.</div>`],
+
+["Разрешения приложений: что можно разрешать?",
+split(`
+    <dl class="kv">
+      <dt>Камера</dt><dd>нужна приложениям для съёмки фото, видео или сканирования QR-кодов</dd>
+      <dt>Микрофон</dt><dd>нужен для звонков, голосовых сообщений и записи звука</dd>
+      <dt>Местоположение</dt><dd>нужно картам, навигаторам и сервисам доставки/такси</dd>
+      <dt>Контакты и фотографии</dt><dd>нужны для выбора фото из галереи или поиска знакомых в приложении</dd>
+    </dl>
+    <div class="tip"><b>Как оценивать доступ:</b> спросите себя — действительно ли этому приложению нужен такой доступ для выполнения своей задачи? Если фонарику или калькулятору нужны контакты и геолокация — это повод насторожиться.</div>
+`, 'lesson4_permissions.jpg', 'Окно запроса разрешений приложения на смартфоне')]
+
+];
+
+// ============================================================
+// БЛОК 5. ПРАКТИКА И ПРОВЕРКА ЗНАНИЙ
+// ============================================================
+const TASKS = [
+
+["Проверяем знания",
+`<p>Ответьте на вопросы и проверьте себя с помощью интерактивных карточек:</p>
+
+<div class="case">
+  <small>ВОПРОС 1</small>
+  <h2>Где безопаснее скачивать приложения и как найти нужную программу?</h2>
+  ${[
+    "В официальных магазинах (Google Play / App Store); найти — через строку поиска по названию и проверить разработчика",
+    "На случайных сайтах по ссылкам из сообщений",
+    "Только через звонок незнакомцу"
+  ].map((x, i) => `<button onclick="pickQ1(${i})">${x}</button>`).join("")}
+  <div id="q1-res"></div>
+</div>
+
+<div class="case" style="margin-top:18px">
+  <small>ВОПРОС 2</small>
+  <h2>Что означает кнопка «Обновить» и как удалить ненужное приложение?</h2>
+  ${[
+    "«Обновить» — доступна новая версия программы; удалить можно через список приложений / настройки или долгое нажатие на значок",
+    "«Обновить» всегда удаляет все контакты с телефона",
+    "Удалить приложение нельзя"
+  ].map((x, i) => `<button onclick="pickQ2(${i})">${x}</button>`).join("")}
+  <div id="q2-res"></div>
+</div>
+
+<div class="case" style="margin-top:18px">
+  <small>ВОПРОС 3</small>
+  <h2>Почему нельзя скачивать неизвестные файлы и что нужно проверить перед установкой?</h2>
+  ${[
+    "Неизвестные файлы могут быть опасными; перед установкой проверяем название, разработчика, рейтинг, отзывы, описание, обновления и возможные покупки/разрешения",
+    "Неизвестные файлы скачивать можно без проверки, если они бесплатные",
+    "Перед установкой проверять ничего не нужно"
+  ].map((x, i) => `<button onclick="pickQ3(${i})">${x}</button>`).join("")}
+  <div id="q3-res"></div>
+</div>`]
+
+];
+
+// ============================================================
+// РЕНДЕР УРОКА
+// ============================================================
+const app = document.getElementById('lesson-app');
+
+function renderSection(slides, startIndex){
+    return slides.map((s, i) => `
+        <article class="slidecard">
+            <div class="num">${String(startIndex + i).padStart(2, "0")}</div>
+            <div class="slidebody">
+                <small>${s[0]}</small>
+                <h2>${s[0]}</h2>
+                ${s[1]}
+            </div>
+        </article>
+    `).join('');
+}
+
+app.innerHTML =
+    renderSection(THEORY, 1) +
+    renderSection(TASKS, THEORY.length + 1);
+
+// ============================================================
+// ИНТЕРАКТИВ
+// ============================================================
+function toggleCheck(btn){
+    btn.classList.toggle('lime');
+    const mark = btn.querySelector('b');
+    if (mark) mark.textContent = btn.classList.contains('lime') ? '✓' : '□';
+}
+
+function pickQ1(i){
+    document.getElementById('q1-res').innerHTML = i === 0
+        ? "<div class='notice'><b>Верно.</b> Официальные магазины безопаснее, а среди результатов поиска важно сверить название, разработчика и отзывы.</div>"
+        : "<div class='notice'><b>Попробуйте ещё раз.</b> Вспомните Блок 1: официальные магазины и поиск по названию.</div>";
+}
+
+function pickQ2(i){
+    document.getElementById('q2-res').innerHTML = i === 0
+        ? "<div class='notice'><b>Верно.</b> Обновление ставит свежую версию приложения, а удалить программу можно через меню или настройки приложений.</div>"
+        : "<div class='notice'><b>Не совсем.</b> Вспомните Блок 3: обновления и удаление приложений.</div>";
+}
+
+function pickQ3(i){
+    document.getElementById('q3-res').innerHTML = i === 0
+        ? "<div class='notice'><b>Верно.</b> Неизвестные файлы несут риск безопасности, а перед установкой важно оценить разработчика, отзывы, описание, обновления, покупки и разрешения.</div>"
+        : "<div class='notice'><b>Попробуйте другой вариант.</b> Вспомните правила безопасности из Блоков 2 и 4.</div>";
+}
+
+// ============================================================
+// КНОПКА «НАВЕРХ»
+// ============================================================
+const toTopBtn = document.getElementById('toTop');
+
+function scrollToTop(){
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+window.addEventListener('scroll', () => {
+    if (window.scrollY > 400){
+        toTopBtn.classList.add('visible');
+    } else {
+        toTopBtn.classList.remove('visible');
+    }
+});
+
+// ============================================================
+// РЕЖИМ ПОКАЗА
+// ============================================================
+let presIndex = 0;
+const presOverlay = document.getElementById('presentation');
+const presScreens = [...document.querySelectorAll('#presentation .pres-screen')];
+const presCounter = document.getElementById('presCounter');
+const presBar = document.getElementById('presBar');
+
+function presRender(){
+    presScreens.forEach((s, n) => s.classList.toggle('active', n === presIndex));
+    presCounter.textContent = `${presIndex + 1} / ${presScreens.length}`;
+    presBar.style.width = ((presIndex + 1) / presScreens.length * 100) + '%';
+}
+
+function presNext(){ if (presIndex < presScreens.length - 1){ presIndex++; presRender(); } }
+function presPrev(){ if (presIndex > 0){ presIndex--; presRender(); } }
+
+function openPresentation(){
+    presIndex = 0;
+    presRender();
+    presOverlay.classList.add('open');
+    presOverlay.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+}
+
+function closePresentation(){
+    presOverlay.classList.remove('open');
+    presOverlay.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+}
+
+// ============================================================
+// ПОВТОРЕНИЕ УРОКА 3
+// ============================================================
+let reviewIndex = 0;
+const reviewOverlay = document.getElementById('review');
+const reviewScreens = [...document.querySelectorAll('#review .pres-screen')];
+const reviewCounter = document.getElementById('reviewCounter');
+const reviewBar = document.getElementById('reviewBar');
+
+function reviewRender(){
+    reviewScreens.forEach((s, n) => s.classList.toggle('active', n === reviewIndex));
+    reviewCounter.textContent = `${reviewIndex + 1} / ${reviewScreens.length}`;
+    reviewBar.style.width = ((reviewIndex + 1) / reviewScreens.length * 100) + '%';
+}
+
+function reviewNext(){ if (reviewIndex < reviewScreens.length - 1){ reviewIndex++; reviewRender(); } }
+function reviewPrev(){ if (reviewIndex > 0){ reviewIndex--; reviewRender(); } }
+
+function openReview(){
+    reviewIndex = 0;
+    renderReviewQuiz();
+    reviewRender();
+    reviewOverlay.classList.add('open');
+    reviewOverlay.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeReview(){
+    reviewOverlay.classList.remove('open');
+    reviewOverlay.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+}
+
+// Клавиатура
+document.addEventListener('keydown', e => {
+    const presOpen   = presOverlay.classList.contains('open');
+    const reviewOpen = reviewOverlay.classList.contains('open');
+
+    if (presOpen){
+        if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown'){ e.preventDefault(); presNext(); }
+        if (e.key === 'ArrowLeft'  || e.key === 'PageUp'){ e.preventDefault(); presPrev(); }
+        if (e.key === 'Escape'){ e.preventDefault(); closePresentation(); }
+        if (e.key === 'Home'){ presIndex = 0; presRender(); }
+        if (e.key === 'End'){ presIndex = presScreens.length - 1; presRender(); }
+    }
+
+    if (reviewOpen){
+        if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown'){ e.preventDefault(); reviewNext(); }
+        if (e.key === 'ArrowLeft'  || e.key === 'PageUp'){ e.preventDefault(); reviewPrev(); }
+        if (e.key === 'Escape'){ e.preventDefault(); closeReview(); }
+        if (e.key === 'Home'){ reviewIndex = 0; reviewRender(); }
+        if (e.key === 'End'){ reviewIndex = reviewScreens.length - 1; reviewRender(); }
+    }
+});
+
+// Свайпы в презентации
+let presX0 = null;
+presOverlay.addEventListener('touchstart', e => presX0 = e.touches[0].clientX);
+presOverlay.addEventListener('touchend', e => {
+    if (presX0 === null) return;
+    const dx = e.changedTouches[0].clientX - presX0;
+    if (Math.abs(dx) > 50) dx < 0 ? presNext() : presPrev();
+    presX0 = null;
+});
+
+// Свайпы в повторении
+let reviewX0 = null;
+reviewOverlay.addEventListener('touchstart', e => reviewX0 = e.touches[0].clientX);
+reviewOverlay.addEventListener('touchend', e => {
+    if (reviewX0 === null) return;
+    const dx = e.changedTouches[0].clientX - reviewX0;
+    if (Math.abs(dx) > 50) dx < 0 ? reviewNext() : reviewPrev();
+    reviewX0 = null;
+});
+
+presRender();
+reviewRender();
+</script>
+{% endblock %}
